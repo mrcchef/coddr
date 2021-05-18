@@ -5,7 +5,7 @@ import 'package:pedantic/pedantic.dart';
 import 'package:coddr/presentation/journeys/home/home_screen.dart';
 import 'package:coddr/dependencies/get_it.dart' as get_it;
 
-void main() async {
+void main() {
   unawaited(get_it.init());
   runApp(MyApp());
 }
