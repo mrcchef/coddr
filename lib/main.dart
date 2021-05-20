@@ -1,3 +1,4 @@
+import 'package:coddr/presentation/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:pedantic/pedantic.dart';
 
@@ -15,9 +16,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Coddr',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        textTheme: ThemeText.getTextTheme(),
       ),
       home: HomeScreen(),
     );

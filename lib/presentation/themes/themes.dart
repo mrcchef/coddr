@@ -9,43 +9,73 @@ class ThemeText {
 
   static TextTheme get _poppinsTextTheme => GoogleFonts.poppinsTextTheme();
 
-  static final TextStyle headline6 = TextStyle(
-      fontSize: Sizes.dimen_20, fontWeight: FontWeight.w500, wordSpacing: 0.15);
+  static TextStyle get headline6 => _poppinsTextTheme.headline6.copyWith(
+      fontSize: Sizes.dimen_20,
+      fontWeight: FontWeight.w600,
+      wordSpacing: 0.15,
+      color: Colors.black);
 
-  static final TextStyle headline5 = TextStyle(
-      fontSize: Sizes.dimen_24, fontWeight: FontWeight.w400, wordSpacing: 0.0);
+  static TextStyle get headline5 => _poppinsTextTheme.headline5.copyWith(
+      fontSize: Sizes.dimen_24,
+      fontWeight: FontWeight.w600,
+      wordSpacing: 0.0,
+      color: Colors.black);
 
-  static final TextStyle headline4 = TextStyle(
-      fontSize: Sizes.dimen_30, fontWeight: FontWeight.w400, wordSpacing: 0.25);
+  static TextStyle get headline4 => _poppinsTextTheme.headline4.copyWith(
+      fontSize: Sizes.dimen_30,
+      fontWeight: FontWeight.w500,
+      wordSpacing: 0.25,
+      color: Colors.black);
 
-  static final TextStyle headline3 = TextStyle(
-      fontSize: Sizes.dimen_48, fontWeight: FontWeight.w400, wordSpacing: 0.0);
+  static TextStyle get headline3 => _poppinsTextTheme.headline3.copyWith(
+      fontSize: Sizes.dimen_48,
+      fontWeight: FontWeight.w400,
+      wordSpacing: 0.0,
+      color: Colors.black);
 
-  static final TextStyle headline2 = TextStyle(
-      fontSize: Sizes.dimen_60, fontWeight: FontWeight.w300, wordSpacing: -0.5);
+  static TextStyle get headline2 => _poppinsTextTheme.headline2.copyWith(
+      fontSize: Sizes.dimen_60,
+      fontWeight: FontWeight.w300,
+      wordSpacing: -0.5,
+      color: Colors.black);
 
-  static final TextStyle headline1 = TextStyle(
-      fontSize: Sizes.dimen_96, fontWeight: FontWeight.w300, wordSpacing: -1.5);
+  static TextStyle get headline1 => _poppinsTextTheme.headline1.copyWith(
+      fontSize: Sizes.dimen_96,
+      fontWeight: FontWeight.w300,
+      wordSpacing: -1.5,
+      color: Colors.black);
 
-  static final TextStyle subtitle1 = TextStyle(
-      fontSize: Sizes.dimen_16, fontWeight: FontWeight.w300, wordSpacing: 0.15);
+  static TextStyle get subtitle1 => _poppinsTextTheme.subtitle1.copyWith(
+      fontSize: Sizes.dimen_16,
+      fontWeight: FontWeight.w300,
+      wordSpacing: 0.15,
+      color: Colors.grey);
 
-  static final TextStyle subtitle2 = TextStyle(
-      fontSize: Sizes.dimen_14, fontWeight: FontWeight.w400, wordSpacing: 0.1);
+  static TextStyle get subtitle2 => _poppinsTextTheme.subtitle2.copyWith(
+      fontSize: Sizes.dimen_14,
+      fontWeight: FontWeight.w400,
+      wordSpacing: 0.1,
+      color: Colors.grey);
 
-  static final TextStyle bodyText1 = TextStyle(
-      fontSize: Sizes.dimen_16, fontWeight: FontWeight.w300, wordSpacing: 0.5);
+  static TextStyle get bodyText1 => _poppinsTextTheme.bodyText1.copyWith(
+      fontSize: Sizes.dimen_16,
+      fontWeight: FontWeight.w300,
+      wordSpacing: 0.5,
+      color: Colors.black);
 
-  static final TextStyle bodyText2 = TextStyle(
-      fontSize: Sizes.dimen_14, fontWeight: FontWeight.w300, wordSpacing: 0.25);
+  static TextStyle get bodyText2 => _poppinsTextTheme.bodyText2.copyWith(
+      fontSize: Sizes.dimen_14,
+      fontWeight: FontWeight.w300,
+      wordSpacing: 0.25,
+      color: Colors.black);
 
-  static final TextStyle button = TextStyle(
+  static TextStyle get button => _poppinsTextTheme.button.copyWith(
       fontSize: Sizes.dimen_14, fontWeight: FontWeight.w400, wordSpacing: 1.25);
 
-  static final TextStyle caption = TextStyle(
+  static TextStyle get caption => _poppinsTextTheme.caption.copyWith(
       fontSize: Sizes.dimen_12, fontWeight: FontWeight.w300, wordSpacing: 0.4);
 
-  static final TextStyle overline = TextStyle(
+  static TextStyle get overline => _poppinsTextTheme.overline.copyWith(
       fontSize: Sizes.dimen_10, fontWeight: FontWeight.w300, wordSpacing: 1.5);
 
   static getTextTheme() => TextTheme(
