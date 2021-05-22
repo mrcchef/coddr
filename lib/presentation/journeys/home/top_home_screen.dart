@@ -17,13 +17,13 @@ class TopHomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Welcome,\nUser",
+                  "Welcome\nUser Name",
                   style: Theme.of(context).textTheme.headline5,
                 ),
-                Container(
-                  height: Sizes.dimen_1.h,
-                  color: Colors.black,
-                ),
+                // Container(
+                //   height: Sizes.dimen_1.h,
+                //   color: Colors.black,
+                // ),
                 Text(
                   "Earn money with your skill",
                   style: Theme.of(context).textTheme.subtitle2,
