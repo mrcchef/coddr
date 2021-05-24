@@ -33,6 +33,12 @@ class ThemeText {
       wordSpacing: 0.0,
       color: Colors.black);
 
+  // static TextStyle get headline3w => _poppinsTextTheme.headline3.copyWith(
+  //     fontSize: Sizes.dimen_48,
+  //     fontWeight: FontWeight.w400,
+  //     wordSpacing: 0.0,
+  //     color: Colors.white);
+
   static TextStyle get headline2 => _poppinsTextTheme.headline2.copyWith(
       fontSize: Sizes.dimen_60,
       fontWeight: FontWeight.w300,
@@ -82,6 +88,7 @@ class ThemeText {
         headline1: headline1,
         headline2: headline2,
         headline3: headline3,
+        
         headline4: headline4,
         headline5: headline5,
         headline6: headline6,

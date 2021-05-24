@@ -1,3 +1,5 @@
+import 'package:coddr/presentation/journeys/home/sign_in.dart';
+import 'package:coddr/presentation/journeys/home/sign_up.dart';
 import 'package:coddr/presentation/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:pedantic/pedantic.dart';
@@ -23,7 +25,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         textTheme: ThemeText.getTextTheme(),
       ),
-      home: HomeScreen(),
+      //home: HomeScreen(),
+      home: SignIn(),
+      routes : {
+        HomeScreen.routeName: (ctx) => HomeScreen(),
+        SignIn.routeName: (ctx) => SignIn(),
+        SignUp.routeName: (ctx) => SignUp(),
+      }
     );
   }
 }
