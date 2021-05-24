@@ -8,4 +8,5 @@ class Images {
   static const hackerEarthLogo = 'assets/logos/HackerEarth.png';
   static const atcoderLogo = 'assets/logos/Atcoder.png';
   static const defaultUserImage = 'assets/images/default_user.png';
+  static const kshittizImage = 'assets/images/kshittiz2.jpg';
 }

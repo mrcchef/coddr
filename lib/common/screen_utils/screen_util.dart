@@ -3,7 +3,9 @@ import 'dart:ui';
 class ScreenUtil {
   static ScreenUtil _instance;
   static const int defaultWidth = 360;
-  static const int defaultHeight = 810;
+  // static const int defaultHeight = 810;
+  // static const int defaultHeight = 1150;
+  static const int defaultHeight = 1140;
 
   /// Size of the phone in UI Design , px
   num uiWidthPx;

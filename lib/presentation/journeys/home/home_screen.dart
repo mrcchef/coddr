@@ -1,3 +1,4 @@
+import 'package:coddr/presentation/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 
 import 'package:coddr/presentation/widgets/custom_bottom_navigation_bar.dart';
@@ -15,6 +16,8 @@ class HomeScreen extends StatelessWidget {
 
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+    print(screenWidth);
+    print(screenHeight);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -45,6 +48,7 @@ class HomeScreen extends StatelessWidget {
           )
         ],
       ),
+      drawer: MainDrawer(),
       body: Column(
         children: [
           Padding(

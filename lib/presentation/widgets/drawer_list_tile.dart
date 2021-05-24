@@ -1,0 +1,25 @@
+import 'package:coddr/common/constants/size_constants.dart';
+import 'package:flutter/material.dart';
+
+class DrawerListTile extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final Function tapHandler;
+
+  DrawerListTile(this.title, this.icon, this.tapHandler);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(
+        icon,
+        size: Sizes.dimen_26,
+      ),
+      title: Text(
+        title,
+        style: Theme.of(context).textTheme.subtitle1,
+      ),
+      onTap: tapHandler,
+    );
+  }
+}
