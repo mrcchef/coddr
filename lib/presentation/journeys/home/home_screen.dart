@@ -53,29 +53,25 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       drawer: MainDrawer(),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(
-                left: Sizes.dimen_16.w,
-                right: Sizes.dimen_16.w,
-                top: Sizes.dimen_12.h),
-            child: Column(
-              children: [
-                TopHomeScreen(),
-                SizedBox(
-                  height: Sizes.dimen_18.h,
-                ),
-                Text(
-                  "Get Started with your favourite platform",
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-                PlatformGrid(),
-              ],
+      body: Padding(
+        padding: EdgeInsets.only(
+            left: Sizes.dimen_16.w,
+            right: Sizes.dimen_16.w,
+            top: Sizes.dimen_12.h),
+        child: Column(
+          children: [
+            TopHomeScreen(),
+            SizedBox(
+              height: Sizes.dimen_30.w,
             ),
-          ),
-          CustomBottomNavigationBar(),
-        ],
+            Text(
+              "Get Started with your favourite platform",
+              style: Theme.of(context).textTheme.headline5,
+            ),
+            Expanded(child: PlatformGrid()),
+            CustomBottomNavigationBar(),
+          ],
+        ),
       ),
     );
   }

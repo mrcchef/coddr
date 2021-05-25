@@ -15,7 +15,7 @@ class MainDrawer extends StatelessWidget {
           children: [
             SizedBox(height: Sizes.dimen_14.h),
             Container(
-              height: Sizes.dimen_96.h,
+              height: Sizes.dimen_140.w,
               width: double.infinity,
               padding: EdgeInsets.only(
                 top: Sizes.dimen_20.w,
