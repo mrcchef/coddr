@@ -9,7 +9,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
     return Expanded(
       child: Container(
         child: Material(
-          elevation: Sizes.dimen_200,
+          elevation: Sizes.dimen_200.w,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(Sizes.dimen_16.w),
             topRight: Radius.circular(Sizes.dimen_16.w),

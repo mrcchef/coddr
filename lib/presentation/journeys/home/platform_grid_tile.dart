@@ -33,7 +33,7 @@ class PlatformGridTile extends StatelessWidget {
           Image.asset(
             imagePath,
             fit: BoxFit.cover,
-            height: Sizes.dimen_60.h,
+            height: Sizes.dimen_120.w,
           ),
           Text(
             title,

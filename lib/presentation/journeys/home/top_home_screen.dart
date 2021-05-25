@@ -8,7 +8,7 @@ class TopHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Sizes.dimen_62.h,
+      height: Sizes.dimen_96.w,
       child: Row(
         children: [
           Container(
@@ -21,7 +21,7 @@ class TopHomeScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 Container(
-                  height: Sizes.dimen_1.h,
+                  height: Sizes.dimen_1.w,
                   color: Colors.black,
                 ),
                 Text(

@@ -64,7 +64,7 @@ class HomeScreen extends StatelessWidget {
               children: [
                 TopHomeScreen(),
                 SizedBox(
-                  height: Sizes.dimen_18.h,
+                  height: Sizes.dimen_30.w,
                 ),
                 Text(
                   "Get Started with your favourite platform",

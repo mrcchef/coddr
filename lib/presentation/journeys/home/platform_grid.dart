@@ -11,7 +11,7 @@ class PlatformGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: SizedBox(
-        height: Sizes.dimen_140.h,
+        height: Sizes.dimen_300.w,
         child: GridView(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
