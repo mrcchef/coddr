@@ -14,12 +14,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init();
-
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     print(screenWidth);
     print(screenHeight);
+    ScreenUtil.init(height: screenHeight, width: screenWidth);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -28,20 +27,23 @@ class HomeScreen extends StatelessWidget {
         elevation: 0.0,
         actions: [
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: Sizes.dimen_16,
-              vertical: Sizes.dimen_8,
+            padding: EdgeInsets.symmetric(
+              horizontal: Sizes.dimen_16.w,
+              vertical: Sizes.dimen_8.h,
             ),
-            child: Icon(
-              Icons.menu,
-              color: Colors.black,
+            child: InkWell(
+              onTap: () {},
+              child: Icon(
+                Icons.menu,
+                color: Colors.black,
+              ),
             ),
           ),
           Spacer(),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: Sizes.dimen_16,
-              vertical: Sizes.dimen_8,
+            padding: EdgeInsets.symmetric(
+              horizontal: Sizes.dimen_16.w,
+              vertical: Sizes.dimen_8.h,
             ),
             child: Icon(
               Icons.notifications_active_outlined,
@@ -54,10 +56,10 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(
-                left: Sizes.dimen_16,
-                right: Sizes.dimen_16,
-                top: Sizes.dimen_12),
+            padding: EdgeInsets.only(
+                left: Sizes.dimen_16.w,
+                right: Sizes.dimen_16.w,
+                top: Sizes.dimen_12.h),
             child: Column(
               children: [
                 TopHomeScreen(),
@@ -68,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                   "Get Started with your favourite platform",
                   style: Theme.of(context).textTheme.headline5,
                 ),
-                SizedBox(height: Sizes.dimen_200.h, child: PlatformGrid()),
+                PlatformGrid(),
               ],
             ),
           ),

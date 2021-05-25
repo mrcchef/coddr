@@ -18,8 +18,8 @@ class MainDrawer extends StatelessWidget {
               height: Sizes.dimen_96.h,
               width: double.infinity,
               padding: EdgeInsets.only(
-                top: Sizes.dimen_20,
-                left: Sizes.dimen_20,
+                top: Sizes.dimen_20.w,
+                left: Sizes.dimen_20.w,
               ),
               alignment: Alignment.centerLeft,
               child: ClipOval(
@@ -30,8 +30,8 @@ class MainDrawer extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(
-                left: Sizes.dimen_30,
+              padding: EdgeInsets.only(
+                left: Sizes.dimen_30.w,
               ),
               child: Text(
                 "User Name",

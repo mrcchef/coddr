@@ -1,4 +1,5 @@
 import 'package:coddr/common/constants/size_constants.dart';
+import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:flutter/material.dart';
 
 class DrawerListTile extends StatelessWidget {
@@ -13,7 +14,7 @@ class DrawerListTile extends StatelessWidget {
     return ListTile(
       leading: Icon(
         icon,
-        size: Sizes.dimen_26,
+        size: Sizes.dimen_26.h,
       ),
       title: Text(
         title,
