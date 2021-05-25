@@ -1,6 +1,7 @@
 import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
+import 'package:coddr/presentation/journeys/home/sign_in.dart';
 import 'package:coddr/presentation/widgets/drawer_list_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +44,9 @@ class MainDrawer extends StatelessWidget {
             DrawerListTile('Settings', Icons.settings, () {}),
             DrawerListTile(
                 'About Us', Icons.sentiment_satisfied_alt_outlined, () {}),
-            DrawerListTile('Sign Out', Icons.logout, () {}),
+            DrawerListTile('Sign Out', Icons.logout, () {
+              Navigator.of(context).pushNamed(SignIn.routeName);
+            }),
           ],
         ),
       ),

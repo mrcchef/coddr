@@ -10,6 +10,8 @@ import 'package:coddr/common/extensions/size_extensions.dart';
 import 'top_home_screen.dart';
 
 class HomeScreen extends StatelessWidget {
+  static const routeName = '/home_screen';
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
