@@ -26,15 +26,14 @@ class PlatformGridTile extends StatelessWidget {
           Sizes.dimen_10.h,
         ),
       ),
-      padding: const EdgeInsets.symmetric(
-          vertical: Sizes.dimen_12, horizontal: Sizes.dimen_12),
+      padding: EdgeInsets.symmetric(
+          vertical: Sizes.dimen_12.w, horizontal: Sizes.dimen_12.w),
       child: Column(
         children: [
           Image.asset(
             imagePath,
             fit: BoxFit.cover,
-            //height: Sizes.dimen_80.h,
-            height: Sizes.dimen_62.h,
+            height: Sizes.dimen_60.h,
           ),
           Text(
             title,
