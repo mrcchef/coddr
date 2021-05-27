@@ -1,3 +1,6 @@
+import 'package:coddr/data/repositories/platform_repository_impl.dart';
+import 'package:coddr/domain/entities/no_params.dart';
+import 'package:coddr/domain/usecases/get_cf_contest_list.dart';
 import 'package:coddr/presentation/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +14,10 @@ import 'top_home_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/home_screen';
+
+  GetCFContestList getCFContestList;
+
+  HomeScreen({this.getCFContestList});
 
   @override
   Widget build(BuildContext context) {
