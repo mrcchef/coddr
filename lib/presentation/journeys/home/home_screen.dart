@@ -15,10 +15,6 @@ import 'top_home_screen.dart';
 class HomeScreen extends StatelessWidget {
   static const routeName = '/home_screen';
 
-  GetCFContestList getCFContestList;
-
-  HomeScreen({this.getCFContestList});
-
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;

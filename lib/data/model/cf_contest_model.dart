@@ -1,7 +1,7 @@
-import 'package:coddr/domain/entities/cf_contest_entity.dart';
+import 'package:coddr/domain/entities/contest_entity.dart';
 import 'package:equatable/equatable.dart';
 
-class CFContestModel extends CFContestEntity {
+class CFContestModel extends ContestEntity {
   int id;
   String name;
   String type;
@@ -29,6 +29,7 @@ class CFContestModel extends CFContestEntity {
           relativeTimeSeconds: relativeTimeSeconds,
           startTimeSeconds: startTimeSeconds,
           type: type,
+          platformHandle: "CF",
         );
 
   CFContestModel.fromJson(Map<String, dynamic> json) {

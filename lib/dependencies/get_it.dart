@@ -6,21 +6,20 @@ import 'package:coddr/presentation/journeys/home/home_screen.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-final getItInstacne = GetIt.I;
+final getItInstance = GetIt.I;
 
 Future init() async {
-  getItInstacne.registerLazySingleton<Client>(() => Client());
-  getItInstacne
-      .registerLazySingleton<APIClient>(() => APIClient(getItInstacne()));
-  getItInstacne.registerFactory<RemoteDataSourceImpl>(
-      () => RemoteDataSourceImpl(apiClient: getItInstacne()));
+  getItInstance.registerLazySingleton<Client>(() => Client());
+  getItInstance
+      .registerLazySingleton<APIClient>(() => APIClient(getItInstance()));
+  getItInstance.registerFactory<RemoteDataSourceImpl>(
+      () => RemoteDataSourceImpl(apiClient: getItInstance()));
 
-  getItInstacne.registerLazySingleton<PlatformRepositoryImpl>(
-      () => PlatformRepositoryImpl(remoteDataSourceImpl: getItInstacne()));
+  getItInstance.registerLazySingleton<PlatformRepositoryImpl>(
+      () => PlatformRepositoryImpl(remoteDataSourceImpl: getItInstance()));
 
-  getItInstacne.registerLazySingleton<HomeScreen>(
-      () => HomeScreen(getCFContestList: getItInstacne()));
+  getItInstance.registerLazySingleton<HomeScreen>(() => HomeScreen());
 
-  getItInstacne.registerLazySingleton<GetCFContestList>(
-      () => GetCFContestList(platformRepository: getItInstacne()));
+  getItInstance.registerLazySingleton<GetCFContestList>(
+      () => GetCFContestList(platformRepository: getItInstance()));
 }

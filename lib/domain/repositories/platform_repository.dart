@@ -1,5 +1,5 @@
-import 'package:coddr/domain/entities/cf_contest_entity.dart';
+import 'package:coddr/domain/entities/contest_entity.dart';
 
 abstract class PlatformRepository {
-  Future<List<CFContestEntity>> getCFContestList();
+  Future<List<ContestEntity>> getCFContestList();
 }

@@ -1,5 +1,8 @@
 import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
+import 'package:coddr/dependencies/get_it.dart';
+import 'package:coddr/domain/entities/no_params.dart';
+import 'package:coddr/domain/usecases/get_cf_contest_list.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:flutter/material.dart';
 
@@ -22,21 +25,30 @@ class PlatformGrid extends StatelessWidget {
           title: 'Codeforces',
           color: AppColor.lightViolet,
           imagePath: Images.codeforcesLogo,
+          function: () async {
+            GetCFContestList getCFContestList =
+                getItInstance<GetCFContestList>();
+            final list = await getCFContestList(NoParams());
+            print(list);
+          },
         ),
         PlatformGridTile(
           title: 'CodeChef',
           color: AppColor.lightRed,
           imagePath: Images.codeChefLogo,
+          function: () {},
         ),
         PlatformGridTile(
           title: 'Hacker Earth',
           color: AppColor.lightBrown,
           imagePath: Images.hackerEarthLogo,
+          function: () {},
         ),
         PlatformGridTile(
           title: 'AtCoder',
           color: AppColor.lightGreen,
           imagePath: Images.atcoderLogo,
+          function: () {},
         ),
       ],
     );
