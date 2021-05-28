@@ -1,6 +1,7 @@
 import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/dependencies/get_it.dart';
+import 'package:coddr/domain/entities/app_error.dart';
 import 'package:coddr/domain/entities/no_params.dart';
 import 'package:coddr/domain/usecases/get_cf_contest_list.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
@@ -28,8 +29,10 @@ class PlatformGrid extends StatelessWidget {
           function: () async {
             GetCFContestList getCFContestList =
                 getItInstance<GetCFContestList>();
-            final list = await getCFContestList(NoParams());
-            print(list);
+            final eitherList = await getCFContestList(NoParams());
+            eitherList.fold(
+                (appError) => print("AppError:${appError.appErrorType}"),
+                (contestList) => print(contestList));
           },
         ),
         PlatformGridTile(
