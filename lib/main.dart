@@ -18,19 +18,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Coddr',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        textTheme: ThemeText.getTextTheme(),
-      ),
-      //home: HomeScreen(),
-      home: SignIn(),
-      routes : {
-        HomeScreen.routeName: (ctx) => HomeScreen(),
-        SignIn.routeName: (ctx) => SignIn(),
-        SignUp.routeName: (ctx) => SignUp(),
-      }
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Coddr',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          textTheme: ThemeText.getTextTheme(),
+        ),
+        //home: HomeScreen(),
+        home: SignIn(),
+        routes: {
+          HomeScreen.routeName: (ctx) => HomeScreen(),
+          SignIn.routeName: (ctx) => SignIn(),
+          SignUp.routeName: (ctx) => SignUp(),
+        });
   }
 }
