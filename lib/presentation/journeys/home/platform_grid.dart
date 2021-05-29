@@ -4,6 +4,7 @@ import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/domain/entities/app_error.dart';
 import 'package:coddr/domain/entities/no_params.dart';
 import 'package:coddr/domain/usecases/get_cf_contest_list.dart';
+import 'package:coddr/presentation/journeys/upcoming_contests/upcoming_contests_screen.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:flutter/material.dart';
 
@@ -27,12 +28,14 @@ class PlatformGrid extends StatelessWidget {
           color: AppColor.lightViolet,
           imagePath: Images.codeforcesLogo,
           function: () async {
+            Navigator.of(context).pushNamed(UpcomingContestsScreen.routeName);
             GetCFContestList getCFContestList =
                 getItInstance<GetCFContestList>();
             final eitherList = await getCFContestList(NoParams());
             eitherList.fold(
-                (appError) => print("AppError:${appError.appErrorType}"),
-                (contestList) => print(contestList));
+              (appError) => print("AppError:${appError.appErrorType}"),
+              (contestList) => print(contestList.length),
+            );
           },
         ),
         PlatformGridTile(

@@ -1,5 +1,6 @@
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
 import 'package:coddr/presentation/journeys/auth/sign_up_screen.dart';
+import 'package:coddr/presentation/journeys/upcoming_contests/upcoming_contests_screen.dart';
 import 'package:coddr/presentation/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:pedantic/pedantic.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
           HomeScreen.routeName: (ctx) => HomeScreen(),
           SignIn.routeName: (ctx) => SignIn(),
           SignUp.routeName: (ctx) => SignUp(),
+          UpcomingContestsScreen.routeName: (ctx) => UpcomingContestsScreen(),
         });
   }
 }
