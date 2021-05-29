@@ -50,6 +50,7 @@ class HomeScreen extends StatelessWidget {
             ),
             child: Icon(
               Icons.notifications_active_outlined,
+              //Icons.menu,
               color: Colors.black,
             ),
           )

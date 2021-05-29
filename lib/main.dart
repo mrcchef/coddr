@@ -1,5 +1,5 @@
-import 'package:coddr/presentation/journeys/home/sign_in.dart';
-import 'package:coddr/presentation/journeys/home/sign_up.dart';
+import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
+import 'package:coddr/presentation/journeys/auth/sign_up_screen.dart';
 import 'package:coddr/presentation/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:pedantic/pedantic.dart';

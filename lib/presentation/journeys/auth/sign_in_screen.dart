@@ -1,8 +1,8 @@
 import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/screen_utils/screen_util.dart';
-import 'package:coddr/presentation/journeys/home/sign_up.dart';
-import 'package:coddr/presentation/widgets/log_in_container.dart';
+import 'package:coddr/presentation/journeys/auth/sign_up_screen.dart';
+import 'package:coddr/presentation/journeys/auth/sign_in_container.dart';
 import 'package:flutter/material.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 
