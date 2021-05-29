@@ -1,6 +1,7 @@
 import 'package:coddr/data/repositories/platform_repository_impl.dart';
 import 'package:coddr/domain/entities/no_params.dart';
 import 'package:coddr/domain/usecases/get_cf_contest_list.dart';
+import 'package:coddr/presentation/widgets/CoddrAppBar.dart';
 import 'package:coddr/presentation/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -25,37 +26,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-        actions: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: Sizes.dimen_16.w,
-              vertical: Sizes.dimen_8.h,
-            ),
-            child: InkWell(
-              onTap: () {},
-              child: Icon(
-                Icons.menu,
-                color: Colors.black,
-              ),
-            ),
-          ),
-          Spacer(),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: Sizes.dimen_16.w,
-              vertical: Sizes.dimen_8.h,
-            ),
-            child: Icon(
-              Icons.notifications_active_outlined,
-              //Icons.menu,
-              color: Colors.black,
-            ),
-          )
-        ],
-      ),
+      appBar: CoddrAppBar(),
       drawer: MainDrawer(),
       body: Padding(
         padding: EdgeInsets.only(
