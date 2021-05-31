@@ -1,5 +1,6 @@
-import 'package:coddr/presentation/journeys/home/sign_in.dart';
-import 'package:coddr/presentation/journeys/home/sign_up.dart';
+import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
+import 'package:coddr/presentation/journeys/auth/sign_up_screen.dart';
+import 'package:coddr/presentation/journeys/upcoming_contests/upcoming_contests_screen.dart';
 import 'package:coddr/presentation/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:pedantic/pedantic.dart';
@@ -18,19 +19,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Coddr',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        textTheme: ThemeText.getTextTheme(),
-      ),
-      //home: HomeScreen(),
-      home: SignIn(),
-      routes : {
-        HomeScreen.routeName: (ctx) => HomeScreen(),
-        SignIn.routeName: (ctx) => SignIn(),
-        SignUp.routeName: (ctx) => SignUp(),
-      }
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Coddr',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          textTheme: ThemeText.getTextTheme(),
+        ),
+        //home: HomeScreen(),
+        home: SignIn(),
+        routes: {
+          HomeScreen.routeName: (ctx) => HomeScreen(),
+          SignIn.routeName: (ctx) => SignIn(),
+          SignUp.routeName: (ctx) => SignUp(),
+          UpcomingContestsScreen.routeName: (ctx) => UpcomingContestsScreen(),
+        });
   }
 }
