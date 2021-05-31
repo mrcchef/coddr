@@ -17,7 +17,12 @@ class UpcomingContestsScreen extends StatelessWidget {
   static const routeName = '/upcoming_contests_screen';
   ContestListingBloc _contestListingBloc;
 
-  List<Color> cardColors = [AppColor.lightGreen,AppColor.lightRed,AppColor.lightViolet,AppColor.lightBrown,];
+  List<Color> cardColors = [
+    AppColor.lightGreen,
+    AppColor.lightRed,
+    AppColor.lightViolet,
+    AppColor.lightBrown,
+  ];
 
   List<ContestEntity> extractContests(List<ContestEntity> contestList) {
     List<ContestEntity> upcomingContestList = [];
@@ -42,69 +47,71 @@ class UpcomingContestsScreen extends StatelessWidget {
           horizontal: Sizes.dimen_16.w,
           vertical: Sizes.dimen_8.h,
         ),
-        child: BlocBuilder<ContestListingBloc, ContestListingState>(
-          bloc: _contestListingBloc,
-          builder: (context, state) {
-            if (state is ContestListFetchingState)
-              return Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.black,
-                ),
-              );
-            else if (state is ContestListFetchedState) {
-              List<ContestEntity> upcomingContestList =
-                  extractContests(state.contestList);
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Upcoming Contests',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline5
-                              .copyWith(fontSize: Sizes.dimen_26.w),
-                        ),
-                        Spacer(),
-                        Image.asset(
-                          Images.codeforcesLogo,
-                          //fit: BoxFit.fitHeight,
-                          height: Sizes.dimen_48.w,
-                          width: Sizes.dimen_48.w,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: Sizes.dimen_8.h),
-                    ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: upcomingContestList.length,
-                        itemBuilder: (context, index) {
-                          DateTime startTime = DateTime.now().add(new Duration(
-                              seconds: upcomingContestList[index]
-                                      .relativeTimeSeconds *
-                                  -1));
-                          DateTime endTime = startTime.add(new Duration(
-                              seconds:
-                                  upcomingContestList[index].durationSeconds));
-                          return ContestCard(
-                            title: upcomingContestList[index].name,
-                            color: cardColors[index%4],
-                            time: '${DateFormat('HH:mm').format(startTime)} - ${DateFormat('HH:mm').format(endTime)}',
-                            //date: DateFormat('yyyy-MM-dd').format(startTime),
-                            date: DateFormat('dd/MMM/yyyy').format(startTime),
-                          );
-                        }),
-                  ],
-                ),
-              );
-            } else if (state is ContestListErrorState) {
-              return Center(
-                child: Text("${state.appErrorType}"),
-              );
-            }
-            return SizedBox.shrink();
-          },
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Text(
+                    'Upcoming Contests',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline5
+                        .copyWith(fontSize: Sizes.dimen_26.w),
+                  ),
+                  Spacer(),
+                  Image.asset(
+                    Images.codeforcesLogo,
+                    //fit: BoxFit.fitHeight,
+                    height: Sizes.dimen_48.w,
+                    width: Sizes.dimen_48.w,
+                  ),
+                ],
+              ),
+              SizedBox(height: Sizes.dimen_8.h),
+              BlocBuilder<ContestListingBloc, ContestListingState>(
+                bloc: _contestListingBloc,
+                builder: (context, state) {
+                  if (state is ContestListFetchingState)
+                    return Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.black,
+                      ),
+                    );
+                  else if (state is ContestListFetchedState) {
+                    List<ContestEntity> upcomingContestList =
+                        extractContests(state.contestList);
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: upcomingContestList.length,
+                      itemBuilder: (context, index) {
+                        DateTime startTime = DateTime.now().add(new Duration(
+                            seconds:
+                                upcomingContestList[index].relativeTimeSeconds *
+                                    -1));
+                        DateTime endTime = startTime.add(new Duration(
+                            seconds:
+                                upcomingContestList[index].durationSeconds));
+                        return ContestCard(
+                          title: upcomingContestList[index].name,
+                          color: cardColors[index % 4],
+                          time:
+                              '${DateFormat('HH:mm').format(startTime)} - ${DateFormat('HH:mm').format(endTime)}',
+                          //date: DateFormat('yyyy-MM-dd').format(startTime),
+                          date: DateFormat('dd/MMM/yyyy').format(startTime),
+                        );
+                      },
+                    );
+                  } else if (state is ContestListErrorState) {
+                    return Center(
+                      child: Text("${state.appErrorType}"),
+                    );
+                  }
+                  return SizedBox.shrink();
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
