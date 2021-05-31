@@ -2,6 +2,7 @@ import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/screen_utils/screen_util.dart';
 import 'package:coddr/dependencies/get_it.dart';
+import 'package:coddr/domain/entities/contest_entity.dart';
 import 'package:coddr/presentation/blocs/bloc/contest_listing_bloc.dart';
 import 'package:coddr/presentation/journeys/upcoming_contests/contest_card.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
@@ -14,6 +15,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class UpcomingContestsScreen extends StatelessWidget {
   static const routeName = '/upcoming_contests_screen';
   ContestListingBloc _contestListingBloc;
+
+  List<Color> cardColors = [AppColor.lightGreen,AppColor.lightRed,AppColor.lightViolet,AppColor.lightBrown,];
+
+  List<ContestEntity> extractContests(List<ContestEntity> contestList) {
+    List<ContestEntity> upcomingContestList = [];
+    contestList.forEach((element) {
+      if (element.phase == 'BEFORE') {
+        upcomingContestList.add(element);
+      }
+    });
+
+    return upcomingContestList.reversed.toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +50,9 @@ class UpcomingContestsScreen extends StatelessWidget {
                   backgroundColor: Colors.black,
                 ),
               );
-            else if (state is ContestListFetchedState)
+            else if (state is ContestListFetchedState) {
+              List<ContestEntity> upcomingContestList =
+                  extractContests(state.contestList);
               return SingleChildScrollView(
                 child: Column(
                   children: [
@@ -59,31 +75,30 @@ class UpcomingContestsScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: Sizes.dimen_8.h),
-                    //ListView.builder(itemBuilder: itemBuilder)
-                    ContestCard(
-                        title: 'Educational Codeforces Round 101',
-                        color: AppColor.lightGreen,
-                        time: '8:05 - 10-20',
-                        date: '30/05/2021'),
-                    ContestCard(
-                        title: 'Codeforces Round 723 (Div 2)',
-                        color: AppColor.lightRed,
-                        time: '8:05 - 10-20',
-                        date: '30/05/2021'),
-                    ContestCard(
-                        title: 'Educational Codeforces Round 102',
-                        color: AppColor.lightViolet,
-                        time: '8:05 - 10-20',
-                        date: '30/05/2021'),
-                    ContestCard(
-                        title: 'Codeforces Round 724 (Div 2)',
-                        color: AppColor.lightBrown,
-                        time: '8:05 - 10-20',
-                        date: '30/05/2021'),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: upcomingContestList.length,
+                        itemBuilder: (context, index) {
+                          DateTime startTime = DateTime.now().add(new Duration(
+                              seconds: upcomingContestList[index]
+                                      .relativeTimeSeconds *
+                                  -1));
+                          DateTime endTime = startTime.add(new Duration(
+                              seconds:
+                                  upcomingContestList[index].durationSeconds));
+                          return ContestCard(
+                            title: upcomingContestList[index].name,
+                            color: cardColors[index%4],
+                            time:
+                                '${startTime.hour.toString()}:${startTime.minute.toString()} - ${endTime.hour.toString()}:${endTime.minute.toString()}',
+                            date:
+                                '${startTime.year.toString()}-${startTime.month.toString()}-${startTime.day.toString()}',
+                          );
+                        }),
                   ],
                 ),
               );
-            else if (state is ContestListErrorState) {
+            } else if (state is ContestListErrorState) {
               return Center(
                 child: Text("${state.appErrorType}"),
               );
