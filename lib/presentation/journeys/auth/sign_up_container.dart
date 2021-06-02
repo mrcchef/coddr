@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/presentation/journeys/home/home_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignUpContainer extends StatefulWidget {
@@ -11,9 +13,43 @@ class _SignUpContainerState extends State<SignUpContainer> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   Map<String, String> _authData = {
+    'username': '',
     'email': '',
     'password': '',
   };
+
+  Future<UserCredential> _signUp() async {
+    var _auth = FirebaseAuth.instance;
+    try {
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
+        email: _authData['email'],
+        password: _authData['password'],
+      );
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user.uid)
+          .set({
+        'username': _authData['username'],
+        'email': _authData['email'],
+      });
+      //Navigator.of(context).pushNamed(HomeScreen.routeName);
+    } catch (err) {
+      var message = 'An error occured, please check your credentials!';
+
+      if (err.message != null) {
+        message = err.message;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Theme.of(context).errorColor,
+        ),
+      );
+    }
+  }
 
   void _submit() {
     if (!_formKey.currentState.validate()) {
@@ -21,6 +57,7 @@ class _SignUpContainerState extends State<SignUpContainer> {
       return;
     }
     _formKey.currentState.save();
+    _signUp();
   }
 
   @override
@@ -42,7 +79,7 @@ class _SignUpContainerState extends State<SignUpContainer> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Sizes.dimen_10),
                 child: TextFormField(
-                  decoration: InputDecoration(labelText: 'Name'),
+                  decoration: InputDecoration(labelText: 'username'),
                   validator: (value) {
                     if (value.length < 3) {
                       return 'Name should be at least of 3 characters';
@@ -50,7 +87,7 @@ class _SignUpContainerState extends State<SignUpContainer> {
                     return null;
                   },
                   onSaved: (value) {
-                    _authData['email'] = value;
+                    _authData['username'] = value;
                   },
                 ),
               ),
@@ -123,7 +160,7 @@ class _SignUpContainerState extends State<SignUpContainer> {
             padding: const EdgeInsets.only(left: Sizes.dimen_8),
             child: TextButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(HomeScreen.routeName);
+                //Navigator.of(context).pushNamed(HomeScreen.routeName);
               },
               child: Text('Forgot Your Password?'),
             ),
