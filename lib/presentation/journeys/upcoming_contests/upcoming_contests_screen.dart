@@ -81,26 +81,31 @@ class UpcomingContestsScreen extends StatelessWidget {
                   else if (state is ContestListFetchedState) {
                     List<ContestEntity> upcomingContestList =
                         extractContests(state.contestList);
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: upcomingContestList.length,
-                      itemBuilder: (context, index) {
-                        DateTime startTime = DateTime.now().add(new Duration(
-                            seconds:
-                                upcomingContestList[index].relativeTimeSeconds *
-                                    -1));
-                        DateTime endTime = startTime.add(new Duration(
-                            seconds:
-                                upcomingContestList[index].durationSeconds));
-                        return ContestCard(
-                          title: upcomingContestList[index].name,
-                          color: cardColors[index % 4],
-                          time:
-                              '${DateFormat('HH:mm').format(startTime)} - ${DateFormat('HH:mm').format(endTime)}',
-                          //date: DateFormat('yyyy-MM-dd').format(startTime),
-                          date: DateFormat('dd/MMM/yyyy').format(startTime),
-                        );
-                      },
+                    return SingleChildScrollView(
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: upcomingContestList.length,
+                        itemBuilder: (context, index) {
+                          DateTime startTime = DateTime.now().add(new Duration(
+                              seconds: upcomingContestList[index]
+                                      .relativeTimeSeconds *
+                                  -1));
+                          DateTime endTime = startTime.add(new Duration(
+                              seconds:
+                                  upcomingContestList[index].durationSeconds));
+                          return ContestCard(
+                            title: upcomingContestList[index].name,
+                            color: cardColors[index % 4],
+                            time:
+                                '${DateFormat('HH:mm').format(startTime)} - ${DateFormat('HH:mm').format(endTime)}',
+                            //date: DateFormat('yyyy-MM-dd').format(startTime),
+                            date: DateFormat('dd/MMM/yyyy').format(startTime),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) =>
+                            Divider(color: Colors.white),
+                      ),
                     );
                   } else if (state is ContestListErrorState) {
                     return Center(
