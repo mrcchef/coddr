@@ -1,7 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/presentation/journeys/home/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:coddr/presentation/themes/app_color.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LogInContainer extends StatefulWidget {
   @override
@@ -16,12 +17,37 @@ class _LogInContainerState extends State<LogInContainer> {
     'password': '',
   };
 
+  Future<UserCredential> _signIn() async {
+    var _auth = FirebaseAuth.instance;
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: _authData['email'],
+        password: _authData['password'],
+      );
+      //Navigator.of(context).pushNamed(HomeScreen.routeName);
+    } catch (err) {
+      var message = 'An error occured, please check your credentials!';
+
+      if (err.message != null) {
+        message = err.message;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Theme.of(context).errorColor,
+        ),
+      );
+    }
+  }
+
   void _submit() {
     if (!_formKey.currentState.validate()) {
       // Invalid!
       return;
     }
     _formKey.currentState.save();
+    _signIn();
   }
 
   @override
@@ -93,7 +119,7 @@ class _LogInContainerState extends State<LogInContainer> {
             padding: const EdgeInsets.only(left: Sizes.dimen_8),
             child: TextButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(HomeScreen.routeName);
+                //Navigator.of(context).pushNamed(HomeScreen.routeName);
               },
               child: Text('Forgot Your Password?'),
             ),
