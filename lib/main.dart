@@ -29,10 +29,15 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           textTheme: ThemeText.getTextTheme(),
         ),
-        //home: SignIn(),
+        // home: (FirebaseAuth.instance.currentUser != null)
+        //     ? SignIn()
+        //     : HomeScreen(),
         home: StreamBuilder(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (ctx, userSnapshot) {
+              // print(userSnapshot.data);
+              // print(FirebaseAuth.instance.currentUser);
+              // print(userSnapshot.hasData);
               if (userSnapshot.hasData) {
                 return HomeScreen();
               }

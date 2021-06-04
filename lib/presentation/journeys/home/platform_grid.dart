@@ -4,7 +4,7 @@ import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/domain/entities/app_error.dart';
 import 'package:coddr/domain/entities/no_params.dart';
 import 'package:coddr/domain/usecases/get_cf_contest_list.dart';
-import 'package:coddr/presentation/blocs/bloc/contest_listing_bloc.dart';
+import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.dart';
 import 'package:coddr/presentation/journeys/upcoming_contests/upcoming_contests_screen.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:flutter/material.dart';

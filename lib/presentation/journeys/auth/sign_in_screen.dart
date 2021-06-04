@@ -6,12 +6,11 @@ import 'package:coddr/presentation/journeys/auth/sign_in_container.dart';
 import 'package:flutter/material.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 
-class SignIn extends StatelessWidget {
-  static const routeName = '/sign_in';
+class SignInScreen extends StatelessWidget {
+  static const routeName = '/sign_in_screen';
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init();
     return Scaffold(
         body: SingleChildScrollView(
       child: Column(
@@ -55,7 +54,7 @@ class SignIn extends StatelessWidget {
               padding: const EdgeInsets.only(left: Sizes.dimen_8),
               child: TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(SignUp.routeName);
+                  Navigator.of(context).pushNamed(SignUpScreen.routeName);
                 },
                 child: Text('Dont have an account? Sign up instead!'),
                 // style: ButtonStyle(Theme.of(context).textTheme.button),

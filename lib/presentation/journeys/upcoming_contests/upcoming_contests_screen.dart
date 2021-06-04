@@ -2,9 +2,10 @@ import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/screen_utils/screen_util.dart';
 import 'package:coddr/dependencies/get_it.dart';
+import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:coddr/domain/entities/contest_entity.dart';
-import 'package:coddr/presentation/blocs/bloc/contest_listing_bloc.dart';
+
 import 'package:coddr/presentation/journeys/upcoming_contests/contest_card.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:coddr/presentation/widgets/CoddrAppBar.dart';
@@ -99,7 +100,6 @@ class UpcomingContestsScreen extends StatelessWidget {
                             color: cardColors[index % 4],
                             time:
                                 '${DateFormat('HH:mm').format(startTime)} - ${DateFormat('HH:mm').format(endTime)}',
-                            //date: DateFormat('yyyy-MM-dd').format(startTime),
                             date: DateFormat('dd/MMM/yyyy').format(startTime),
                           );
                         },

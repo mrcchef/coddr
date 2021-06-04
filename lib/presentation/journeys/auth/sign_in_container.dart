@@ -17,14 +17,14 @@ class _LogInContainerState extends State<LogInContainer> {
     'password': '',
   };
 
-  Future<UserCredential> _signIn() async {
+  Future<void> _signIn() async {
     var _auth = FirebaseAuth.instance;
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: _authData['email'],
         password: _authData['password'],
       );
-      //Navigator.of(context).pushNamed(HomeScreen.routeName);
+      Navigator.of(context).pushNamed(HomeScreen.routeName);
     } catch (err) {
       var message = 'An error occured, please check your credentials!';
 
@@ -119,7 +119,7 @@ class _LogInContainerState extends State<LogInContainer> {
             padding: const EdgeInsets.only(left: Sizes.dimen_8),
             child: TextButton(
               onPressed: () {
-                //Navigator.of(context).pushNamed(HomeScreen.routeName);
+                Navigator.of(context).pushNamed(HomeScreen.routeName);
               },
               child: Text('Forgot Your Password?'),
             ),

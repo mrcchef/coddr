@@ -17,7 +17,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     final responseBody = await apiClient.get('contest.list');
     List<CFContestModel> contestList =
         CFContestListModel.fromJson(responseBody).contest;
-    
+
     return contestList;
   }
 }

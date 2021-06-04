@@ -7,13 +7,11 @@ import 'package:coddr/presentation/journeys/auth/sign_up_container.dart';
 import 'package:flutter/material.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 
-class SignUp extends StatelessWidget {
-  static const routeName = '/sign_up';
+class SignUpScreen extends StatelessWidget {
+  static const routeName = '/sign_up_screen';
 
   @override
   Widget build(BuildContext context) {
-    final deviceSize = MediaQuery.of(context).size;
-    ScreenUtil.init();
     return Scaffold(
         body: SingleChildScrollView(
       child: Column(
@@ -57,7 +55,7 @@ class SignUp extends StatelessWidget {
               padding: const EdgeInsets.only(left: Sizes.dimen_8),
               child: TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(SignIn.routeName);
+                  Navigator.of(context).pushNamed(SignInScreen.routeName);
                 },
                 child: Text('Already have an account? Sign In instead!'),
                 // style: ButtonStyle(Theme.of(context).textTheme.button),

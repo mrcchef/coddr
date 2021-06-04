@@ -18,7 +18,7 @@ class _SignUpContainerState extends State<SignUpContainer> {
     'password': '',
   };
 
-  Future<UserCredential> _signUp() async {
+  Future<void> _signUp() async {
     var _auth = FirebaseAuth.instance;
     try {
       UserCredential userCredential =
@@ -34,7 +34,7 @@ class _SignUpContainerState extends State<SignUpContainer> {
         'username': _authData['username'],
         'email': _authData['email'],
       });
-      //Navigator.of(context).pushNamed(HomeScreen.routeName);
+      Navigator.of(context).pushNamed(HomeScreen.routeName);
     } catch (err) {
       var message = 'An error occured, please check your credentials!';
 
