@@ -6,13 +6,14 @@ import 'package:coddr/domain/usecases/usecase.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 
-class SignIn extends Usecase<bool, NoParams> {
+class SignIn extends Usecase<bool, UserCredentials> {
   PlatformRepositoryImpl platformRepositoryImpl;
 
   SignIn({@required this.platformRepositoryImpl});
 
   @override
-  Future<Either<AppError, bool>> call(NoParams noParams) async {
-    return platformRepositoryImpl.signOut();
+  Future<Either<AppError, bool>> call(UserCredentials userCredentials) async {
+    return platformRepositoryImpl.signIn(
+        userCredentials.email, userCredentials.password);
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:html';
 
 import 'package:bloc/bloc.dart';
 import 'package:coddr/domain/entities/no_params.dart';
@@ -16,18 +15,14 @@ part 'authentication_state.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  SignIn signIn;
-  SignOut signOut;
-  SignUp signUp;
   IsSignedIn isSignedIn;
   GetEmailId getEmailId;
+  SignOut signOut;
 
   AuthenticationBloc({
-    @required this.signIn,
-    @required this.signOut,
     @required this.isSignedIn,
-    @required this.signUp,
     @required this.getEmailId,
+    @required this.signOut,
   }) : super(AuthenticationInitial());
 
   @override
@@ -40,7 +35,7 @@ class AuthenticationBloc
         final String email = getEmailId();
         yield Authenticated(email: email);
       } else {
-        UnAuthenticated();
+        yield UnAuthenticated();
       }
     } else if (event is SiggnedInEvent) {
       final String email = getEmailId();

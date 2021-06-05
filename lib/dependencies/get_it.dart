@@ -8,7 +8,9 @@ import 'package:coddr/domain/usecases/is_signed_in.dart';
 import 'package:coddr/domain/usecases/sign_in.dart';
 import 'package:coddr/domain/usecases/sign_out.dart';
 import 'package:coddr/domain/usecases/sign_up.dart';
+import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
 import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.dart';
+import 'package:coddr/presentation/blocs/login/login_bloc.dart';
 import 'package:coddr/presentation/journeys/home/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
@@ -55,4 +57,14 @@ Future init() async {
 
   getItInstance.registerLazySingleton<ContestListingBloc>(
       () => ContestListingBloc(getCFContestList: getItInstance()));
+
+  getItInstance
+      .registerLazySingleton<AuthenticationBloc>(() => AuthenticationBloc(
+            getEmailId: getItInstance(),
+            isSignedIn: getItInstance(),
+            signOut: getItInstance(),
+          ));
+  getItInstance.registerLazySingleton<LoginBloc>(() => LoginBloc(
+        signIn: getItInstance(),
+      ));
 }

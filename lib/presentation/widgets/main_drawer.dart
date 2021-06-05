@@ -47,7 +47,7 @@ class MainDrawer extends StatelessWidget {
                 'About Us', Icons.sentiment_satisfied_alt_outlined, () {}),
             DrawerListTile('Sign Out', Icons.logout, () async {
               await FirebaseAuth.instance.signOut();
-              Navigator.of(context).pushNamed(SignIn.routeName);
+              Navigator.of(context).pushNamed(SignInScreen.routeName);
             }),
           ],
         ),
