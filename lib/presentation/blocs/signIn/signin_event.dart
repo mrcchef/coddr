@@ -1,7 +1,7 @@
-part of 'login_bloc.dart';
+part of 'signin_bloc.dart';
 
-abstract class LoginEvent extends Equatable {
-  const LoginEvent();
+abstract class SignInEvent extends Equatable {
+  const SignInEvent();
 
   @override
   List<Object> get props => [];
@@ -16,10 +16,10 @@ abstract class LoginEvent extends Equatable {
 //   List<Object> get props => [email, password];
 // }
 
-class LoginWithCredentialsPressedEvent extends LoginEvent {
+class SignInWithCredentialsPressedEvent extends SignInEvent {
   final String email, password;
 
-  LoginWithCredentialsPressedEvent(
+  SignInWithCredentialsPressedEvent(
       {@required this.email, @required this.password});
 
   @override

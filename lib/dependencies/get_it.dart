@@ -10,7 +10,7 @@ import 'package:coddr/domain/usecases/sign_out.dart';
 import 'package:coddr/domain/usecases/sign_up.dart';
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
 import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.dart';
-import 'package:coddr/presentation/blocs/login/login_bloc.dart';
+import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
 import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
 import 'package:coddr/presentation/journeys/home/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -64,7 +64,7 @@ Future init() async {
         isSignedIn: getItInstance(),
         signOut: getItInstance(),
       ));
-  getItInstance.registerFactory<LoginBloc>(() => LoginBloc(
+  getItInstance.registerFactory<SignInBloc>(() => SignInBloc(
         signIn: getItInstance(),
       ));
   getItInstance.registerFactory<SignUpBloc>(() => SignUpBloc(

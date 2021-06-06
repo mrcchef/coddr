@@ -1,6 +1,6 @@
-part of 'login_bloc.dart';
+part of 'signin_bloc.dart';
 
-abstract class LoginState extends Equatable {
+abstract class SignInState extends Equatable {
   final bool isEmailValid;
   final bool isPasswordValid;
   final bool isSubmitting;
@@ -9,7 +9,7 @@ abstract class LoginState extends Equatable {
 
   bool get isFormValid => isEmailValid && isPasswordValid;
 
-  LoginState({
+  SignInState({
     @required this.isEmailValid,
     @required this.isPasswordValid,
     @required this.isSubmitting,
@@ -22,8 +22,8 @@ abstract class LoginState extends Equatable {
       [isEmailValid, isPasswordValid, isSubmitting, isSuccess, isFailure];
 }
 
-class LoginStateEmpty extends LoginState {
-  LoginStateEmpty()
+class SignInStateEmpty extends SignInState {
+  SignInStateEmpty()
       : super(
             isEmailValid: true,
             isPasswordValid: true,
@@ -32,8 +32,8 @@ class LoginStateEmpty extends LoginState {
             isSuccess: false);
 }
 
-class LoginStateLoding extends LoginState {
-  LoginStateLoding()
+class SignInStateLoding extends SignInState {
+  SignInStateLoding()
       : super(
             isEmailValid: true,
             isPasswordValid: true,
@@ -42,8 +42,8 @@ class LoginStateLoding extends LoginState {
             isSuccess: false);
 }
 
-class LoginStateFaliure extends LoginState {
-  LoginStateFaliure()
+class SignInStateFaliure extends SignInState {
+  SignInStateFaliure()
       : super(
             isEmailValid: true,
             isPasswordValid: true,
@@ -52,8 +52,8 @@ class LoginStateFaliure extends LoginState {
             isSuccess: false);
 }
 
-class LoginStateSuccess extends LoginState {
-  LoginStateSuccess()
+class SignInStateSuccess extends SignInState {
+  SignInStateSuccess()
       : super(
             isEmailValid: true,
             isPasswordValid: true,

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
-import 'package:coddr/presentation/blocs/login/login_bloc.dart';
+import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
 import 'package:coddr/presentation/journeys/auth/validators.dart';
 import 'package:coddr/presentation/journeys/home/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -71,8 +71,8 @@ class _LogInContainerState extends State<LogInContainer> {
 
   void _onFormSubmitted(BuildContext context) {
     print("login event added");
-    BlocProvider.of<LoginBloc>(context).add(
-      LoginWithCredentialsPressedEvent(
+    BlocProvider.of<SignInBloc>(context).add(
+      SignInWithCredentialsPressedEvent(
         email: _authData['email'],
         password: _authData['password'],
       ),
@@ -82,21 +82,21 @@ class _LogInContainerState extends State<LogInContainer> {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
-    return BlocConsumer<LoginBloc, LoginState>(
-      bloc: BlocProvider.of<LoginBloc>(context),
+    return BlocConsumer<SignInBloc, SignInState>(
+      bloc: BlocProvider.of<SignInBloc>(context),
       listener: (context, state) {
-        if (state is LoginStateFaliure) {
+        if (state is SignInStateFaliure) {
           ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text('Login Falied')));
-        } else if (state is LoginStateSuccess) {
+        } else if (state is SignInStateSuccess) {
           BlocProvider.of<AuthenticationBloc>(context).add(SiggnedInEvent());
-          Navigator.of(context).pop();
+          // Navigator.of(context).pop();
           // Navigator.of(context).pushNamed(HomeScreen.routeName);
         }
       },
       builder: (context, state) {
         bool isLoading = false;
-        if (state is LoginStateLoding)
+        if (state is SignInStateLoding)
           isLoading = true;
         else
           isLoading = false;

@@ -3,25 +3,24 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:coddr/domain/entities/user_credentials.dart';
 import 'package:coddr/domain/usecases/sign_in.dart';
-import 'package:coddr/presentation/journeys/auth/validators.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-part 'login_event.dart';
-part 'login_state.dart';
+part 'signin_event.dart';
+part 'signin_state.dart';
 
-class LoginBloc extends Bloc<LoginEvent, LoginState> {
+class SignInBloc extends Bloc<SignInEvent, SignInState> {
   SignIn signIn;
 
-  LoginBloc({this.signIn}) : super(LoginStateEmpty());
+  SignInBloc({this.signIn}) : super(SignInStateEmpty());
 
   @override
-  Stream<LoginState> mapEventToState(
-    LoginEvent event,
+  Stream<SignInState> mapEventToState(
+    SignInEvent event,
   ) async* {
     print(event);
-    if (event is LoginWithCredentialsPressedEvent) {
-      yield* _mapLoginWithCredentialsPressedToState(
+    if (event is SignInWithCredentialsPressedEvent) {
+      yield* _mapSignInWithCredentialsPressedToState(
         email: event.email,
         password: event.password,
         signIn: signIn,
@@ -41,17 +40,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   //   );
   // }
 
-  Stream<LoginState> _mapLoginWithCredentialsPressedToState({
+  Stream<SignInState> _mapSignInWithCredentialsPressedToState({
     String email,
     String password,
     SignIn signIn,
   }) async* {
-    yield LoginStateLoding();
+    yield SignInStateLoding();
 
     final eitherResponse =
         await signIn(UserCredentials(email: email, password: password));
 
     yield eitherResponse.fold(
-        (l) => LoginStateFaliure(), (r) => LoginStateSuccess());
+        (l) => SignInStateFaliure(), (r) => SignInStateSuccess());
   }
 }

@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
 import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
 import 'package:coddr/presentation/journeys/auth/validators.dart';
-import 'package:coddr/presentation/journeys/home/home_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -85,7 +83,7 @@ class _SignUpContainerState extends State<SignUpContainer> {
               .showSnackBar(const SnackBar(content: Text('SignUp Falied')));
         } else if (state is SignUpStateSuccess) {
           BlocProvider.of<AuthenticationBloc>(context).add(SiggnedInEvent());
-          Navigator.of(context).pop();
+          // Navigator.of(context).pop();
         }
       },
       builder: (context, state) {
@@ -126,14 +124,12 @@ class _SignUpContainerState extends State<SignUpContainer> {
                 ),
               ),
               Padding(
-                // padding: const EdgeInsets.symmetric(horizontal: Sizes.dimen_10),
                 padding: const EdgeInsets.only(
                   left: Sizes.dimen_10,
                   top: Sizes.dimen_10,
                   right: Sizes.dimen_10,
                 ),
                 child: Card(
-                  //color: Colors.green.shade100,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(Sizes.dimen_10),
                   ),
@@ -159,7 +155,6 @@ class _SignUpContainerState extends State<SignUpContainer> {
                 ),
               ),
               Padding(
-                //padding: const EdgeInsets.symmetric(horizontal: Sizes.dimen_10),
                 padding: const EdgeInsets.only(
                   left: Sizes.dimen_10,
                   top: Sizes.dimen_10,
@@ -177,7 +172,6 @@ class _SignUpContainerState extends State<SignUpContainer> {
                     child: TextFormField(
                       decoration: InputDecoration(labelText: 'Password'),
                       obscureText: true,
-                      // controller: _passwordController,
                       validator: (value) {
                         if (value.isEmpty || value.length <= 5) {
                           return 'Password is too short';

@@ -2,7 +2,7 @@ import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/screen_utils/screen_util.dart';
 import 'package:coddr/dependencies/get_it.dart';
-import 'package:coddr/presentation/blocs/login/login_bloc.dart';
+import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
 import 'package:coddr/presentation/journeys/auth/sign_up_screen.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_container.dart';
 import 'package:flutter/material.dart';
@@ -17,18 +17,18 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  LoginBloc _loginBloc;
+  SignInBloc _signInBloc;
 
   @override
   void initState() {
     super.initState();
-    _loginBloc = getItInstance<LoginBloc>();
+    _signInBloc = getItInstance<SignInBloc>();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _loginBloc.close();
+    _signInBloc.close();
   }
 
   @override
@@ -69,7 +69,7 @@ class _SignInScreenState extends State<SignInScreen> {
               height: Sizes.dimen_100.h,
             ),
           ),
-          BlocProvider.value(value: _loginBloc, child: LogInContainer()),
+          BlocProvider.value(value: _signInBloc, child: LogInContainer()),
           SizedBox(height: Sizes.dimen_18.h),
           Center(
             child: Padding(
