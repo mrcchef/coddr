@@ -19,6 +19,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Stream<LoginState> mapEventToState(
     LoginEvent event,
   ) async* {
+    print(event);
     if (event is LoginWithCredentialsPressedEvent) {
       yield* _mapLoginWithCredentialsPressedToState(
         email: event.email,
@@ -28,17 +29,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
   }
 
-  Stream<LoginState> _mapEmailChangedToState(String email) async* {
-    yield LoginStateUpdateEmail(
-      isEmailValid: Validators.isValidEmail(email),
-    );
-  }
+  // Stream<LoginState> _mapEmailChangedToState(String email) async* {
+  //   yield LoginStateUpdateEmail(
+  //     isEmailValid: Validators.isValidEmail(email),
+  //   );
+  // }
 
-  Stream<LoginState> _mapPasswordChangedToState(String password) async* {
-    yield LoginStateUpdatePassword(
-      isPasswordValid: Validators.isValidPassword(password),
-    );
-  }
+  // Stream<LoginState> _mapPasswordChangedToState(String password) async* {
+  //   yield LoginStateUpdatePassword(
+  //     isPasswordValid: Validators.isValidPassword(password),
+  //   );
+  // }
 
   Stream<LoginState> _mapLoginWithCredentialsPressedToState({
     String email,
@@ -46,11 +47,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     SignIn signIn,
   }) async* {
     yield LoginStateLoding();
-    try {
-      await signIn(UserCredentials(email: email, password: password));
-      yield LoginStateSuccess();
-    } catch (_) {
-      yield LoginStateFaliure();
-    }
+
+    final eitherResponse =
+        await signIn(UserCredentials(email: email, password: password));
+
+    yield eitherResponse.fold(
+        (l) => LoginStateFaliure(), (r) => LoginStateSuccess());
   }
 }

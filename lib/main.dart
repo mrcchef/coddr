@@ -39,6 +39,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _authenticationBloc.close();
+  }
+
+  @override
   Widget build(BuildContext context) {
     ScreenUtil.init();
     return BlocProvider<AuthenticationBloc>.value(

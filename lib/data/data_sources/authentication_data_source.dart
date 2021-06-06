@@ -16,10 +16,12 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
 
   @override
   Future<void> signInWithCredentials(String email, String password) async {
-    await firebaseAuth.signInWithEmailAndPassword(
+    final UserCredential userCredential =
+        await firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
+    print(userCredential);
   }
 
   Future<void> signUpWithCredentials(String email, String password) async {
