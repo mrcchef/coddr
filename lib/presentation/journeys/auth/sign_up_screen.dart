@@ -1,19 +1,40 @@
 import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/screen_utils/screen_util.dart';
+import 'package:coddr/dependencies/get_it.dart';
+import 'package:coddr/domain/usecases/sign_up.dart';
+import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_container.dart';
 import 'package:coddr/presentation/journeys/auth/sign_up_container.dart';
 import 'package:flutter/material.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SignUp extends StatelessWidget {
-  static const routeName = '/sign_up';
+class SignUpScreen extends StatefulWidget {
+  static const routeName = '/sign_up_screen';
+
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  SignUpBloc _signUpBloc;
+
+  @override
+  void initState() {
+    _signUpBloc = getItInstance<SignUpBloc>();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _signUpBloc.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final deviceSize = MediaQuery.of(context).size;
-    ScreenUtil.init();
     return Scaffold(
         body: SingleChildScrollView(
       child: Column(
@@ -50,14 +71,14 @@ class SignUp extends StatelessWidget {
               height: Sizes.dimen_100.h,
             ),
           ),
-          SignUpContainer(),
+          BlocProvider.value(value: _signUpBloc, child: SignUpContainer()),
           SizedBox(height: Sizes.dimen_18.h),
           Center(
             child: Padding(
               padding: const EdgeInsets.only(left: Sizes.dimen_8),
               child: TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(SignIn.routeName);
+                  Navigator.of(context).pushNamed(SignInScreen.routeName);
                 },
                 child: Text('Already have an account? Sign In instead!'),
                 // style: ButtonStyle(Theme.of(context).textTheme.button),

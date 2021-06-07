@@ -1,8 +1,6 @@
 import 'package:coddr/data/repositories/platform_repository_impl.dart';
 import 'package:coddr/dependencies/get_it.dart';
-import 'package:coddr/domain/entities/no_params.dart';
-import 'package:coddr/domain/usecases/get_cf_contest_list.dart';
-import 'package:coddr/presentation/blocs/bloc/contest_listing_bloc.dart';
+import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.dart';
 import 'package:coddr/presentation/widgets/CoddrAppBar.dart';
 import 'package:coddr/presentation/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
