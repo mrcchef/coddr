@@ -85,16 +85,16 @@ class _SignUpContainerState extends State<SignUpContainer> {
               .showSnackBar(const SnackBar(content: Text('SignUp Falied')));
         } else if (state is SignUpStateSuccess) {
           BlocProvider.of<AuthenticationBloc>(context).add(SiggnedInEvent());
-          // Navigator.of(context).pop();
+           Navigator.of(context).pop();
         }
       },
       builder: (context, state) {
         bool isLoading = false;
         //This if block is added as while signing up new screen was not being
         // pushed even though user was created. THIS IS TEMPORARY
-        if (state is SignUpStateSuccess) {
-          Navigator.of(context).pop();
-        }
+        // if (state is SignUpStateSuccess) {
+        //   Navigator.of(context).pop();
+        // }
         if (state is SignUpStateLoding)
           isLoading = true;
         else
