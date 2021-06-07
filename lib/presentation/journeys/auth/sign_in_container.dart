@@ -96,6 +96,11 @@ class _LogInContainerState extends State<LogInContainer> {
       },
       builder: (context, state) {
         bool isLoading = false;
+        //This if block is added as while signing up new screen was not being
+        // pushed even though user was created. THIS IS TEMPORARY
+        if (state is SignInStateSuccess) {
+          Navigator.of(context).pop();
+        }
         if (state is SignInStateLoding)
           isLoading = true;
         else

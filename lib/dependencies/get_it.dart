@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coddr/data/core/api_client.dart';
 import 'package:coddr/data/data_sources/authentication_data_source.dart';
 import 'package:coddr/data/data_sources/remote_data_source.dart';
@@ -8,6 +9,7 @@ import 'package:coddr/domain/usecases/is_signed_in.dart';
 import 'package:coddr/domain/usecases/sign_in.dart';
 import 'package:coddr/domain/usecases/sign_out.dart';
 import 'package:coddr/domain/usecases/sign_up.dart';
+import 'package:coddr/domain/usecases/store_user_credentials.dart';
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
 import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.dart';
 import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
@@ -21,12 +23,19 @@ final getItInstance = GetIt.I;
 
 Future init() async {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   getItInstance.registerLazySingleton<Client>(() => Client());
+
   getItInstance
       .registerLazySingleton<APIClient>(() => APIClient(getItInstance()));
-  getItInstance.registerFactory<RemoteDataSourceImpl>(
-      () => RemoteDataSourceImpl(apiClient: getItInstance()));
+
+  getItInstance
+      .registerFactory<RemoteDataSourceImpl>(() => RemoteDataSourceImpl(
+            apiClient: getItInstance(),
+            firebaseFirestore: firebaseFirestore,
+            authenticationDataSourceImpl: getItInstance(),
+          ));
 
   getItInstance.registerFactory(
       () => AuthenticationDataSourceImpl(firebaseAuth: firebaseAuth));
@@ -59,15 +68,21 @@ Future init() async {
   getItInstance.registerLazySingleton<ContestListingBloc>(
       () => ContestListingBloc(getCFContestList: getItInstance()));
 
+  getItInstance.registerLazySingleton<StoreUserCredentials>(
+      () => StoreUserCredentials(platformRepositoryImpl: getItInstance()));
+
   getItInstance.registerFactory<AuthenticationBloc>(() => AuthenticationBloc(
         getEmailId: getItInstance(),
         isSignedIn: getItInstance(),
         signOut: getItInstance(),
       ));
+
   getItInstance.registerFactory<SignInBloc>(() => SignInBloc(
         signIn: getItInstance(),
       ));
+
   getItInstance.registerFactory<SignUpBloc>(() => SignUpBloc(
         signUp: getItInstance(),
+        storeUserCredentials: getItInstance(),
       ));
 }

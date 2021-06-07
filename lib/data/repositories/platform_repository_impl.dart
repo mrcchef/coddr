@@ -57,11 +57,24 @@ class PlatformRepositoryImpl extends PlatformRepository {
     }
   }
 
+  @override
   bool isSignedIn() {
     return authenticationDataSourceImpl.isSignedIn();
   }
 
+  @override
   String getEmailId() {
     return authenticationDataSourceImpl.getEmailId();
+  }
+
+  @override
+  Future<Either<AppError, void>> storeUserCredentials(
+      Map<String, String> authData) async {
+    try {
+      await remoteDataSourceImpl.storeUserCredentials(authData);
+      return Right(null);
+    } on Exception {
+      return Left(AppError(appErrorType: AppErrorType.firebase));
+    }
   }
 }
