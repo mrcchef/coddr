@@ -2,6 +2,7 @@ import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
 import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
 import 'package:coddr/presentation/journeys/auth/validators.dart';
+import 'package:coddr/presentation/journeys/home/home_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,6 +69,7 @@ class _SignUpContainerState extends State<SignUpContainer> {
       SignUpWithCredentialsPressedEvent(
         email: _authData['email'],
         password: _authData['password'],
+        username: _authData['username'],
       ),
     );
   }
@@ -83,11 +85,16 @@ class _SignUpContainerState extends State<SignUpContainer> {
               .showSnackBar(const SnackBar(content: Text('SignUp Falied')));
         } else if (state is SignUpStateSuccess) {
           BlocProvider.of<AuthenticationBloc>(context).add(SiggnedInEvent());
-          // Navigator.of(context).pop();
+           Navigator.of(context).pop();
         }
       },
       builder: (context, state) {
         bool isLoading = false;
+        //This if block is added as while signing up new screen was not being
+        // pushed even though user was created. THIS IS TEMPORARY
+        // if (state is SignUpStateSuccess) {
+        //   Navigator.of(context).pop();
+        // }
         if (state is SignUpStateLoding)
           isLoading = true;
         else

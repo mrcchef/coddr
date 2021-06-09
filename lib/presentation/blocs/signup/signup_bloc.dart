@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:coddr/domain/entities/user_credentials.dart';
 import 'package:coddr/domain/usecases/sign_up.dart';
+import 'package:coddr/domain/usecases/store_user_credentials.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
@@ -11,8 +12,12 @@ part 'signup_state.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   SignUp signUp;
+  StoreUserCredentials storeUserCredentials;
 
-  SignUpBloc({@required this.signUp}) : super(SignUpStateEmpty());
+  SignUpBloc({
+    @required this.signUp,
+    @required this.storeUserCredentials,
+  }) : super(SignUpStateEmpty());
 
   @override
   Stream<SignUpState> mapEventToState(
@@ -23,6 +28,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       yield* _mapSignUpWithCredentialsPressedToState(
         email: event.email,
         password: event.password,
+        username: event.username,
         signUp: signUp,
       );
     }
@@ -31,6 +37,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   Stream<SignUpState> _mapSignUpWithCredentialsPressedToState({
     String email,
     String password,
+    String username,
     SignUp signUp,
   }) async* {
     yield SignUpStateLoding();
@@ -38,7 +45,15 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     final eitherResponse =
         await signUp(UserCredentials(email: email, password: password));
 
-    yield eitherResponse.fold(
-        (l) => SignUpStateFaliure(), (r) => SignUpStateSuccess());
+    yield eitherResponse.fold((l) => SignUpStateFaliure(), (r) {
+      final Map<String, String> authData = {
+        'email': email,
+        'username': username,
+        'password': password,
+      };
+      storeUserCredentials(authData);
+      
+      return SignUpStateSuccess();
+    });
   }
 }

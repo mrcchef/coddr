@@ -10,4 +10,10 @@ abstract class PlatformRepository {
   Future<Either<AppError, bool>> signUp(String email, String password);
 
   Future<Either<AppError, bool>> signOut();
+
+  bool isSignedIn();
+
+  String getEmailId();
+
+  Future<Either<AppError, void>> storeUserCredentials(Map<String, String> authData);
 }

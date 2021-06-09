@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-enum AppErrorType { api, database, network, authentication }
+enum AppErrorType { api, database, network, authentication, firebase }
 
 class AppError extends Equatable {
   final AppErrorType appErrorType;

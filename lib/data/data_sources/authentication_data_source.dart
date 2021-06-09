@@ -7,6 +7,8 @@ abstract class AuthenticationDataSource {
   Future<void> signOut();
   bool isSignedIn();
   String getEmailId();
+  String getUid();
+  Future<void> signUpWithCredentials(String email, String password);
 }
 
 class AuthenticationDataSourceImpl extends AuthenticationDataSource {
@@ -24,6 +26,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
     print(userCredential);
   }
 
+  @override
   Future<void> signUpWithCredentials(String email, String password) async {
     await firebaseAuth.createUserWithEmailAndPassword(
       email: email,
@@ -32,16 +35,23 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
   }
 
   @override
+  String getUid() {
+    return firebaseAuth.currentUser.uid;
+  }
+
+  @override
   Future<void> signOut() async {
     await firebaseAuth.signOut();
   }
 
+  @override
   bool isSignedIn() {
     final currentUser = firebaseAuth.currentUser;
     if (currentUser == null) return false;
     return true;
   }
 
+  @override
   String getEmailId() {
     return firebaseAuth.currentUser.email;
   }
