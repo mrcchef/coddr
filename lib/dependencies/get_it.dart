@@ -4,6 +4,7 @@ import 'package:coddr/data/data_sources/authentication_data_source.dart';
 import 'package:coddr/data/data_sources/remote_data_source.dart';
 import 'package:coddr/data/repositories/platform_repository_impl.dart';
 import 'package:coddr/domain/usecases/get_cf_contest_list.dart';
+import 'package:coddr/domain/usecases/get_cf_user.dart';
 import 'package:coddr/domain/usecases/get_emailId.dart';
 import 'package:coddr/domain/usecases/is_signed_in.dart';
 import 'package:coddr/domain/usecases/sign_in.dart';
@@ -31,13 +32,13 @@ Future init() async {
       .registerLazySingleton<APIClient>(() => APIClient(getItInstance()));
 
   getItInstance
-      .registerFactory<RemoteDataSourceImpl>(() => RemoteDataSourceImpl(
+      .registerLazySingleton<RemoteDataSourceImpl>(() => RemoteDataSourceImpl(
             apiClient: getItInstance(),
             firebaseFirestore: firebaseFirestore,
             authenticationDataSourceImpl: getItInstance(),
           ));
 
-  getItInstance.registerFactory(
+  getItInstance.registerLazySingleton(
       () => AuthenticationDataSourceImpl(firebaseAuth: firebaseAuth));
 
   getItInstance.registerLazySingleton<PlatformRepositoryImpl>(() =>
@@ -49,6 +50,9 @@ Future init() async {
 
   getItInstance.registerLazySingleton<GetCFContestList>(
       () => GetCFContestList(platformRepository: getItInstance()));
+
+  getItInstance.registerLazySingleton<GetCFUser>(
+      () => GetCFUser(platformRepository: getItInstance()));
 
   getItInstance.registerLazySingleton<GetEmailId>(
       () => GetEmailId(platformRepositoryImpl: getItInstance()));

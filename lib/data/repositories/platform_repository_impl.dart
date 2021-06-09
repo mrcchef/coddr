@@ -2,6 +2,7 @@ import 'package:coddr/data/data_sources/authentication_data_source.dart';
 import 'package:coddr/data/data_sources/remote_data_source.dart';
 import 'package:coddr/domain/entities/app_error.dart';
 import 'package:coddr/domain/entities/contest_entity.dart';
+import 'package:coddr/domain/entities/user_entity.dart';
 import 'package:coddr/domain/repositories/platform_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
@@ -75,6 +76,17 @@ class PlatformRepositoryImpl extends PlatformRepository {
       return Right(null);
     } on Exception {
       return Left(AppError(appErrorType: AppErrorType.firebase));
+    }
+  }
+
+  @override
+  Future<Either<AppError, List<UserEntity>>> getCFUserList(List<String> params) async {
+    try {
+      List<UserEntity> userList =
+          await remoteDataSourceImpl.getCFUser(params);
+      return Right(userList);
+    } on Exception {
+      return Left(AppError(appErrorType: AppErrorType.api));
     }
   }
 }

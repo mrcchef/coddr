@@ -1,5 +1,6 @@
 import 'package:coddr/domain/entities/app_error.dart';
 import 'package:coddr/domain/entities/contest_entity.dart';
+import 'package:coddr/domain/entities/user_entity.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class PlatformRepository {
@@ -15,5 +16,9 @@ abstract class PlatformRepository {
 
   String getEmailId();
 
-  Future<Either<AppError, void>> storeUserCredentials(Map<String, String> authData);
+  Future<Either<AppError, void>> storeUserCredentials(
+      Map<String, String> authData);
+
+  Future<Either<AppError, List<UserEntity>>> getCFUserList(
+      List<String> params);
 }
