@@ -86,8 +86,9 @@ class _LogInContainerState extends State<LogInContainer> {
       bloc: BlocProvider.of<SignInBloc>(context),
       listener: (context, state) {
         if (state is SignInStateFaliure) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
           ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text('Login Falied')));
+              .showSnackBar(const SnackBar(content: Text('Login Failed')));
         } else if (state is SignInStateSuccess) {
           BlocProvider.of<AuthenticationBloc>(context).add(SiggnedInEvent());
           // Navigator.of(context).pop();
