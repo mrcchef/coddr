@@ -61,7 +61,8 @@ class _MyAppState extends State<MyApp> {
               if (state is AuthenticationInitial) {
                 print("AppStarted");
                 return SplashScreen();
-              } else if (state is Authenticated) {
+              }
+               else if (state is Authenticated) {
                 print("State is Authenticated");
                 return HomeScreen();
               } else {

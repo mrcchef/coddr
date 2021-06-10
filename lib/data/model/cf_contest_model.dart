@@ -2,14 +2,14 @@ import 'package:coddr/domain/entities/contest_entity.dart';
 import 'package:equatable/equatable.dart';
 
 class CFContestModel extends ContestEntity {
-  int id;
-  String name;
-  String type;
-  String phase;
-  bool frozen;
-  int durationSeconds;
-  int startTimeSeconds;
-  int relativeTimeSeconds;
+  final int id;
+  final String name;
+  final String type;
+  final String phase;
+  final bool frozen;
+  final int durationSeconds;
+  final int startTimeSeconds;
+  final int relativeTimeSeconds;
 
   CFContestModel(
       {this.id,
@@ -32,15 +32,17 @@ class CFContestModel extends ContestEntity {
           platformHandle: "CF",
         );
 
-  CFContestModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    type = json['type'];
-    phase = json['phase'];
-    frozen = json['frozen'];
-    durationSeconds = json['durationSeconds'];
-    startTimeSeconds = json['startTimeSeconds'];
-    relativeTimeSeconds = json['relativeTimeSeconds'];
+  factory CFContestModel.fromJson(Map<String, dynamic> json) {
+    return CFContestModel(
+      id: json['id'],
+      name: json['name'],
+      type: json['type'],
+      phase: json['phase'],
+      frozen: json['frozen'],
+      durationSeconds: json['durationSeconds'],
+      startTimeSeconds: json['startTimeSeconds'],
+      relativeTimeSeconds: json['relativeTimeSeconds'],
+    );
   }
 
   Map<String, dynamic> toJson() {
