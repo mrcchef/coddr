@@ -45,7 +45,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init();
     return BlocProvider<AuthenticationBloc>.value(
       value: _authenticationBloc,
       child: MaterialApp(
@@ -61,8 +60,8 @@ class _MyAppState extends State<MyApp> {
               if (state is AuthenticationInitial) {
                 print("AppStarted");
                 return SplashScreen();
-              }
-               else if (state is Authenticated) {
+              } else if (state is Authenticated) {
+                print(state.email);
                 print("State is Authenticated");
                 return HomeScreen();
               } else {

@@ -43,13 +43,15 @@ class SignInStateLoding extends SignInState {
 }
 
 class SignInStateFaliure extends SignInState {
-  SignInStateFaliure()
+  final String message;
+  SignInStateFaliure({@required this.message})
       : super(
             isEmailValid: true,
             isPasswordValid: true,
             isFailure: true,
             isSubmitting: false,
             isSuccess: false);
+  List<Object> get props => [message];
 }
 
 class SignInStateSuccess extends SignInState {

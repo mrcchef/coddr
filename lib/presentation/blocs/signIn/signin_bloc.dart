@@ -51,6 +51,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         await signIn(UserCredentials(email: email, password: password));
 
     yield eitherResponse.fold(
-        (l) => SignInStateFaliure(), (r) => SignInStateSuccess());
+        (l) => SignInStateFaliure(message: "Logined Failed"),
+        (r) => SignInStateSuccess());
   }
 }

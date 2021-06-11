@@ -80,7 +80,7 @@ class _SignUpContainerState extends State<SignUpContainer> {
     return BlocConsumer<SignUpBloc, SignUpState>(
       bloc: BlocProvider.of<SignUpBloc>(context),
       listener: (context, state) {
-        if (state is SignUpStateFaliure) {
+        if (state is SignUpStateFailure) {
           ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text('SignUp Falied')));
         } else if (state is SignUpStateSuccess) {

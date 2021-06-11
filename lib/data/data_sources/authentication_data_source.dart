@@ -55,4 +55,8 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
   String getEmailId() {
     return firebaseAuth.currentUser.email;
   }
+
+  Future<void> verifyEmail() async {
+    await firebaseAuth.currentUser.sendEmailVerification();
+  }
 }

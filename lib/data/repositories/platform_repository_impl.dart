@@ -80,13 +80,22 @@ class PlatformRepositoryImpl extends PlatformRepository {
   }
 
   @override
-  Future<Either<AppError, List<UserEntity>>> getCFUserList(List<String> params) async {
+  Future<Either<AppError, List<UserEntity>>> getCFUserList(
+      List<String> params) async {
     try {
-      List<UserEntity> userList =
-          await remoteDataSourceImpl.getCFUser(params);
+      List<UserEntity> userList = await remoteDataSourceImpl.getCFUser(params);
       return Right(userList);
     } on Exception {
       return Left(AppError(appErrorType: AppErrorType.api));
+    }
+  }
+
+  Future<Either<AppError, void>> verifyEmail() async {
+    try {
+      authenticationDataSourceImpl.verifyEmail();
+      return Right(null);
+    } on Exception {
+      return Left(AppError(appErrorType: AppErrorType.authentication));
     }
   }
 }

@@ -33,23 +33,28 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    print(screenWidth);
+    print(screenHeight);
+    ScreenUtil.init(height: screenHeight, width: screenWidth);
     return Scaffold(
         body: SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: Sizes.dimen_18.h,
+            height: Sizes.dimen_30.w,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: Sizes.dimen_14),
+            padding: EdgeInsets.only(left: Sizes.dimen_14.w),
             child: Text(
               'Sign In',
               style: Theme.of(context).textTheme.headline3,
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: Sizes.dimen_14),
+            padding: EdgeInsets.only(left: Sizes.dimen_14.w),
             child: Text(
               'Nice to see you again!',
               style: Theme.of(context)
@@ -58,25 +63,24 @@ class _SignInScreenState extends State<SignInScreen> {
                   .copyWith(fontSize: Sizes.dimen_20),
             ),
           ),
-          SizedBox(
-            height: Sizes.dimen_20.h,
-          ),
-          Center(
-            child: Image.asset(
-              Images.atcoderLogo,
-              fit: BoxFit.cover,
-              //height: Sizes.dimen_80.h,
-              height: Sizes.dimen_100.h,
+          Padding(
+            padding: EdgeInsets.all(Sizes.dimen_14.w),
+            child: Center(
+              child: Image.asset(
+                Images.atcoderLogo,
+                fit: BoxFit.cover,
+                height: Sizes.dimen_150.w,
+              ),
             ),
           ),
           BlocProvider.value(value: _signInBloc, child: LogInContainer()),
-          SizedBox(height: Sizes.dimen_18.h),
+          SizedBox(height: Sizes.dimen_18.w),
           Center(
             child: Padding(
-              padding: const EdgeInsets.only(left: Sizes.dimen_8),
+              padding: EdgeInsets.only(left: Sizes.dimen_8.w),
               child: TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(SignUpScreen.routeName);
+                  Navigator.of(context).popAndPushNamed(SignUpScreen.routeName);
                 },
                 child: Text('Dont have an account? Sign up instead!'),
                 // style: ButtonStyle(Theme.of(context).textTheme.button),
