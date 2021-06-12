@@ -98,4 +98,8 @@ class PlatformRepositoryImpl extends PlatformRepository {
       return Left(AppError(appErrorType: AppErrorType.authentication));
     }
   }
+
+  bool isEmailVerified() {
+    return authenticationDataSourceImpl.isEmailVerified();
+  }
 }

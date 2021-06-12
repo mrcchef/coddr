@@ -83,9 +83,13 @@ class _SignUpContainerState extends State<SignUpContainer> {
         if (state is SignUpStateFailure) {
           ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text('SignUp Falied')));
+        } else if (state is SignUpStateVerifying) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content:
+                  Text('Verify Email through the link sent to your email')));
         } else if (state is SignUpStateSuccess) {
           BlocProvider.of<AuthenticationBloc>(context).add(SiggnedInEvent());
-           Navigator.of(context).pop();
+          Navigator.of(context).pop();
         }
       },
       builder: (context, state) {
