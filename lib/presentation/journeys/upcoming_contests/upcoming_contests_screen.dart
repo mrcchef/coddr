@@ -1,7 +1,5 @@
 import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
-import 'package:coddr/common/screen_utils/screen_util.dart';
-import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:coddr/domain/entities/contest_entity.dart';
