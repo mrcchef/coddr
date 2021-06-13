@@ -78,45 +78,21 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       if (!isVerificationEmailSent) {
         yield SignUpStateFailure();
       } else {
-        bool isEmailVerified = false;
-        FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+        print("verification email sent");
+        final Map<String, String> authData = {
+          'email': email,
+          'username': username,
+          'password': password,
+        };
+        final eitherResponseStoreUser = await storeUserCredentials(authData);
+        final bool isStored =
+            eitherResponseStoreUser.fold((l) => false, (r) => true);
 
-        DateTime startTime = DateTime.now();
-        DateTime endTime = startTime.add(new Duration(seconds: 60));
-
-        timer = Timer.periodic(
-          new Duration(seconds: 5),
-          (timer) {
-            firebaseAuth.currentUser.reload();
-            if (firebaseAuth.currentUser.emailVerified) {
-              isEmailVerified = true;
-              timer.cancel();
-            }
-            if (DateTime.now().isAfter(endTime)) {
-              isEmailVerified = false;
-              timer.cancel();
-            }
-          },
-        );
-
-        if (!isEmailVerified)
+        if (!isStored) {
           yield SignUpStateFailure();
-        else {
-          final Map<String, String> authData = {
-            'email': email,
-            'username': username,
-            'password': password,
-          };
-          final eitherResponseStoreUser = await storeUserCredentials(authData);
-          final bool isStored =
-              eitherResponseStoreUser.fold((l) => false, (r) => true);
-
-          if (!isStored) {
-            yield SignUpStateFailure();
-          } else {
-            print("success");
-            yield SignUpStateSuccess();
-          }
+        } else {
+          print("success");
+          yield SignUpStateSuccess();
         }
       }
     }

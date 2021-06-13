@@ -1,8 +1,11 @@
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
+import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
 import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
+import 'package:coddr/presentation/journeys/auth/sign_up_screen.dart';
 import 'package:coddr/presentation/journeys/auth/validators.dart';
 import 'package:coddr/presentation/journeys/home/home_screen.dart';
+import 'package:coddr/presentation/widgets/app_dialog.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -74,6 +77,17 @@ class _SignUpContainerState extends State<SignUpContainer> {
     );
   }
 
+  // void _showVerifyEmailDialog(BuildContext context) async {
+  //   await showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return AppDialog(
+  //           onPressed: () => BlocProvider.of<AuthenticationBloc>(context)
+  //               .add(SiggnedInEvent()),
+  //         );
+  //       });
+  // }
+
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
@@ -88,6 +102,8 @@ class _SignUpContainerState extends State<SignUpContainer> {
               content:
                   Text('Verify Email through the link sent to your email')));
         } else if (state is SignUpStateSuccess) {
+          print("Entered signup consumer");
+          // _showVerifyEmailDialog(context);
           BlocProvider.of<AuthenticationBloc>(context).add(SiggnedInEvent());
           Navigator.of(context).pop();
         }

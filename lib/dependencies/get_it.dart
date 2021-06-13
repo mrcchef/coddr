@@ -73,7 +73,7 @@ Future init() async {
   getItInstance.registerLazySingleton<VerifyEmail>(
       () => VerifyEmail(platformRepositoryImpl: getItInstance()));
 
-  getItInstance.registerLazySingleton<ContestListingBloc>(
+  getItInstance.registerFactory<ContestListingBloc>(
       () => ContestListingBloc(getCFContestList: getItInstance()));
 
   getItInstance.registerLazySingleton<StoreUserCredentials>(
