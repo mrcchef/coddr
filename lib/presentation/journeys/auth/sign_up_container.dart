@@ -1,4 +1,5 @@
 import 'package:coddr/common/constants/size_constants.dart';
+import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
 import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
 import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
@@ -24,38 +25,12 @@ class _SignUpContainerState extends State<SignUpContainer> {
     'password': '',
   };
 
-  // Future<void> _signUp() async {
-  //   var _auth = FirebaseAuth.instance;
-  //   try {
-  //     UserCredential userCredential =
-  //         await _auth.createUserWithEmailAndPassword(
-  //       email: _authData['email'],
-  //       password: _authData['password'],
-  //     );
-
-  //     await FirebaseFirestore.instance
-  //         .collection('users')
-  //         .doc(userCredential.user.uid)
-  //         .set({
-  //       'username': _authData['username'],
-  //       'email': _authData['email'],
-  //     });
-  //     Navigator.of(context).pushNamed(HomeScreen.routeName);
-  //   } catch (err) {
-  //     var message = 'An error occured, please check your credentials!';
-
-  //     if (err.message != null) {
-  //       message = err.message;
-  //     }
-
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(
-  //         content: Text(message),
-  //         backgroundColor: Theme.of(context).errorColor,
-  //       ),
-  //     );
-  //   }
-  // }
+  AuthenticationBloc authenticationBloc;
+  @override
+  void initState() {
+    authenticationBloc = getItInstance<AuthenticationBloc>();
+    super.initState();
+  }
 
   void _submit(BuildContext context) {
     if (!_formKey.currentState.validate()) {
@@ -77,17 +52,6 @@ class _SignUpContainerState extends State<SignUpContainer> {
     );
   }
 
-  // void _showVerifyEmailDialog(BuildContext context) async {
-  //   await showDialog(
-  //       context: context,
-  //       builder: (context) {
-  //         return AppDialog(
-  //           onPressed: () => BlocProvider.of<AuthenticationBloc>(context)
-  //               .add(SiggnedInEvent()),
-  //         );
-  //       });
-  // }
-
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
@@ -102,10 +66,9 @@ class _SignUpContainerState extends State<SignUpContainer> {
               content:
                   Text('Verify Email through the link sent to your email')));
         } else if (state is SignUpStateSuccess) {
-          print("Entered signup consumer");
-          // _showVerifyEmailDialog(context);
+          // print("Entered signup consumer");
           BlocProvider.of<AuthenticationBloc>(context).add(SiggnedInEvent());
-          Navigator.of(context).pop();
+          //   // Navigator.of(context).pop();
         }
       },
       builder: (context, state) {
@@ -119,6 +82,7 @@ class _SignUpContainerState extends State<SignUpContainer> {
           isLoading = true;
         else
           isLoading = false;
+
         return Form(
           key: _formKey,
           child: Column(
@@ -188,7 +152,6 @@ class _SignUpContainerState extends State<SignUpContainer> {
                   right: Sizes.dimen_10,
                 ),
                 child: Card(
-                  //color: Colors.green.shade100,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(Sizes.dimen_10),
                   ),

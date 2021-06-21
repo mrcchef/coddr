@@ -90,6 +90,7 @@ class _LogInContainerState extends State<LogInContainer> {
           ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text('Login Failed')));
         } else if (state is SignInStateSuccess) {
+          print("sign in success lister");
           BlocProvider.of<AuthenticationBloc>(context).add(SiggnedInEvent());
           // Navigator.of(context).pop();
           // Navigator.of(context).pushNamed(HomeScreen.routeName);
@@ -106,6 +107,7 @@ class _LogInContainerState extends State<LogInContainer> {
           isLoading = true;
         else
           isLoading = false;
+
         return Form(
           key: _formKey,
           child: Column(

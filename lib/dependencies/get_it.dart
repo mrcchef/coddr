@@ -79,11 +79,11 @@ Future init() async {
   getItInstance.registerLazySingleton<StoreUserCredentials>(
       () => StoreUserCredentials(platformRepositoryImpl: getItInstance()));
 
-  getItInstance.registerFactory<AuthenticationBloc>(() => AuthenticationBloc(
-        getEmailId: getItInstance(),
-        isSignedIn: getItInstance(),
-        signOut: getItInstance(),
-      ));
+  getItInstance.registerSingleton<AuthenticationBloc>(AuthenticationBloc(
+    getEmailId: getItInstance(),
+    isSignedIn: getItInstance(),
+    signOut: getItInstance(),
+  ));
 
   getItInstance.registerFactory<SignInBloc>(() => SignInBloc(
         signIn: getItInstance(),

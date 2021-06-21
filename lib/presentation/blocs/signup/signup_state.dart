@@ -6,8 +6,8 @@ abstract class SignUpState extends Equatable {
   final bool isSubmitting;
   final bool isSuccess;
   final bool isFailure;
-  final bool isVerified;
-  final bool isVerifying;
+  // final bool isVerified;
+  // final bool isVerifying;
 
   bool get isFormValid => isEmailValid && isPasswordValid;
 
@@ -17,8 +17,8 @@ abstract class SignUpState extends Equatable {
     @required this.isSubmitting,
     @required this.isSuccess,
     @required this.isFailure,
-    @required this.isVerified,
-    @required this.isVerifying,
+    // @required this.isVerified,
+    // @required this.isVerifying,
   });
 
   @override
@@ -28,8 +28,8 @@ abstract class SignUpState extends Equatable {
         isSubmitting,
         isSuccess,
         isFailure,
-        isVerified,
-        isVerifying,
+        // isVerified,
+        // isVerifying,
       ];
 }
 
@@ -41,8 +41,8 @@ class SignUpStateEmpty extends SignUpState {
           isFailure: false,
           isSubmitting: false,
           isSuccess: false,
-          isVerified: false,
-          isVerifying: false,
+          // isVerified: false,
+          // isVerifying: false,
         );
 }
 
@@ -54,22 +54,25 @@ class SignUpStateLoding extends SignUpState {
           isFailure: false,
           isSubmitting: true,
           isSuccess: false,
-          isVerified: false,
-          isVerifying: false,
+          // isVerified: false,
+          // isVerifying: false,
         );
 }
 
 class SignUpStateFailure extends SignUpState {
-  SignUpStateFailure()
+  final String message;
+  SignUpStateFailure({@required this.message})
       : super(
           isEmailValid: true,
           isPasswordValid: true,
           isFailure: true,
           isSubmitting: false,
           isSuccess: false,
-          isVerified: false,
-          isVerifying: false,
+          // isVerified: false,
+          // isVerifying: false,
         );
+  @override
+  List<Object> get props => [message];
 }
 
 class SignUpStateSuccess extends SignUpState {
@@ -80,8 +83,8 @@ class SignUpStateSuccess extends SignUpState {
           isFailure: false,
           isSubmitting: false,
           isSuccess: true,
-          isVerified: true,
-          isVerifying: false,
+          // isVerified: true,
+          // isVerifying: false,
         );
 }
 
@@ -93,8 +96,8 @@ class SignUpStateVerifying extends SignUpState {
           isFailure: false,
           isSubmitting: false,
           isSuccess: false,
-          isVerified: false,
-          isVerifying: true,
+          // isVerified: false,
+          // isVerifying: true,
         );
 }
 
@@ -106,7 +109,7 @@ class SignUpStateVerified extends SignUpState {
           isFailure: false,
           isSubmitting: false,
           isSuccess: false,
-          isVerified: true,
-          isVerifying: false,
+          // isVerified: true,
+          // isVerifying: false,
         );
 }

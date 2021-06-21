@@ -23,8 +23,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   void initState() {
-    _signUpBloc = getItInstance<SignUpBloc>();
     super.initState();
+    _signUpBloc = getItInstance<SignUpBloc>();
   }
 
   @override

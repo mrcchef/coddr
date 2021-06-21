@@ -64,36 +64,37 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     });
 
     if (!isEmailCreated)
-      yield SignUpStateFailure();
+      yield SignUpStateFailure(message: "Account does not created");
     else {
-      yield SignUpStateVerifying();
-      final eitherResponseVerifyEmail = await verifyEmail(NoParams());
+      //   yield SignUpStateVerifying();
+      // final eitherResponseVerifyEmail = await verifyEmail(NoParams());
 
-      final bool isVerificationEmailSent = eitherResponseVerifyEmail.fold((l) {
-        return false;
-      }, (r) {
-        return true;
-      });
+      // final bool isVerificationEmailSent = eitherResponseVerifyEmail.fold((l) {
+      // return false;
+      // }, (r) {
+      //   return true;
+      // });
 
-      if (!isVerificationEmailSent) {
-        yield SignUpStateFailure();
+      // if (!isVerificationEmailSent) {
+      // yield SignUpStateFailure();
+      // } else
+      // {
+      print("verification email sent");
+      final Map<String, String> authData = {
+        'email': email,
+        'username': username,
+        'password': password,
+      };
+      final eitherResponseStoreUser = await storeUserCredentials(authData);
+      final bool isStored =
+          eitherResponseStoreUser.fold((l) => false, (r) => true);
+
+      if (!isStored) {
+        yield SignUpStateFailure(
+            message: "Credentials does not stored in Firebase");
       } else {
-        print("verification email sent");
-        final Map<String, String> authData = {
-          'email': email,
-          'username': username,
-          'password': password,
-        };
-        final eitherResponseStoreUser = await storeUserCredentials(authData);
-        final bool isStored =
-            eitherResponseStoreUser.fold((l) => false, (r) => true);
-
-        if (!isStored) {
-          yield SignUpStateFailure();
-        } else {
-          print("success");
-          yield SignUpStateSuccess();
-        }
+        print("success");
+        yield SignUpStateSuccess();
       }
     }
   }
