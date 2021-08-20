@@ -47,7 +47,7 @@ class MainDrawer extends StatelessWidget {
             DrawerListTile('Settings', Icons.settings, () {}),
             DrawerListTile(
                 'About Us', Icons.sentiment_satisfied_alt_outlined, () {}),
-            DrawerListTile('Sign Out', Icons.logout, () async {
+            DrawerListTile('Sign Out', Icons.logout, () {
               BlocProvider.of<AuthenticationBloc>(context)
                   .add(SiggnedOutEvent());
             }),

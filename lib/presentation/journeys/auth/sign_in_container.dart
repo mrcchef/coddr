@@ -47,6 +47,7 @@ class _LogInContainerState extends State<LogInContainer> {
   // }
 
   void _submit(BuildContext context) {
+    print("Submit");
     if (!_formKey.currentState.validate()) {
       // Invalid!
       return;
@@ -81,130 +82,100 @@ class _LogInContainerState extends State<LogInContainer> {
 
   @override
   Widget build(BuildContext context) {
+    bool isLoading = false;
     final deviceSize = MediaQuery.of(context).size;
-    return BlocConsumer<SignInBloc, SignInState>(
-      bloc: BlocProvider.of<SignInBloc>(context),
-      listener: (context, state) {
-        if (state is SignInStateFaliure) {
-          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text('Login Failed')));
-        } else if (state is SignInStateSuccess) {
-          print("sign in success lister");
-          BlocProvider.of<AuthenticationBloc>(context).add(SiggnedInEvent());
-          // Navigator.of(context).pop();
-          // Navigator.of(context).pushNamed(HomeScreen.routeName);
-        }
-      },
-      builder: (context, state) {
-        bool isLoading = false;
-        //This if block is added as while signing up new screen was not being
-        // pushed even though user was created. THIS IS TEMPORARY
-        // if (state is SignInStateSuccess) {
-        //   Navigator.of(context).pop();
-        // }
-        if (state is SignInStateLoding)
-          isLoading = true;
-        else
-          isLoading = false;
-
-        return Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: Sizes.dimen_10),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(Sizes.dimen_10),
+              ),
+              elevation: Sizes.dimen_8,
+              child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Sizes.dimen_10),
-                child: Card(
-                  //color: Colors.green.shade100,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(Sizes.dimen_10),
-                  ),
-                  elevation: Sizes.dimen_8,
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: Sizes.dimen_10),
-                    child: TextFormField(
-                      decoration: InputDecoration(labelText: 'E-Mail'),
-                      keyboardType: TextInputType.emailAddress,
-                      validator: (value) {
-                        bool check = Validators.isValidEmail(value);
-                        if (check) return null;
-                        return "INVALID_EMAIL";
-                      },
-                      onSaved: (value) {
-                        _authData['email'] = value;
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: Sizes.dimen_10,
-                  top: Sizes.dimen_10,
-                  right: Sizes.dimen_10,
-                ),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(Sizes.dimen_10),
-                  ),
-                  elevation: Sizes.dimen_8,
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: Sizes.dimen_10),
-                    child: TextFormField(
-                      decoration: InputDecoration(labelText: 'Password'),
-                      obscureText: true,
-                      // controller: _passwordController,
-                      validator: (value) {
-                        if (value.isEmpty || value.length <= 5) {
-                          return 'Password is too short';
-                        }
-                        return null;
-                        // bool check = Validators.isValidPassword(value);
-                        // if (check) return null;
-                        // return "INVALID_PASSWORD";
-                      },
-                      onSaved: (value) {
-                        _authData['password'] = value;
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: Sizes.dimen_8),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(HomeScreen.routeName);
+                child: TextFormField(
+                  decoration: InputDecoration(labelText: 'E-Mail'),
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    bool check = Validators.isValidEmail(value);
+                    if (check) return null;
+                    return "INVALID_EMAIL";
                   },
-                  child: Text('Forgot Your Password?'),
+                  onSaved: (value) {
+                    _authData['email'] = value;
+                  },
                 ),
               ),
-              Center(
-                child: Container(
-                  width: deviceSize.width * 0.7,
-                  height: deviceSize.height * 0.07,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(Sizes.dimen_10),
-                    child: ElevatedButton(
-                      onPressed: isLoading ? null : () => _submit(context),
-                      child: isLoading
-                          ? Center(child: CircularProgressIndicator())
-                          : Text('Sign In'),
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.orange.shade400),
-                      ),
-                    ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: Sizes.dimen_10,
+              top: Sizes.dimen_10,
+              right: Sizes.dimen_10,
+            ),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(Sizes.dimen_10),
+              ),
+              elevation: Sizes.dimen_8,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: Sizes.dimen_10),
+                child: TextFormField(
+                  decoration: InputDecoration(labelText: 'Password'),
+                  obscureText: true,
+                  // controller: _passwordController,
+                  validator: (value) {
+                    if (value.isEmpty || value.length <= 5) {
+                      return 'Password is too short';
+                    }
+                    return null;
+                    // bool check = Validators.isValidPassword(value);
+                    // if (check) return null;
+                    // return "INVALID_PASSWORD";
+                  },
+                  onSaved: (value) {
+                    _authData['password'] = value;
+                  },
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: Sizes.dimen_8),
+            child: TextButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(HomeScreen.routeName);
+              },
+              child: Text('Forgot Your Password?'),
+            ),
+          ),
+          Center(
+            child: Container(
+              width: deviceSize.width * 0.7,
+              height: deviceSize.height * 0.07,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(Sizes.dimen_10),
+                child: ElevatedButton(
+                  onPressed: isLoading ? null : () => _submit(context),
+                  child: isLoading
+                      ? Center(child: CircularProgressIndicator())
+                      : Text('Sign In'),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.orange.shade400),
                   ),
                 ),
               ),
-            ],
+            ),
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 }

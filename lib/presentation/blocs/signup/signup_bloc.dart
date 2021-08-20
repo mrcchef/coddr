@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:coddr/dependencies/get_it.dart';
+import 'package:coddr/domain/entities/app_error.dart';
 import 'package:coddr/domain/entities/no_params.dart';
 import 'package:coddr/domain/entities/user_credentials.dart';
 import 'package:coddr/domain/usecases/sign_up.dart';
@@ -55,47 +56,52 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     final eitherResponse =
         await signUp(UserCredentials(email: email, password: password));
     print(eitherResponse);
-    final bool isEmailCreated = await eitherResponse.fold((l) {
-      print("failed");
-      return false;
-    }, (r) {
-      print("email created");
-      return true;
-    });
 
-    if (!isEmailCreated)
-      yield SignUpStateFailure(message: "Account does not created");
-    else {
-      //   yield SignUpStateVerifying();
-      // final eitherResponseVerifyEmail = await verifyEmail(NoParams());
+    yield eitherResponse.fold(
+        (appError) => SignUpStateFailure(message: "SignUp Failed"),
+        (r) => SignUpStateSuccess());
 
-      // final bool isVerificationEmailSent = eitherResponseVerifyEmail.fold((l) {
-      // return false;
-      // }, (r) {
-      //   return true;
-      // });
+    // final bool isEmailCreated = await eitherResponse.fold((l) {
+    //   print("failed");
+    //   return false;
+    // }, (r) {
+    //   print("email created");
+    //   return true;
+    // });
 
-      // if (!isVerificationEmailSent) {
-      // yield SignUpStateFailure();
-      // } else
-      // {
-      print("verification email sent");
-      final Map<String, String> authData = {
-        'email': email,
-        'username': username,
-        'password': password,
-      };
-      final eitherResponseStoreUser = await storeUserCredentials(authData);
-      final bool isStored =
-          eitherResponseStoreUser.fold((l) => false, (r) => true);
+    // if (!isEmailCreated)
+    //   yield SignUpStateFailure(message: "Account does not created");
+    // else {
+    //   yield SignUpStateVerifying();
+    // final eitherResponseVerifyEmail = await verifyEmail(NoParams());
 
-      if (!isStored) {
-        yield SignUpStateFailure(
-            message: "Credentials does not stored in Firebase");
-      } else {
-        print("success");
-        yield SignUpStateSuccess();
-      }
-    }
+    // final bool isVerificationEmailSent = eitherResponseVerifyEmail.fold((l) {
+    // return false;
+    // }, (r) {
+    //   return true;
+    // });
+
+    // if (!isVerificationEmailSent) {
+    // yield SignUpStateFailure();
+    // } else
+    // {
+    // print("verification email sent");
+    // final Map<String, String> authData = {
+    //   'email': email,
+    //   'username': username,
+    //   'password': password,
+    // };
+    // final eitherResponseStoreUser = await storeUserCredentials(authData);
+    // final bool isStored =
+    //     eitherResponseStoreUser.fold((l) => false, (r) => true);
+
+    // if (!isStored) {
+    //   yield SignUpStateFailure(
+    //       message: "Credentials does not stored in Firebase");
+    // } else {
+    //   print("success");
+    //   yield SignUpStateSuccess();
+    // }
+    // }
   }
 }
