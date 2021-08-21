@@ -56,7 +56,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       'Verify Email through the link sent to your email')));
             } else if (state is SignUpStateSuccess) {
               print("Entered signup consumer");
-              Navigator.of(context).pushNamed(HomeScreen.routeName);
+              Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
               // BlocProvider.of<AuthenticationBloc>(context)
               //     .add(SiggnedInEvent());
             }

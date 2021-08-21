@@ -42,8 +42,8 @@ class AuthenticationBloc
       print(email);
       yield Authenticated(email: email);
     } else if (event is SiggnedOutEvent) {
-      signOut(NoParams());
       yield UnAuthenticated();
+      signOut(NoParams());
     }
   }
 }

@@ -79,21 +79,31 @@ Future init() async {
   getItInstance.registerLazySingleton<StoreUserCredentials>(
       () => StoreUserCredentials(platformRepositoryImpl: getItInstance()));
 
-  getItInstance.registerFactory(() => AuthenticationBloc(
-        getEmailId: getItInstance(),
-        isSignedIn: getItInstance(),
-        signOut: getItInstance(),
-      ));
+  // getItInstance.registerFactory(() => AuthenticationBloc(
+  //       getEmailId: getItInstance(),
+  //       isSignedIn: getItInstance(),
+  //       signOut: getItInstance(),
+  //     ));
 
-  // getItInstance.registerSingleton<AuthenticationBloc>(AuthenticationBloc(
-  //   getEmailId: getItInstance(),
-  //   isSignedIn: getItInstance(),
-  //   signOut: getItInstance(),
+  getItInstance.registerSingleton<AuthenticationBloc>(AuthenticationBloc(
+    getEmailId: getItInstance(),
+    isSignedIn: getItInstance(),
+    signOut: getItInstance(),
+  ));
+
+  // getItInstance.registerSingleton<SignInBloc>(SignInBloc(
+  //   signIn: getItInstance(),
   // ));
 
   getItInstance.registerFactory<SignInBloc>(() => SignInBloc(
         signIn: getItInstance(),
       ));
+
+  // getItInstance.registerSingleton<SignUpBloc>(SignUpBloc(
+  //   signUp: getItInstance(),
+  //   storeUserCredentials: getItInstance(),
+  //   verifyEmail: getItInstance(),
+  // ));
 
   getItInstance.registerFactory<SignUpBloc>(() => SignUpBloc(
         signUp: getItInstance(),

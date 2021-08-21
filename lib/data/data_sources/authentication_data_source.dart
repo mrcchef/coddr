@@ -41,7 +41,9 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
 
   @override
   Future<void> signOut() async {
+    print("before: ${firebaseAuth.currentUser.uid}");
     await firebaseAuth.signOut();
+    print("after: ${firebaseAuth.currentUser.uid}");
   }
 
   @override

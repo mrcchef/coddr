@@ -53,9 +53,9 @@ class _SignInScreenState extends State<SignInScreen> {
                   .showSnackBar(const SnackBar(content: Text('Login Failed')));
             } else if (state is SignInStateSuccess) {
               print("sign in success lister");
-              // Navigator.of(context).pushNamed(HomeScreen.routeName);
-              BlocProvider.of<AuthenticationBloc>(context)
-                  .add(SiggnedInEvent());
+              Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+              // BlocProvider.of<AuthenticationBloc>(context)
+              //     .add(SiggnedInEvent());
 
               // Navigator.of(context).pop();
             }
