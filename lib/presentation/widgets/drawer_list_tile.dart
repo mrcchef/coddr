@@ -14,7 +14,7 @@ class DrawerListTile extends StatelessWidget {
     return ListTile(
       leading: Icon(
         icon,
-        size: Sizes.dimen_26.h,
+        size: Sizes.dimen_30.w,
       ),
       title: Text(
         title,

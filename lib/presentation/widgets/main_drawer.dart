@@ -1,9 +1,12 @@
 import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
-import 'package:coddr/presentation/journeys/home/sign_in.dart';
+import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
+import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
 import 'package:coddr/presentation/widgets/drawer_list_tile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainDrawer extends StatelessWidget {
   @override
@@ -15,7 +18,7 @@ class MainDrawer extends StatelessWidget {
           children: [
             SizedBox(height: Sizes.dimen_14.h),
             Container(
-              height: Sizes.dimen_96.h,
+              height: Sizes.dimen_140.w,
               width: double.infinity,
               padding: EdgeInsets.only(
                 top: Sizes.dimen_20.w,
@@ -44,8 +47,9 @@ class MainDrawer extends StatelessWidget {
             DrawerListTile('Settings', Icons.settings, () {}),
             DrawerListTile(
                 'About Us', Icons.sentiment_satisfied_alt_outlined, () {}),
-            DrawerListTile('Sign Out', Icons.logout, () {
-              Navigator.of(context).pushNamed(SignIn.routeName);
+            DrawerListTile('Sign Out', Icons.logout, () async {
+              BlocProvider.of<AuthenticationBloc>(context)
+                  .add(SiggnedOutEvent());
             }),
           ],
         ),
