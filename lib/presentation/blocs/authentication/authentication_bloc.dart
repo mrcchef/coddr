@@ -38,9 +38,8 @@ class AuthenticationBloc
         yield UnAuthenticated();
       }
     } else if (event is SiggnedInEvent) {
-      final bool check = isSignedIn();
-      print(check);
       final String email = getEmailId();
+      print(email);
       yield Authenticated(email: email);
     } else if (event is SiggnedOutEvent) {
       yield UnAuthenticated();

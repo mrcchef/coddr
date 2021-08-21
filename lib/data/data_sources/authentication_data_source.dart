@@ -41,7 +41,9 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
 
   @override
   Future<void> signOut() async {
+    print("before: ${firebaseAuth.currentUser.uid}");
     await firebaseAuth.signOut();
+    print("after: ${firebaseAuth.currentUser.uid}");
   }
 
   @override
@@ -54,5 +56,13 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
   @override
   String getEmailId() {
     return firebaseAuth.currentUser.email;
+  }
+
+  Future<void> verifyEmail() async {
+    await firebaseAuth.currentUser.sendEmailVerification();
+  }
+
+  bool isEmailVerified() {
+    return firebaseAuth.currentUser.emailVerified;
   }
 }

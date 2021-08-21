@@ -16,7 +16,7 @@ class UpcomingContestsScreen extends StatelessWidget {
   static const routeName = '/upcoming_contests_screen';
   ContestListingBloc _contestListingBloc;
 
-  List<Color> cardColors = [
+  final List<Color> cardColors = [
     AppColor.lightGreen,
     AppColor.lightRed,
     AppColor.lightViolet,

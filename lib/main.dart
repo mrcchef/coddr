@@ -1,12 +1,13 @@
 import 'package:coddr/common/screen_utils/screen_util.dart';
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
+import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
+import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
 import 'package:coddr/presentation/journeys/auth/sign_up_screen.dart';
 import 'package:coddr/presentation/journeys/auth/splash_screen.dart';
 import 'package:coddr/presentation/journeys/upcoming_contests/upcoming_contests_screen.dart';
 import 'package:coddr/presentation/journeys/upcoming_fixtures/upcoming_fixtures_screen.dart';
 import 'package:coddr/presentation/themes/themes.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pedantic/pedantic.dart';
@@ -31,11 +32,15 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   AuthenticationBloc _authenticationBloc;
+  SignInBloc _signInBloc;
+  SignUpBloc _signUpBloc;
 
   @override
   void initState() {
     _authenticationBloc = get_it.getItInstance<AuthenticationBloc>();
     _authenticationBloc.add(AppStartedEvent());
+    _signInBloc = get_it.getItInstance<SignInBloc>();
+    _signUpBloc = get_it.getItInstance<SignUpBloc>();
     super.initState();
   }
 
@@ -47,9 +52,18 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init();
-    return BlocProvider<AuthenticationBloc>.value(
-      value: _authenticationBloc,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthenticationBloc>(
+          create: (context) => _authenticationBloc,
+        ),
+        BlocProvider<SignInBloc>(
+          create: (context) => _signInBloc,
+        ),
+        BlocProvider<SignUpBloc>(
+          create: (context) => _signUpBloc,
+        ),
+      ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Coddr',
@@ -64,6 +78,7 @@ class _MyAppState extends State<MyApp> {
                 print("AppStarted");
                 return SplashScreen();
               } else if (state is Authenticated) {
+                print(state.email);
                 print("State is Authenticated");
                 return HomeScreen();
               } else {

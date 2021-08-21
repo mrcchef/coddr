@@ -7,6 +7,6 @@ class IsSignedIn {
   IsSignedIn({@required this.platformRepositoryImpl});
 
   bool call() {
-    return platformRepositoryImpl.isSignedIn();
+    return platformRepositoryImpl.isEmailVerified();
   }
 }

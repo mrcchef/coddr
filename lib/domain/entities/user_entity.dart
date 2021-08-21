@@ -6,16 +6,16 @@ class UserEntity extends Equatable {
   final String lastName;
   final String handle;
   final String email;
-  final String platformHandle;
+  final String platformName;
 
   UserEntity({
     @required this.firstName,
     @required this.lastName,
     @required this.handle,
     @required this.email,
-    @required this.platformHandle,
+    @required this.platformName,
   });
 
   @override
-  List<Object> get props => [handle,email];
+  List<Object> get props => [handle, email];
 }

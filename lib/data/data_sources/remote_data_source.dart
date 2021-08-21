@@ -39,15 +39,18 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(authenticationDataSourceImpl.getUid())
-        .set({
-      'username': authData['username'],
-      'email': authData['email'],
-    });
+        .set(
+      {
+        'username': authData['username'],
+        'email': authData['email'],
+      },
+    );
   }
 
   @override
   Future<List<CFUserModel>> getCFUser(List<String> handles) async {
-    final responseBody = await apiClient.get('user.info?',params: {'handles': handles});
+    final responseBody =
+        await apiClient.get('user.info?', params: {'handles': handles});
     List<CFUserModel> userList = CFUserListModel.fromJson(responseBody).user;
     print(userList);
     return userList;

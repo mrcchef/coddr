@@ -2,7 +2,7 @@ import 'package:coddr/common/constants/size_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 
-class CoddrAppBar extends StatelessWidget with PreferredSizeWidget{
+class CoddrAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -15,7 +15,9 @@ class CoddrAppBar extends StatelessWidget with PreferredSizeWidget{
             vertical: Sizes.dimen_8.h,
           ),
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              Scaffold.of(context).openDrawer();
+            },
             child: Icon(Icons.menu, color: Colors.black),
           ),
         ),
