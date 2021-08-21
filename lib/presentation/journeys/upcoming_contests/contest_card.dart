@@ -38,6 +38,7 @@ class ContestCard extends StatelessWidget {
                   .headline6
                   .copyWith(fontSize: Sizes.dimen_16.w),
               textAlign: TextAlign.center,
+              maxLines: 2,
             ),
             Spacer(),
             Row(

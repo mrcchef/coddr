@@ -42,7 +42,7 @@ class CFUserModel extends UserEntity {
           lastName: lastName,
           handle: handle,
           email: email,
-          platformHandle: 'CF',
+          platformName: 'CF',
         );
 
   factory CFUserModel.fromJson(Map<String, dynamic> json) {
