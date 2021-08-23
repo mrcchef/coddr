@@ -1,16 +1,15 @@
 import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
-import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.dart';
-import 'package:intl/intl.dart';
+import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/domain/entities/contest_entity.dart';
-
+import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.dart';
 import 'package:coddr/presentation/journeys/upcoming_contests/contest_card.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:coddr/presentation/widgets/CoddrAppBar.dart';
 import 'package:coddr/presentation/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
-import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class UpcomingContestsScreen extends StatelessWidget {
   static const routeName = '/upcoming_contests_screen';

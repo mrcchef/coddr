@@ -1,12 +1,10 @@
 import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
-import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
+import 'package:coddr/presentation/journeys/profile/profile.dart';
 import 'package:coddr/presentation/widgets/drawer_list_tile.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainDrawer extends StatelessWidget {
   @override
@@ -42,7 +40,10 @@ class MainDrawer extends StatelessWidget {
                 textAlign: TextAlign.start,
               ),
             ),
-            DrawerListTile('Profile', Icons.person_outline_outlined, () {}),
+            DrawerListTile('Profile', Icons.person_outline_outlined, () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (_) => Profile()));
+            }),
             DrawerListTile('Activity', Icons.timeline, () {}),
             DrawerListTile('Settings', Icons.settings, () {}),
             DrawerListTile(

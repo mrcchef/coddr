@@ -1,5 +1,4 @@
 import 'package:coddr/domain/entities/contest_entity.dart';
-import 'package:equatable/equatable.dart';
 
 class CFContestModel extends ContestEntity {
   final int id;

@@ -1,15 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:coddr/dependencies/get_it.dart';
-import 'package:coddr/domain/entities/app_error.dart';
-import 'package:coddr/domain/entities/no_params.dart';
 import 'package:coddr/domain/entities/user_credentials.dart';
 import 'package:coddr/domain/usecases/sign_up.dart';
 import 'package:coddr/domain/usecases/store_user_credentials.dart';
 import 'package:coddr/domain/usecases/verify_email.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 part 'signup_event.dart';

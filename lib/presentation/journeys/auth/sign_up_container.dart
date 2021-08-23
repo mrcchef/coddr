@@ -1,13 +1,9 @@
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
-import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
 import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
-import 'package:coddr/presentation/journeys/auth/sign_up_screen.dart';
 import 'package:coddr/presentation/journeys/auth/validators.dart';
 import 'package:coddr/presentation/journeys/home/home_screen.dart';
-import 'package:coddr/presentation/widgets/app_dialog.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

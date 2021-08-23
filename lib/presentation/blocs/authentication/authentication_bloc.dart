@@ -4,9 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:coddr/domain/entities/no_params.dart';
 import 'package:coddr/domain/usecases/get_emailId.dart';
 import 'package:coddr/domain/usecases/is_signed_in.dart';
-import 'package:coddr/domain/usecases/sign_in.dart';
 import 'package:coddr/domain/usecases/sign_out.dart';
-import 'package:coddr/domain/usecases/sign_up.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 

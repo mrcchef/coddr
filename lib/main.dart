@@ -1,21 +1,19 @@
-import 'package:coddr/common/screen_utils/screen_util.dart';
+import 'package:coddr/dependencies/get_it.dart' as get_it;
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
 import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
 import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
 import 'package:coddr/presentation/journeys/auth/sign_up_screen.dart';
 import 'package:coddr/presentation/journeys/auth/splash_screen.dart';
+//Files
+import 'package:coddr/presentation/journeys/home/home_screen.dart';
 import 'package:coddr/presentation/journeys/upcoming_contests/upcoming_contests_screen.dart';
 import 'package:coddr/presentation/journeys/upcoming_fixtures/upcoming_fixtures_screen.dart';
 import 'package:coddr/presentation/themes/themes.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pedantic/pedantic.dart';
-
-//Files
-import 'package:coddr/presentation/journeys/home/home_screen.dart';
-import 'package:coddr/dependencies/get_it.dart' as get_it;
-import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

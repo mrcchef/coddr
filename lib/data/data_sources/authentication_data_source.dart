@@ -1,4 +1,3 @@
-import 'package:coddr/domain/usecases/get_emailId.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

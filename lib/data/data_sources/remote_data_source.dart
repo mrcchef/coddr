@@ -6,7 +6,6 @@ import 'package:coddr/data/model/cf_contest_model.dart';
 import 'package:coddr/data/model/cf_user_list_model.dart';
 import 'package:coddr/data/model/cf_user_model.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:http/http.dart';
 
 abstract class RemoteDataSource {
   Future<List<CFContestModel>> getCFContest();
