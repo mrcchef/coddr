@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class Profile extends StatelessWidget {
   @override
@@ -6,437 +9,399 @@ class Profile extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: ListView(
+        padding: EdgeInsets.only(top: 0),
         children: [
+          Stack(
+            children: [
+              Column(
+                children: [
+                  Container(
+                    height: 190,
+                    width: double.infinity,
+                    child: Image.asset(
+                      'assets/images/coding.jpeg',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 56,
+                  )
+                ],
+              ),
+              Positioned(
+                top: 125,
+                right: 135,
+                child: CircleAvatar(
+                  radius: 60,
+                  backgroundImage: AssetImage('assets/images/kshittiz2.jpg'),
+                ),
+              )
+            ],
+          ),
+          SizedBox(
+            height: 18,
+          ),
+          Divider(
+            thickness: 2.5,
+          ),
           Column(
             children: [
-              Stack(
-                children: <Widget>[
-                  Container(
-                    height: 250,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                      image: NetworkImage(
-                          'https://c0.wallpaperflare.com/preview/690/183/611/code-coding-connection-css.jpg'),
-                      fit: BoxFit.cover,
-                    )),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 120.0, top: 200),
-                    child: CircleAvatar(
-                      radius: 80,
-                      backgroundColor: Colors.white,
-                      child: CircleAvatar(
-                        radius: 75,
-                        backgroundImage: NetworkImage(
-                            'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'),
-                      ),
-                    ),
-                  ),
-                  Container(
-                      margin: const EdgeInsets.only(left: 150.0, top: 370),
-                      child: Text('Sahil Potdukhe')),
-                  Divider(
-                    indent: 75,
-                    endIndent: 75,
-                    thickness: 2,
-                    color: Colors.amber,
-                    height: 800,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 400),
-                    child: Column(
-                      children: <Widget>[
-                        ListTile(
-                          title: Text("Name"),
-                          subtitle: Text("Sahil Potdukhe"),
-                          leading: Icon(Icons.account_circle),
-                        ),
-                        ListTile(
-                          title: Text(
-                            "Email",
-                            textDirection: TextDirection.rtl,
-                          ),
-                          subtitle: Text(
-                            "sahilpotdukhe@gmail.com",
-                            textDirection: TextDirection.rtl,
-                          ),
-                          trailing: Icon(Icons.email),
-                        ),
-                        ListTile(
-                          title: Text("Contact"),
-                          subtitle: Text("7447332348"),
-                          leading: Icon(Icons.phone),
-                        ),
-                      ],
-                    ),
-                  ),
+              ListTile(
+                title: Text(
+                  "Name",
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: HexColor('0B2FB0')),
+                ),
+                subtitle: Text(
+                  "Sahil Potdukhe",
+                  style: TextStyle(fontSize: 12, color: Colors.black),
+                ),
+                leading: CircleAvatar(
+                  radius: 22,
+                  backgroundImage: AssetImage('assets/images/img.png'),
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  "Email",
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: HexColor('0B2FB0')),
+                  textDirection: TextDirection.rtl,
+                ),
+                subtitle: Text(
+                  "sahilpotdukhe@gmail.com",
+                  style: TextStyle(fontSize: 12, color: Colors.black),
+                  textDirection: TextDirection.rtl,
+                ),
+                trailing: CircleAvatar(
+                  radius: 22,
+                  backgroundImage: AssetImage('assets/images/img_1.png'),
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  "Contact",
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: HexColor('0B2FB0')),
+                ),
+                subtitle: Text("7447332096",
+                    style: TextStyle(fontSize: 12, color: Colors.black)),
+                leading: CircleAvatar(
+                  radius: 22,
+                  backgroundImage: AssetImage('assets/images/img_2.png'),
+                ),
+              ),
+            ],
+          ),
+          Divider(
+            thickness: 2.5,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Container(
+              height: 200,
+              decoration: BoxDecoration(
+                  color: HexColor('D8FFCE'),
+                  borderRadius: BorderRadius.circular(30)),
+              child: Column(
+                children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      margin: EdgeInsets.only(left: 1, right: 1, top: 650),
-                      width: double.infinity,
-                      // height: 280.0,
-                      decoration: BoxDecoration(
-                          color: Colors.teal[200],
-                          borderRadius: BorderRadius.all(Radius.circular(16.0)),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                offset: Offset(0.0, 3.0),
-                                blurRadius: 5.0)
-                          ]),
-
-                      child: Column(
-                        children: <Widget>[
+                    child: Text(
+                      'History',
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Spacer(),
+                      Column(
+                        children: [
+                          Image.asset(
+                            'assets/images/coins.png',
+                            height: 50,
+                            width: 50,
+                          ),
                           SizedBox(
-                            height: 5,
+                            height: 15,
                           ),
                           Text(
-                            "History",
+                            '300',
+                            style: TextStyle(fontSize: 14, color: Colors.black),
+                          ),
+                          Text(
+                            'Coins',
                             style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700),
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10.0, vertical: 25.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Column(
-                                  children: <Widget>[
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: new CircleAvatar(
-                                        radius: 30,
-                                        backgroundColor: Colors.transparent,
-                                        backgroundImage: NetworkImage(
-                                            'https://o.remove.bg/downloads/f2986e74-5a1c-4a6f-8c96-b10d3bc9f0f0/1086.10-coins-icon-iconbunny-removebg-preview.png'),
-                                      ),
-                                    ),
-                                    SizedBox(height: 8.0),
-                                    Text('300',
-                                        style: TextStyle(
-                                            color: Colors.black54,
-                                            fontWeight: FontWeight.w500)),
-                                    Text('Coins',
-                                        style: TextStyle(
-                                            color: Colors.black54,
-                                            fontWeight: FontWeight.w500))
-                                  ],
-                                ),
-                                Column(
-                                  children: <Widget>[
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: new CircleAvatar(
-                                        radius: 30,
-                                        backgroundColor: Colors.transparent,
-                                        backgroundImage: NetworkImage(
-                                            'https://o.remove.bg/downloads/f520261c-fb63-405e-be48-668aba43da13/a2b88dae-79b5-496b-a53b-6a3e81eb99c7-removebg-preview.png'),
-                                      ),
-                                    ),
-                                    SizedBox(height: 8.0),
-                                    Text('25',
-                                        style: TextStyle(
-                                            color: Colors.black54,
-                                            fontWeight: FontWeight.w500)),
-                                    Text('Contest',
-                                        style: TextStyle(
-                                            color: Colors.black54,
-                                            fontWeight: FontWeight.w500))
-                                  ],
-                                ),
-                                Column(
-                                  children: <Widget>[
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: new CircleAvatar(
-                                        radius: 30,
-                                        backgroundColor: Colors.transparent,
-                                        backgroundImage: NetworkImage(
-                                            'https://o.remove.bg/downloads/ed5ac9c3-fe8b-4361-b85f-e7db12d07b15/pngtree-first-prize-gold-trophy-icon-prize-gold-trophy-winner-first-prize-png-image_1908592-removebg-preview.png'),
-                                      ),
-                                    ),
-                                    SizedBox(height: 8.0),
-                                    Text('20',
-                                        style: TextStyle(
-                                            color: Colors.black54,
-                                            fontWeight: FontWeight.w500)),
-                                    Text('Wins',
-                                        style: TextStyle(
-                                            color: Colors.black54,
-                                            fontWeight: FontWeight.w500))
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 20.0),
                         ],
                       ),
-                    ),
-                  ),
-                  Divider(
-                    indent: 75,
-                    endIndent: 75,
-                    thickness: 2,
-                    color: Colors.amber,
-                    height: 1770,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                        margin: EdgeInsets.only(left: 1, right: 1, top: 900),
-                        // width: double.infinity,
-                        height: 200.0,
-                        decoration: BoxDecoration(
-                          color: Color.fromRGBO(225, 217, 254, 1),
-                          borderRadius: BorderRadius.all(Radius.circular(16.0)),
-                        ),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(13.0),
-                              child: Text('Handles',
-                                  textDirection: TextDirection.ltr,
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w500)),
+                      Spacer(),
+                      Column(
+                        children: [
+                          Container(
+                            height: 70,
+                            width: 100,
+                            child: Image.asset(
+                              'assets/images/contest.png',
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Text('CodeChef',
-                                      textDirection: TextDirection.ltr,
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontWeight: FontWeight.w500)),
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Text('abhisheksahu1234',
-                                      textDirection: TextDirection.ltr,
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontWeight: FontWeight.w500)),
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Text('Verify',
-                                      textDirection: TextDirection.ltr,
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontWeight: FontWeight.w500)),
-                                  SizedBox(
-                                    width: 40,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Text('CodeForces',
-                                      textDirection: TextDirection.ltr,
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontWeight: FontWeight.w500)),
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Text('abhisheksahu1234',
-                                      textDirection: TextDirection.ltr,
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontWeight: FontWeight.w500)),
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Text('Verify',
-                                      textDirection: TextDirection.ltr,
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontWeight: FontWeight.w500)),
-                                  SizedBox(
-                                    width: 40,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Text('CodeChef',
-                                      textDirection: TextDirection.ltr,
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontWeight: FontWeight.w500)),
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Text('abhisheksahu1234',
-                                      textDirection: TextDirection.ltr,
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontWeight: FontWeight.w500)),
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Text('Verify',
-                                      textDirection: TextDirection.ltr,
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontWeight: FontWeight.w500)),
-                                  SizedBox(
-                                    width: 40,
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        )),
-                  ),
-                  Divider(
-                    indent: 75,
-                    endIndent: 75,
-                    thickness: 2,
-                    color: Colors.amber,
-                    height: 2270,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      margin: EdgeInsets.only(left: 1, right: 1, top: 1150),
-                      width: double.infinity,
-                      // height: 280.0,
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(249, 225, 213, 1),
-                        borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                          ),
+                          Text(
+                            '25',
+                            style: TextStyle(fontSize: 14, color: Colors.black),
+                          ),
+                          Text(
+                            'Contest',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        ],
                       ),
-
-                      child: Column(
-                        children: <Widget>[
+                      Spacer(),
+                      Column(
+                        children: [
+                          Image.asset(
+                            'assets/images/trophy.png',
+                            height: 50,
+                            width: 50,
+                          ),
                           SizedBox(
-                            height: 5,
+                            height: 15,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Column(
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(17.0),
-                                    child: GestureDetector(
-                                      onTap: () {},
-                                      child: new CircleAvatar(
-                                        radius: 30,
-                                        backgroundColor: Colors.transparent,
-                                        backgroundImage: NetworkImage(
-                                            'https://o.remove.bg/downloads/bd8a8cc1-e631-4ca6-aae0-2fc8b621d0eb/pngtree-vector-location-icon-png-image_317888-removebg-preview.png'),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  SizedBox(height: 8.0),
-                                  Text('City',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold)),
-                                  Text('Allahabad',
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontWeight: FontWeight.w500)),
-                                  Text('State',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold)),
-                                  Text('Uttar Pradesh',
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontWeight: FontWeight.w500)),
-                                  Text('Country',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold)),
-                                  Text('India',
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontWeight: FontWeight.w500)),
-                                ],
-                              ),
-                            ],
+                          Text(
+                            '20',
+                            style: TextStyle(fontSize: 14, color: Colors.black),
                           ),
-                          SizedBox(height: 20.0),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    indent: 75,
-                    endIndent: 75,
-                    thickness: 2,
-                    color: Colors.amber,
-                    height: 2650,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      margin: EdgeInsets.only(left: 1, right: 1, top: 1340),
-                      width: double.infinity,
-                      //height: 280.0,
-                      decoration: BoxDecoration(
-                          color: Color.fromRGBO(211, 249, 200, 1),
-                          borderRadius: BorderRadius.all(Radius.circular(16.0)),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                offset: Offset(0.0, 3.0),
-                                blurRadius: 5.0)
-                          ]),
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: 5,
-                          ),
-                          ListTile(
-                            title: Text("Student/Professional"),
-                            subtitle: Text("Student"),
-                            trailing: Icon(Icons.computer),
-                          ),
-                          ListTile(
-                            title: Text("Institution"),
-                            subtitle: Text(
-                                "Indian Institute of Information Technology, Vadodara"),
+                          Text(
+                            'Wins',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
                           ),
                         ],
                       ),
-                    ),
+                      Spacer(),
+                    ],
                   ),
                 ],
               ),
-            ],
-          )
+            ),
+          ),
+          Divider(
+            thickness: 2.5,
+          ),
+          Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: HexColor('FDD9D9'),
+                    borderRadius: BorderRadius.circular(30)),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(8.0, 8, 8, 0),
+                      child: Text(
+                        'Handles',
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                      ),
+                    ),
+                    ListTile(
+                      minVerticalPadding: 0,
+                      title: Text(
+                        "CodeForces",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: HexColor('0B2FB0')),
+                      ),
+                      subtitle: Text(
+                        "sahilpotdukhe11",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      trailing:
+                        Image.asset('assets/images/verified.png',width: 90,)
+                      // Text(
+                      //   "Verified",
+                      //   style: TextStyle(
+                      //       color: Colors.green, fontWeight: FontWeight.bold),
+                      // ),
+                    ),
+                    ListTile(
+                      minVerticalPadding: 0,
+                      title: Text(
+                        "CodeChef",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: HexColor('0B2FB0')),
+                      ),
+                      subtitle: Text(
+                        "sahilpotdukhe123",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      trailing: Text(
+                        "Verify",
+                        style: TextStyle(
+                            color: Colors.red, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    ListTile(
+                      title: Text(
+                        "HackerEarth",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: HexColor('0B2FB0')),
+                      ),
+                      subtitle: Text(
+                        "sahilpotdukhe142",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      trailing: Text(
+                        "Verify",
+                        style: TextStyle(
+                            color: Colors.red, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+              )),
+          Divider(
+            thickness: 2.5,
+          ),
+          Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                height: 140,
+                decoration: BoxDecoration(
+                    color: HexColor('E1D9FE'),
+                    borderRadius: BorderRadius.circular(30)),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Icon(
+                        FontAwesomeIcons.mapMarkerAlt,
+                        size: 50,
+                      ),
+                    ),
+                    Spacer(),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'City',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: HexColor('861F3E'),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              width: 52,
+                            ),
+                            Text('Allahabad')
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'State',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: HexColor('861F3E'),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              width: 42,
+                            ),
+                            Text('Uttar Pradesh')
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'Country',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: HexColor('861F3E'),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text('India')
+                          ],
+                        ),
+                      ],
+                    ),
+                    Spacer()
+                  ],
+                ),
+              )),
+          Divider(
+            thickness: 2.5,
+          ),
+          Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+
+                decoration: BoxDecoration(
+                    color: HexColor('FDE5D9'),
+                    borderRadius: BorderRadius.circular(30)),
+                child:Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Student/Professional' ,style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),),
+                              Text('Student'),
+                            ],
+                          ),
+                        ),
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(8.0,20,10,10),
+                          child: Icon(FontAwesomeIcons.laptop),
+                        ),
+                        SizedBox(width: 30,)
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20.0,0,0,5),
+                      child: Text('Institution',style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold)),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20.0,0,0,5),
+                      child: Text('Indian Institute of Information Technology Vadodara'),
+                    ),
+                    SizedBox(height: 10,)
+
+                  ],
+                )
+              ))
         ],
       ),
     );
