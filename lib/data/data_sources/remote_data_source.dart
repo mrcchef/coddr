@@ -5,12 +5,15 @@ import 'package:coddr/data/model/cf_contest_list_model.dart';
 import 'package:coddr/data/model/cf_contest_model.dart';
 import 'package:coddr/data/model/cf_user_list_model.dart';
 import 'package:coddr/data/model/cf_user_model.dart';
+import 'package:coddr/domain/entities/user_model.dart';
 import 'package:flutter/cupertino.dart';
 
 abstract class RemoteDataSource {
   Future<List<CFContestModel>> getCFContest();
   Future<void> storeUserCredentials(Map<String, String> authData);
   Future<List<CFUserModel>> getCFUser(List<String> handles);
+  Future<UserModel> fetchUserDetails(String uid);
+  Future<void> storeUserDetails(UserModel userModel);
 }
 
 class RemoteDataSourceImpl extends RemoteDataSource {
@@ -44,6 +47,39 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         'email': authData['email'],
       },
     );
+  }
+
+  Future<void> storeUserDetails(UserModel userModel) async {
+    await FirebaseFirestore.instance.collection('users').doc(userModel.uid).set(
+      {
+        'displayName': userModel.displayName,
+        'contactNumber': userModel.contanctNumber,
+        'coins': userModel.coins,
+        'contest': userModel.contest,
+        'wins': userModel.wins,
+        'handleCF': userModel.handelCF,
+        'handleCC': userModel.handelCC,
+        'handelATC': userModel.handelATC,
+        'handelHE': userModel.handelHE,
+        'city': userModel.city,
+        'state': userModel.state,
+        'country': userModel.country,
+        'occupation': userModel.occupation,
+        'institution': userModel.instition,
+      },
+    );
+  }
+
+  Future<UserModel> fetchUserDetails(String uid) async {
+    UserModel userModel;
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .get()
+        .then((value) => {userModel = UserModel.fromMap(value.data())});
+    print(userModel);
+    return userModel;
   }
 
   @override

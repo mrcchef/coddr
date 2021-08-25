@@ -14,6 +14,7 @@ import 'package:coddr/domain/usecases/store_user_credentials.dart';
 import 'package:coddr/domain/usecases/verify_email.dart';
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
 import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.dart';
+import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
 import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
 import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
 import 'package:coddr/presentation/journeys/home/home_screen.dart';
@@ -75,6 +76,9 @@ Future init() async {
 
   getItInstance.registerFactory<ContestListingBloc>(
       () => ContestListingBloc(getCFContestList: getItInstance()));
+
+  getItInstance.registerFactory<ProfileBloc>(
+      () => ProfileBloc(remoteDataSourceImpl: getItInstance()));
 
   getItInstance.registerLazySingleton<StoreUserCredentials>(
       () => StoreUserCredentials(platformRepositoryImpl: getItInstance()));

@@ -1,408 +1,454 @@
+import 'package:coddr/data/data_sources/authentication_data_source.dart';
+import 'package:coddr/dependencies/get_it.dart' as get_it;
+import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
+  @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  ProfileBloc profileBloc;
+  AuthenticationDataSource authenticationDataSource;
+
+  @override
+  void initState() {
+    authenticationDataSource =
+        get_it.getItInstance<AuthenticationDataSourceImpl>();
+    profileBloc = get_it.getItInstance<ProfileBloc>();
+    profileBloc.add(FetchProfileData(uid: authenticationDataSource.getUid()));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: ListView(
-        padding: EdgeInsets.only(top: 0),
-        children: [
-          Stack(
+      body: BlocBuilder<ProfileBloc, ProfileState>(
+        bloc: profileBloc,
+        builder: (context, state) {
+          if (state is ProfileLoding)
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+
+          if (state is ProfileLoaded) print(state.userModel);
+
+          return ListView(
+            padding: EdgeInsets.only(top: 0),
             children: [
-              Column(
+              Stack(
                 children: [
-                  Container(
-                    height: 190,
-                    width: double.infinity,
-                    child: Image.asset(
-                      'assets/images/coding.jpeg',
-                      fit: BoxFit.cover,
-                    ),
+                  Column(
+                    children: [
+                      Container(
+                        height: 190,
+                        width: double.infinity,
+                        child: Image.asset(
+                          'assets/images/coding.jpeg',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 56,
+                      )
+                    ],
                   ),
-                  SizedBox(
-                    height: 56,
+                  Positioned(
+                    top: 125,
+                    right: 135,
+                    child: CircleAvatar(
+                      radius: 60,
+                      backgroundImage:
+                          AssetImage('assets/images/kshittiz2.jpg'),
+                    ),
                   )
                 ],
               ),
-              Positioned(
-                top: 125,
-                right: 135,
-                child: CircleAvatar(
-                  radius: 60,
-                  backgroundImage: AssetImage('assets/images/kshittiz2.jpg'),
-                ),
-              )
-            ],
-          ),
-          SizedBox(
-            height: 18,
-          ),
-          Divider(
-            thickness: 2.5,
-          ),
-          Column(
-            children: [
-              ListTile(
-                title: Text(
-                  "Name",
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: HexColor('0B2FB0')),
-                ),
-                subtitle: Text(
-                  "Sahil Potdukhe",
-                  style: TextStyle(fontSize: 12, color: Colors.black),
-                ),
-                leading: CircleAvatar(
-                  radius: 22,
-                  backgroundImage: AssetImage('assets/images/img.png'),
-                ),
+              SizedBox(
+                height: 18,
               ),
-              ListTile(
-                title: Text(
-                  "Email",
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: HexColor('0B2FB0')),
-                  textDirection: TextDirection.rtl,
-                ),
-                subtitle: Text(
-                  "sahilpotdukhe@gmail.com",
-                  style: TextStyle(fontSize: 12, color: Colors.black),
-                  textDirection: TextDirection.rtl,
-                ),
-                trailing: CircleAvatar(
-                  radius: 22,
-                  backgroundImage: AssetImage('assets/images/img_1.png'),
-                ),
+              Divider(
+                thickness: 2.5,
               ),
-              ListTile(
-                title: Text(
-                  "Contact",
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: HexColor('0B2FB0')),
-                ),
-                subtitle: Text("7447332096",
-                    style: TextStyle(fontSize: 12, color: Colors.black)),
-                leading: CircleAvatar(
-                  radius: 22,
-                  backgroundImage: AssetImage('assets/images/img_2.png'),
-                ),
-              ),
-            ],
-          ),
-          Divider(
-            thickness: 2.5,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Container(
-              height: 200,
-              decoration: BoxDecoration(
-                  color: HexColor('D8FFCE'),
-                  borderRadius: BorderRadius.circular(30)),
-              child: Column(
+              Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'History',
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                  ListTile(
+                    title: Text(
+                      "Name",
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: HexColor('0B2FB0')),
+                    ),
+                    subtitle: Text(
+                      "Sahil Potdukhe",
+                      style: TextStyle(fontSize: 12, color: Colors.black),
+                    ),
+                    leading: CircleAvatar(
+                      radius: 22,
+                      backgroundImage: AssetImage('assets/images/img.png'),
                     ),
                   ),
-                  Row(
-                    children: [
-                      Spacer(),
-                      Column(
-                        children: [
-                          Image.asset(
-                            'assets/images/coins.png',
-                            height: 50,
-                            width: 50,
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            '300',
-                            style: TextStyle(fontSize: 14, color: Colors.black),
-                          ),
-                          Text(
-                            'Coins',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      Column(
-                        children: [
-                          Container(
-                            height: 70,
-                            width: 100,
-                            child: Image.asset(
-                              'assets/images/contest.png',
-                            ),
-                          ),
-                          Text(
-                            '25',
-                            style: TextStyle(fontSize: 14, color: Colors.black),
-                          ),
-                          Text(
-                            'Contest',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      Column(
-                        children: [
-                          Image.asset(
-                            'assets/images/trophy.png',
-                            height: 50,
-                            width: 50,
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            '20',
-                            style: TextStyle(fontSize: 14, color: Colors.black),
-                          ),
-                          Text(
-                            'Wins',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                    ],
+                  ListTile(
+                    title: Text(
+                      "Email",
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: HexColor('0B2FB0')),
+                      textDirection: TextDirection.rtl,
+                    ),
+                    subtitle: Text(
+                      "sahilpotdukhe@gmail.com",
+                      style: TextStyle(fontSize: 12, color: Colors.black),
+                      textDirection: TextDirection.rtl,
+                    ),
+                    trailing: CircleAvatar(
+                      radius: 22,
+                      backgroundImage: AssetImage('assets/images/img_1.png'),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      "Contact",
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: HexColor('0B2FB0')),
+                    ),
+                    subtitle: Text("7447332096",
+                        style: TextStyle(fontSize: 12, color: Colors.black)),
+                    leading: CircleAvatar(
+                      radius: 22,
+                      backgroundImage: AssetImage('assets/images/img_2.png'),
+                    ),
                   ),
                 ],
               ),
-            ),
-          ),
-          Divider(
-            thickness: 2.5,
-          ),
-          Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: HexColor('FDD9D9'),
-                    borderRadius: BorderRadius.circular(30)),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0, 8, 8, 0),
-                      child: Text(
-                        'Handles',
-                        style: TextStyle(fontSize: 20, color: Colors.black),
+              Divider(
+                thickness: 2.5,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Container(
+                  height: 200,
+                  decoration: BoxDecoration(
+                      color: HexColor('D8FFCE'),
+                      borderRadius: BorderRadius.circular(30)),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'History',
+                          style: TextStyle(fontSize: 20, color: Colors.black),
+                        ),
                       ),
-                    ),
-                    ListTile(
-                      minVerticalPadding: 0,
-                      title: Text(
-                        "CodeForces",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: HexColor('0B2FB0')),
+                      Row(
+                        children: [
+                          Spacer(),
+                          Column(
+                            children: [
+                              Image.asset(
+                                'assets/images/coins.png',
+                                height: 50,
+                                width: 50,
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Text(
+                                '300',
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.black),
+                              ),
+                              Text(
+                                'Coins',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          Column(
+                            children: [
+                              Container(
+                                height: 70,
+                                width: 100,
+                                child: Image.asset(
+                                  'assets/images/contest.png',
+                                ),
+                              ),
+                              Text(
+                                '25',
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.black),
+                              ),
+                              Text(
+                                'Contest',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          Column(
+                            children: [
+                              Image.asset(
+                                'assets/images/trophy.png',
+                                height: 50,
+                                width: 50,
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Text(
+                                '20',
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.black),
+                              ),
+                              Text(
+                                'Wins',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                        ],
                       ),
-                      subtitle: Text(
-                        "sahilpotdukhe11",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      trailing:
-                        Image.asset('assets/images/verified.png',width: 90,)
-                      // Text(
-                      //   "Verified",
-                      //   style: TextStyle(
-                      //       color: Colors.green, fontWeight: FontWeight.bold),
-                      // ),
-                    ),
-                    ListTile(
-                      minVerticalPadding: 0,
-                      title: Text(
-                        "CodeChef",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: HexColor('0B2FB0')),
-                      ),
-                      subtitle: Text(
-                        "sahilpotdukhe123",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      trailing: Text(
-                        "Verify",
-                        style: TextStyle(
-                            color: Colors.red, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    ListTile(
-                      title: Text(
-                        "HackerEarth",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: HexColor('0B2FB0')),
-                      ),
-                      subtitle: Text(
-                        "sahilpotdukhe142",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      trailing: Text(
-                        "Verify",
-                        style: TextStyle(
-                            color: Colors.red, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              )),
-          Divider(
-            thickness: 2.5,
-          ),
-          Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Container(
-                height: 140,
-                decoration: BoxDecoration(
-                    color: HexColor('E1D9FE'),
-                    borderRadius: BorderRadius.circular(30)),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Icon(
-                        FontAwesomeIcons.mapMarkerAlt,
-                        size: 50,
-                      ),
-                    ),
-                    Spacer(),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
+              ),
+              Divider(
+                thickness: 2.5,
+              ),
+              Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: HexColor('FDD9D9'),
+                        borderRadius: BorderRadius.circular(30)),
+                    child: Column(
                       children: [
-                        Row(
-                          children: [
-                            Text(
-                              'City',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: HexColor('861F3E'),
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              width: 52,
-                            ),
-                            Text('Allahabad')
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(8.0, 8, 8, 0),
+                          child: Text(
+                            'Handles',
+                            style: TextStyle(fontSize: 20, color: Colors.black),
+                          ),
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              'State',
+                        ListTile(
+                            minVerticalPadding: 0,
+                            title: Text(
+                              "CodeForces",
                               style: TextStyle(
-                                  fontSize: 16,
-                                  color: HexColor('861F3E'),
-                                  fontWeight: FontWeight.bold),
+                                  fontWeight: FontWeight.bold,
+                                  color: HexColor('0B2FB0')),
                             ),
-                            SizedBox(
-                              width: 42,
+                            subtitle: Text(
+                              "sahilpotdukhe11",
+                              style: TextStyle(color: Colors.black),
                             ),
-                            Text('Uttar Pradesh')
-                          ],
+                            trailing: Image.asset(
+                              'assets/images/verified.png',
+                              width: 90,
+                            )
+                            // Text(
+                            //   "Verified",
+                            //   style: TextStyle(
+                            //       color: Colors.green, fontWeight: FontWeight.bold),
+                            // ),
+                            ),
+                        ListTile(
+                          minVerticalPadding: 0,
+                          title: Text(
+                            "CodeChef",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: HexColor('0B2FB0')),
+                          ),
+                          subtitle: Text(
+                            "sahilpotdukhe123",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          trailing: Text(
+                            "Verify",
+                            style: TextStyle(
+                                color: Colors.red, fontWeight: FontWeight.bold),
+                          ),
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              'Country',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: HexColor('861F3E'),
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Text('India')
-                          ],
+                        ListTile(
+                          title: Text(
+                            "HackerEarth",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: HexColor('0B2FB0')),
+                          ),
+                          subtitle: Text(
+                            "sahilpotdukhe142",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          trailing: Text(
+                            "Verify",
+                            style: TextStyle(
+                                color: Colors.red, fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ],
                     ),
-                    Spacer()
-                  ],
-                ),
-              )),
-          Divider(
-            thickness: 2.5,
-          ),
-          Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Container(
-
-                decoration: BoxDecoration(
-                    color: HexColor('FDE5D9'),
-                    borderRadius: BorderRadius.circular(30)),
-                child:Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  )),
+              Divider(
+                thickness: 2.5,
+              ),
+              Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                    height: 140,
+                    decoration: BoxDecoration(
+                        color: HexColor('E1D9FE'),
+                        borderRadius: BorderRadius.circular(30)),
+                    child: Row(
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(20.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Student/Professional' ,style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),),
-                              Text('Student'),
-                            ],
+                          child: Icon(
+                            FontAwesomeIcons.mapMarkerAlt,
+                            size: 50,
                           ),
                         ),
                         Spacer(),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(8.0,20,10,10),
-                          child: Icon(FontAwesomeIcons.laptop),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  'City',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: HexColor('861F3E'),
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  width: 52,
+                                ),
+                                Text('Allahabad')
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'State',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: HexColor('861F3E'),
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  width: 42,
+                                ),
+                                Text('Uttar Pradesh')
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Country',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: HexColor('861F3E'),
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text('India')
+                              ],
+                            ),
+                          ],
                         ),
-                        SizedBox(width: 30,)
+                        Spacer()
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0,0,0,5),
-                      child: Text('Institution',style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold)),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0,0,0,5),
-                      child: Text('Indian Institute of Information Technology Vadodara'),
-                    ),
-                    SizedBox(height: 10,)
-
-                  ],
-                )
-              ))
-        ],
+                  )),
+              Divider(
+                thickness: 2.5,
+              ),
+              Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                      decoration: BoxDecoration(
+                          color: HexColor('FDE5D9'),
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Student/Professional',
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text('Student'),
+                                  ],
+                                ),
+                              ),
+                              Spacer(),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(8.0, 20, 10, 10),
+                                child: Icon(FontAwesomeIcons.laptop),
+                              ),
+                              SizedBox(
+                                width: 30,
+                              )
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(20.0, 0, 0, 5),
+                            child: Text('Institution',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold)),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(20.0, 0, 0, 5),
+                            child: Text(
+                                'Indian Institute of Information Technology Vadodara'),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          )
+                        ],
+                      )))
+            ],
+          );
+        },
       ),
     );
   }

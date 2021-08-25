@@ -1,5 +1,6 @@
 import 'package:coddr/dependencies/get_it.dart' as get_it;
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
+import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
 import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
 import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
@@ -32,6 +33,7 @@ class _MyAppState extends State<MyApp> {
   AuthenticationBloc _authenticationBloc;
   SignInBloc _signInBloc;
   SignUpBloc _signUpBloc;
+  ProfileBloc _profileBloc;
 
   @override
   void initState() {
@@ -39,6 +41,7 @@ class _MyAppState extends State<MyApp> {
     _authenticationBloc.add(AppStartedEvent());
     _signInBloc = get_it.getItInstance<SignInBloc>();
     _signUpBloc = get_it.getItInstance<SignUpBloc>();
+    _profileBloc = get_it.getItInstance<ProfileBloc>();
     super.initState();
   }
 
@@ -60,6 +63,9 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider<SignUpBloc>(
           create: (context) => _signUpBloc,
+        ),
+        BlocProvider<ProfileBloc>(
+          create: (context) => _profileBloc,
         ),
       ],
       child: MaterialApp(
