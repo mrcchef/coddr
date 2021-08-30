@@ -1,9 +1,9 @@
 import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
+import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:coddr/presentation/widgets/CoddrAppBar.dart';
 import 'package:coddr/presentation/widgets/main_drawer.dart';
-import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:flutter/material.dart';
 
 import 'fixture_card.dart';
@@ -20,11 +20,37 @@ class UpcomingFixturesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget leftAppBarWidget = InkWell(
+      onTap: () {
+        Navigator.of(context).pop();
+      },
+      child: Icon(Icons.arrow_back_ios, color: Colors.black),
+    );
+
+    Widget middleAppBarWidget = Padding(
+      padding: EdgeInsets.only(top: Sizes.dimen_6.h),
+      child: Text('Coddr', style: Theme.of(context).textTheme.headline5),
+    );
+
+    Widget rightAppBarWidget = Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: Sizes.dimen_16.w,
+        vertical: Sizes.dimen_8.h,
+      ),
+      child: Icon(
+        Icons.notifications_active_outlined,
+        color: Colors.black,
+      ),
+    );
     final title = ModalRoute.of(context).settings.arguments as String;
     print(title);
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CoddrAppBar(),
+      appBar: CoddrAppBar(
+        leftWidget: leftAppBarWidget,
+        middleWidget: middleAppBarWidget,
+        rightWidget: rightAppBarWidget,
+      ),
       drawer: MainDrawer(),
       body: Padding(
         padding: EdgeInsets.symmetric(

@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
+
 class Plocation extends StatelessWidget {
-  const Plocation({Key key}) : super(key: key);
+  final String city, state, country;
+
+  const Plocation({
+    Key key,
+    @required this.city,
+    @required this.state,
+    @required this.country,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +47,7 @@ class Plocation extends StatelessWidget {
                       SizedBox(
                         width: 52,
                       ),
-                      Text('Allahabad')
+                      Text(city)
                     ],
                   ),
                   Row(
@@ -54,7 +62,7 @@ class Plocation extends StatelessWidget {
                       SizedBox(
                         width: 42,
                       ),
-                      Text('Uttar Pradesh')
+                      Text(state)
                     ],
                   ),
                   Row(
@@ -69,7 +77,7 @@ class Plocation extends StatelessWidget {
                       SizedBox(
                         width: 20,
                       ),
-                      Text('India')
+                      Text(country)
                     ],
                   ),
                 ],

@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
+
 class PHandles extends StatelessWidget {
-  const PHandles({Key key}) : super(key: key);
+  final String handelCF, handelCC, handelHE;
+
+  const PHandles({
+    Key key,
+    @required this.handelCF,
+    @required this.handelCC,
+    @required this.handelHE,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +34,10 @@ class PHandles extends StatelessWidget {
                 title: Text(
                   "CodeForces",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: HexColor('0B2FB0')),
+                      fontWeight: FontWeight.bold, color: HexColor('0B2FB0')),
                 ),
                 subtitle: Text(
-                  "sahilpotdukhe11",
+                  handelCF,
                   style: TextStyle(color: Colors.black),
                 ),
                 trailing: TextButton.icon(
@@ -43,8 +50,7 @@ class PHandles extends StatelessWidget {
                     label: Text(
                       'Verified',
                       style: TextStyle(
-                          color: Colors.green,
-                          fontWeight: FontWeight.bold),
+                          color: Colors.green, fontWeight: FontWeight.bold),
                     )),
               ),
               ListTile(
@@ -52,11 +58,10 @@ class PHandles extends StatelessWidget {
                 title: Text(
                   "CodeChef",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: HexColor('0B2FB0')),
+                      fontWeight: FontWeight.bold, color: HexColor('0B2FB0')),
                 ),
                 subtitle: Text(
-                  "sahilpotdukhe123",
+                  handelCC,
                   style: TextStyle(color: Colors.black),
                 ),
                 trailing: TextButton.icon(
@@ -64,8 +69,7 @@ class PHandles extends StatelessWidget {
                   label: Text(
                     'Verify',
                     style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold),
+                        color: Colors.red, fontWeight: FontWeight.bold),
                   ),
                   icon: Icon(
                     FontAwesomeIcons.questionCircle,
@@ -76,10 +80,9 @@ class PHandles extends StatelessWidget {
               ),
               ListTile(
                 title: Text(
-                  "HackerEarth",
+                  handelHE,
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: HexColor('0B2FB0')),
+                      fontWeight: FontWeight.bold, color: HexColor('0B2FB0')),
                 ),
                 subtitle: Text(
                   "sahilpotdukhe142",
@@ -95,8 +98,7 @@ class PHandles extends StatelessWidget {
                     label: Text(
                       'Verified',
                       style: TextStyle(
-                          color: Colors.green,
-                          fontWeight: FontWeight.bold),
+                          color: Colors.green, fontWeight: FontWeight.bold),
                     )),
               ),
             ],

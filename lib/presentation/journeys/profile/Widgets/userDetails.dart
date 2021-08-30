@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class UserDetails extends StatefulWidget {
-  @override
-  _UserDetailsState createState() => _UserDetailsState();
-}
+class UserDetails extends StatelessWidget {
+  final String displayName;
+  final String contactNumber;
+  final String email;
+  UserDetails({
+    @required this.displayName,
+    @required this.contactNumber,
+    @required this.email,
+  });
 
-class _UserDetailsState extends State<UserDetails> {
-  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -21,7 +24,7 @@ class _UserDetailsState extends State<UserDetails> {
                 color: HexColor('0B2FB0')),
           ),
           subtitle: Text(
-            "Sahil Potdukhe",
+            displayName,
             style: TextStyle(fontSize: 12, color: Colors.black),
           ),
           leading: CircleAvatar(
@@ -39,7 +42,7 @@ class _UserDetailsState extends State<UserDetails> {
             textDirection: TextDirection.rtl,
           ),
           subtitle: Text(
-            "7447332096",
+            contactNumber,
             style: TextStyle(fontSize: 12, color: Colors.black),
             textDirection: TextDirection.rtl,
           ),
@@ -57,7 +60,7 @@ class _UserDetailsState extends State<UserDetails> {
                 color: HexColor('0B2FB0')),
           ),
           subtitle: Text(
-            "sahilpotdukhe@gmail.com",
+            email,
             style: TextStyle(fontSize: 12, color: Colors.black),
           ),
           leading: CircleAvatar(
@@ -68,8 +71,7 @@ class _UserDetailsState extends State<UserDetails> {
             onPressed: () {},
             label: Text(
               'Verify',
-              style: TextStyle(
-                  color: Colors.red, fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
             ),
             icon: Icon(
               FontAwesomeIcons.questionCircle,

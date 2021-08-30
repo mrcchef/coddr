@@ -1,8 +1,19 @@
 import 'package:coddr/common/constants/size_constants.dart';
-import 'package:flutter/material.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
+import 'package:flutter/material.dart';
 
 class CoddrAppBar extends StatelessWidget with PreferredSizeWidget {
+  final Widget leftWidget;
+  final Widget middleWidget;
+  final Widget rightWidget;
+
+  const CoddrAppBar({
+    Key key,
+    @required this.leftWidget,
+    @required this.middleWidget,
+    @required this.rightWidget,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -14,29 +25,12 @@ class CoddrAppBar extends StatelessWidget with PreferredSizeWidget {
             horizontal: Sizes.dimen_16.w,
             vertical: Sizes.dimen_8.h,
           ),
-          child: InkWell(
-            onTap: () {
-              Scaffold.of(context).openDrawer();
-            },
-            child: Icon(Icons.menu, color: Colors.black),
-          ),
+          child: leftWidget,
         ),
         Spacer(),
-        Padding(
-          padding: EdgeInsets.only(top: Sizes.dimen_6.h),
-          child: Text('Coddr', style: Theme.of(context).textTheme.headline5),
-        ),
+        middleWidget,
         Spacer(),
-        Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: Sizes.dimen_16.w,
-            vertical: Sizes.dimen_8.h,
-          ),
-          child: Icon(
-            Icons.notifications_active_outlined,
-            color: Colors.black,
-          ),
-        )
+        rightWidget,
       ],
     );
   }

@@ -2,17 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class PHistory extends StatelessWidget {
-  const PHistory({Key key}) : super(key: key);
+  final int coins;
+  final int contest;
+  final int wins;
+
+  const PHistory({
+    Key key,
+    @required this.coins,
+    @required this.contest,
+    @required this.wins,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Container(
         height: 200,
         decoration: BoxDecoration(
-            color: HexColor('D8FFCE'),
-            borderRadius: BorderRadius.circular(30)),
+            color: HexColor('D8FFCE'), borderRadius: BorderRadius.circular(30)),
         child: Column(
           children: [
             Padding(
@@ -36,9 +44,8 @@ class PHistory extends StatelessWidget {
                       height: 15,
                     ),
                     Text(
-                      '300',
-                      style: TextStyle(
-                          fontSize: 14, color: Colors.black),
+                      coins.toString(),
+                      style: TextStyle(fontSize: 14, color: Colors.black),
                     ),
                     Text(
                       'Coins',
@@ -60,9 +67,8 @@ class PHistory extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '25',
-                      style: TextStyle(
-                          fontSize: 14, color: Colors.black),
+                      contest.toString(),
+                      style: TextStyle(fontSize: 14, color: Colors.black),
                     ),
                     Text(
                       'Contest',
@@ -85,9 +91,8 @@ class PHistory extends StatelessWidget {
                       height: 15,
                     ),
                     Text(
-                      '20',
-                      style: TextStyle(
-                          fontSize: 14, color: Colors.black),
+                      wins.toString(),
+                      style: TextStyle(fontSize: 14, color: Colors.black),
                     ),
                     Text(
                       'Wins',

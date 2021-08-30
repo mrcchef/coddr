@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 
 class UserModel extends Equatable {
   final String displayName;
-  final String emailId;
+  final String email;
   final String uid;
-  final String contanctNumber;
+  final String contactNumber;
   final int coins;
   final int contest;
   final int wins;
@@ -22,10 +22,10 @@ class UserModel extends Equatable {
   final String instition;
 
   UserModel({
-    @required this.emailId,
+    @required this.email,
     @required this.uid,
     this.displayName,
-    this.contanctNumber,
+    this.contactNumber,
     this.coins = 500,
     this.contest = 0,
     this.wins = 0,
@@ -44,9 +44,9 @@ class UserModel extends Equatable {
   List<Object> get props {
     return [
       displayName,
-      emailId,
+      email,
       uid,
-      contanctNumber,
+      contactNumber,
       coins,
       contest,
       wins,
@@ -64,7 +64,7 @@ class UserModel extends Equatable {
 
   UserModel copyWith({
     String displayName,
-    String emailId,
+    String email,
     String uid,
     String contanctNumber,
     int coins,
@@ -82,9 +82,9 @@ class UserModel extends Equatable {
   }) {
     return UserModel(
       displayName: displayName ?? this.displayName,
-      emailId: emailId ?? this.emailId,
+      email: email ?? this.email,
       uid: uid ?? this.uid,
-      contanctNumber: contanctNumber ?? this.contanctNumber,
+      contactNumber: contanctNumber ?? this.contactNumber,
       coins: coins ?? this.coins,
       contest: contest ?? this.contest,
       wins: wins ?? this.wins,
@@ -103,9 +103,9 @@ class UserModel extends Equatable {
   Map<String, dynamic> toMap() {
     return {
       'displayName': displayName,
-      'emailId': emailId,
+      'email': email,
       'uid': uid,
-      'contanctNumber': contanctNumber,
+      'contanctNumber': contactNumber,
       'coins': coins,
       'contest': contest,
       'wins': wins,
@@ -124,9 +124,9 @@ class UserModel extends Equatable {
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
       displayName: map['displayName'],
-      emailId: map['emailId'],
+      email: map['email'],
       uid: map['uid'],
-      contanctNumber: map['contanctNumber'],
+      contactNumber: map['contanctNumber'],
       coins: map['coins'],
       contest: map['contest'],
       wins: map['wins'],

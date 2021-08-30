@@ -1,15 +1,18 @@
+import 'package:coddr/common/constants/size_constants.dart';
+import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/dependencies/get_it.dart';
+import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
 import 'package:coddr/presentation/journeys/profile/Widgets/Image_section.dart';
-import 'package:coddr/presentation/journeys/profile/Widgets/PEditDetails.dart';
-import 'package:coddr/presentation/journeys/profile/Widgets/PEditImage.dart';
 import 'package:coddr/presentation/journeys/profile/Widgets/PHandles.dart';
 import 'package:coddr/presentation/journeys/profile/Widgets/PHistory.dart';
 import 'package:coddr/presentation/journeys/profile/Widgets/Ploacation.dart';
-import 'package:coddr/presentation/journeys/profile/Widgets/editHandles.dart';
 import 'package:coddr/presentation/journeys/profile/Widgets/userDetails.dart';
+import 'package:coddr/presentation/journeys/profile/edit_profile.dart';
+import 'package:coddr/presentation/widgets/CoddrAppBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 enum Page { accountinfo, editinfo }
@@ -22,7 +25,6 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   ProfileBloc _profileBloc;
   Page _selectedPage = Page.accountinfo;
-  GlobalKey<FormState> _formkey = GlobalKey();
 
   @override
   void initState() {
@@ -39,50 +41,63 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    Widget leftAppBarWidget = InkWell(
+      onTap: () {
+        Navigator.of(context).pop();
+      },
+      child: Icon(Icons.arrow_back_ios, color: Colors.black),
+    );
+
+    Widget middleAppBarWidget = Padding(
+      padding: EdgeInsets.only(top: Sizes.dimen_6.h),
+      child: Text('Profile', style: Theme.of(context).textTheme.headline5),
+    );
+
+    Widget rightAppBarWidget = Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: Sizes.dimen_16.w,
+          vertical: Sizes.dimen_8.h,
+        ),
+        child: TextButton.icon(
+          onPressed: () {
+            print("edit button pressed");
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => EditProfile()));
+          },
+          label: Text('Edit',
+              style: TextStyle(
+                fontSize: 16,
+                color: HexColor('#d91f2a'),
+                fontWeight: FontWeight.bold,
+              )),
+          icon: Icon(
+            Icons.edit,
+            color: HexColor('#d91f2a'),
+          ),
+        ));
+
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black),
-        title: TextButton(
-          onPressed: () {
-            setState(() {
-              _selectedPage = Page.accountinfo;
-            });
-          },
-          child: Text('Profile',
-              style: TextStyle(color: Colors.black, fontSize: 20)),
-        ),
-        centerTitle: true,
-        actions: [
-          TextButton.icon(
-            onPressed: () {
-              setState(() {
-                _selectedPage = Page.editinfo;
-              });
-            },
-            label: Text('Edit',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: HexColor('#d91f2a'),
-                  fontWeight: FontWeight.bold,
-                )),
-            icon: Icon(
-              Icons.edit,
-              color: HexColor('#d91f2a'),
-            ),
-          )
-        ],
+      appBar: CoddrAppBar(
+        leftWidget: leftAppBarWidget,
+        middleWidget: middleAppBarWidget,
+        rightWidget: rightAppBarWidget,
       ),
-      body: _loadScreen(),
-    );
-  }
+      body: BlocBuilder<ProfileBloc, ProfileState>(
+        bloc: _profileBloc,
+        builder: (context, state) {
+          if (state is ProfileLoding) {
+            return Center(child: CircularProgressIndicator());
+          }
 
-  Widget _loadScreen() {
-    switch (_selectedPage) {
-      case Page.accountinfo:
-        return Scaffold(
-          body: ListView(
+          if (state is ProfileError) {
+            return Center(child: Text(state.message));
+          }
+
+          final curState = (state as ProfileLoaded);
+          UserModel userModel = curState.userModel;
+
+          return ListView(
             padding: EdgeInsets.only(top: 0),
             children: [
               ImageSection(),
@@ -92,58 +107,44 @@ class _ProfileState extends State<Profile> {
               Divider(
                 thickness: 2.5,
               ),
-              UserDetails(),
+              UserDetails(
+                email: userModel.email,
+                displayName: userModel.displayName,
+                contactNumber: userModel.contactNumber == null
+                    ? ""
+                    : userModel.contactNumber,
+              ),
               Divider(
                 thickness: 2.5,
               ),
-              PHistory(),
+              PHistory(
+                coins: userModel.coins == null ? 0 : userModel.coins,
+                contest: userModel.contest == null ? 0 : userModel.contest,
+                wins: userModel.wins == null ? 0 : userModel.wins,
+              ),
               Divider(
                 thickness: 2.5,
               ),
-              PHandles(),
+              PHandles(
+                handelCF: userModel.handelCF == null ? "" : userModel.handelCF,
+                handelCC: userModel.handelCC == null ? "" : userModel.handelCC,
+                handelHE: userModel.handelHE == null ? "" : userModel.handelHE,
+              ),
               Divider(
                 thickness: 2.5,
               ),
-              Plocation(),
+              Plocation(
+                city: userModel.city == null ? "" : userModel.city,
+                state: userModel.state == null ? "" : userModel.state,
+                country: userModel.country == null ? "" : userModel.country,
+              ),
               Divider(
                 thickness: 2.5,
               ),
             ],
-          ),
-        );
-
-      case Page.editinfo:
-        return Scaffold(
-          body: Form(
-            key: _formkey,
-            child: ListView(
-              children: [
-                SizedBox(
-                  height: 25,
-                ),
-                PEditImage(),
-                SizedBox(
-                  height: 25,
-                ),
-                PEditDetails(),
-                Pedithandles(),
-                SizedBox(
-                  height: 25,
-                ),
-                Center(
-                  child: RaisedButton(
-                    onPressed: () {},
-                    color: HexColor('#d91f2a'),
-                    child: Text(
-                      'Save Changes',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        );
-    }
+          );
+        },
+      ),
+    );
   }
 }

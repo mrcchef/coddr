@@ -48,11 +48,38 @@ class _HomeScreenState extends State<HomeScreen> {
     print(screenHeight);
     ScreenUtil.init(height: screenHeight, width: screenWidth);
 
+    Widget leftAppBarWidget = InkWell(
+      onTap: () {
+        Scaffold.of(context).openDrawer();
+      },
+      child: Icon(Icons.menu, color: Colors.black),
+    );
+
+    Widget middleAppBarWidget = Padding(
+      padding: EdgeInsets.only(top: Sizes.dimen_6.h),
+      child: Text('Coddr', style: Theme.of(context).textTheme.headline5),
+    );
+
+    Widget rightAppBarWidget = Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: Sizes.dimen_16.w,
+        vertical: Sizes.dimen_8.h,
+      ),
+      child: Icon(
+        Icons.notifications_active_outlined,
+        color: Colors.black,
+      ),
+    );
+
     return BlocProvider<ContestListingBloc>.value(
       value: _contestListingBloc,
       child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: CoddrAppBar(),
+          appBar: CoddrAppBar(
+            leftWidget: leftAppBarWidget,
+            middleWidget: middleAppBarWidget,
+            rightWidget: rightAppBarWidget,
+          ),
           drawer: MainDrawer(),
           body: BlocBuilder<ProfileBloc, ProfileState>(
             bloc: _profileBloc,
@@ -67,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
               final curState = (state as ProfileLoaded);
               UserModel userModel = curState.userModel;
-              print(userModel);
+
               return Padding(
                 padding: EdgeInsets.only(
                     left: Sizes.dimen_16.w,

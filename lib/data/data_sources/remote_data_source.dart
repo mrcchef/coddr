@@ -52,7 +52,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     await FirebaseFirestore.instance.collection('users').doc(userModel.uid).set(
       {
         'displayName': userModel.displayName,
-        'contactNumber': userModel.contanctNumber,
+        'contactNumber': userModel.contactNumber,
         'coins': userModel.coins,
         'contest': userModel.contest,
         'wins': userModel.wins,

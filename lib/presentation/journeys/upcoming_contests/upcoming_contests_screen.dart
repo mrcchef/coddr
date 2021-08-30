@@ -35,10 +35,36 @@ class UpcomingContestsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget leftAppBarWidget = InkWell(
+      onTap: () {
+        Navigator.of(context).pop();
+      },
+      child: Icon(Icons.arrow_back_ios, color: Colors.black),
+    );
+
+    Widget middleAppBarWidget = Padding(
+      padding: EdgeInsets.only(top: Sizes.dimen_6.h),
+      child: Text('Coddr', style: Theme.of(context).textTheme.headline5),
+    );
+
+    Widget rightAppBarWidget = Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: Sizes.dimen_16.w,
+        vertical: Sizes.dimen_8.h,
+      ),
+      child: Icon(
+        Icons.notifications_active_outlined,
+        color: Colors.black,
+      ),
+    );
     _contestListingBloc = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CoddrAppBar(),
+      appBar: CoddrAppBar(
+        leftWidget: leftAppBarWidget,
+        middleWidget: middleAppBarWidget,
+        rightWidget: rightAppBarWidget,
+      ),
       drawer: MainDrawer(),
       body: Padding(
         padding: EdgeInsets.symmetric(
