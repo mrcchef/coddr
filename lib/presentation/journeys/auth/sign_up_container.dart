@@ -16,7 +16,7 @@ class _SignUpContainerState extends State<SignUpContainer> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   Map<String, String> _authData = {
-    'username': '',
+    'displayName': '',
     'email': '',
     'password': '',
   };
@@ -44,7 +44,7 @@ class _SignUpContainerState extends State<SignUpContainer> {
       SignUpWithCredentialsPressedEvent(
         email: _authData['email'],
         password: _authData['password'],
-        username: _authData['username'],
+        displayName: _authData['displayName'],
       ),
     );
   }
@@ -68,7 +68,7 @@ class _SignUpContainerState extends State<SignUpContainer> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Sizes.dimen_10),
                 child: TextFormField(
-                  decoration: InputDecoration(labelText: 'username'),
+                  decoration: InputDecoration(labelText: 'Display Name'),
                   validator: (value) {
                     if (value.length < 3) {
                       return 'Name should be at least of 3 characters';
@@ -76,7 +76,7 @@ class _SignUpContainerState extends State<SignUpContainer> {
                     return null;
                   },
                   onSaved: (value) {
-                    _authData['username'] = value;
+                    _authData['displayName'] = value;
                   },
                 ),
               ),

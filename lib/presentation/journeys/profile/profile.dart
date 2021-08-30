@@ -1,3 +1,5 @@
+import 'package:coddr/dependencies/get_it.dart';
+import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
 import 'package:coddr/presentation/journeys/profile/Widgets/Image_section.dart';
 import 'package:coddr/presentation/journeys/profile/Widgets/PEditDetails.dart';
 import 'package:coddr/presentation/journeys/profile/Widgets/PEditImage.dart';
@@ -18,8 +20,22 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  ProfileBloc _profileBloc;
   Page _selectedPage = Page.accountinfo;
   GlobalKey<FormState> _formkey = GlobalKey();
+
+  @override
+  void initState() {
+    _profileBloc = getItInstance<ProfileBloc>();
+    _profileBloc.add(FetchProfileData());
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _profileBloc.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

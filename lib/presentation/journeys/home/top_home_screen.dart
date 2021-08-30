@@ -1,10 +1,13 @@
-import 'package:flutter/material.dart';
-
 import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
+import 'package:flutter/material.dart';
 
 class TopHomeScreen extends StatelessWidget {
+  final String displayName;
+
+  const TopHomeScreen({Key key, @required this.displayName}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,7 +20,7 @@ class TopHomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Welcome\nUser Name",
+                  "Welcome\n$displayName",
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 Container(

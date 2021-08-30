@@ -38,13 +38,12 @@ class RemoteDataSourceImpl extends RemoteDataSource {
 
   @override
   Future<void> storeUserCredentials(Map<String, String> authData) async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(authenticationDataSourceImpl.getUid())
-        .set(
+    final String uid = authenticationDataSourceImpl.getUid();
+    await FirebaseFirestore.instance.collection('users').doc(uid).set(
       {
-        'username': authData['username'],
+        'displayName': authData['displayName'],
         'email': authData['email'],
+        'uid': uid,
       },
     );
   }
@@ -73,11 +72,14 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   Future<UserModel> fetchUserDetails(String uid) async {
     UserModel userModel;
 
-    FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('users')
         .doc(uid)
         .get()
-        .then((value) => {userModel = UserModel.fromMap(value.data())});
+        .then((value) {
+      userModel = UserModel.fromMap(value.data());
+      print("value data: ${value.data()}");
+    });
     print(userModel);
     return userModel;
   }

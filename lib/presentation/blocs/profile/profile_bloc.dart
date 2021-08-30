@@ -1,17 +1,17 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:coddr/data/data_sources/remote_data_source.dart';
+import 'package:coddr/domain/entities/no_params.dart';
 import 'package:coddr/domain/entities/user_model.dart';
+import 'package:coddr/domain/usecases/fetch_user_detail.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  final RemoteDataSourceImpl remoteDataSourceImpl;
-  ProfileBloc({this.remoteDataSourceImpl}) : super(ProfileInitial());
+  final FetchUserDetail fetchUserDetail;
+  ProfileBloc({this.fetchUserDetail}) : super(ProfileLoding());
 
   @override
   Stream<ProfileState> mapEventToState(
@@ -20,9 +20,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     yield ProfileLoding();
 
     if (event is FetchProfileData) {
-      UserModel userModel =
-          await remoteDataSourceImpl.fetchUserDetails(event.uid);
-      yield ProfileLoaded(userModel: userModel);
+      final eitherResponse = await fetchUserDetail(NoParams());
+
+      yield eitherResponse
+          .fold((error) => ProfileError(message: "User detail fetching failed"),
+              (userModel) {
+        print("userModel: $userModel");
+        return ProfileLoaded(userModel: userModel);
+      });
     }
   }
 }

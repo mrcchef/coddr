@@ -3,6 +3,7 @@ import 'package:coddr/data/core/api_client.dart';
 import 'package:coddr/data/data_sources/authentication_data_source.dart';
 import 'package:coddr/data/data_sources/remote_data_source.dart';
 import 'package:coddr/data/repositories/platform_repository_impl.dart';
+import 'package:coddr/domain/usecases/fetch_user_detail.dart';
 import 'package:coddr/domain/usecases/get_cf_contest_list.dart';
 import 'package:coddr/domain/usecases/get_cf_user.dart';
 import 'package:coddr/domain/usecases/get_emailId.dart';
@@ -53,6 +54,9 @@ Future init() async {
   getItInstance.registerLazySingleton<GetCFContestList>(
       () => GetCFContestList(platformRepository: getItInstance()));
 
+  getItInstance.registerLazySingleton<FetchUserDetail>(
+      () => FetchUserDetail(platformRepository: getItInstance()));
+
   getItInstance.registerLazySingleton<GetCFUser>(
       () => GetCFUser(platformRepository: getItInstance()));
 
@@ -78,7 +82,7 @@ Future init() async {
       () => ContestListingBloc(getCFContestList: getItInstance()));
 
   getItInstance.registerFactory<ProfileBloc>(
-      () => ProfileBloc(remoteDataSourceImpl: getItInstance()));
+      () => ProfileBloc(fetchUserDetail: getItInstance()));
 
   getItInstance.registerLazySingleton<StoreUserCredentials>(
       () => StoreUserCredentials(platformRepositoryImpl: getItInstance()));

@@ -32,7 +32,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       yield* _mapSignUpWithCredentialsPressedToState(
         email: event.email,
         password: event.password,
-        username: event.username,
+        displayName: event.displayName,
         signUp: signUp,
         verifyEmail: verifyEmail,
       );
@@ -42,7 +42,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   Stream<SignUpState> _mapSignUpWithCredentialsPressedToState({
     String email,
     String password,
-    String username,
+    String displayName,
     SignUp signUp,
     VerifyEmail verifyEmail,
   }) async* {
@@ -53,9 +53,25 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         await signUp(UserCredentials(email: email, password: password));
     print(eitherResponse);
 
-    yield eitherResponse.fold(
-        (appError) => SignUpStateFailure(message: "SignUp Failed"),
-        (r) => SignUpStateSuccess());
+    final Map<String, String> authData = {
+      'email': email,
+      'displayName': displayName,
+      'password': password,
+    };
+
+    bool isSignUpSuccesss = false;
+
+    eitherResponse.fold((appError) {
+      isSignUpSuccesss = false;
+    }, (r) {
+      isSignUpSuccesss = true;
+    });
+
+    if (isSignUpSuccesss) {
+      await storeUserCredentials(authData);
+      yield SignUpStateSuccess();
+    } else
+      yield SignUpStateFailure(message: "Sign Up Failed");
 
     // final bool isEmailCreated = await eitherResponse.fold((l) {
     //   print("failed");
@@ -82,14 +98,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     // } else
     // {
     // print("verification email sent");
-    // final Map<String, String> authData = {
-    //   'email': email,
-    //   'username': username,
-    //   'password': password,
-    // };
-    // final eitherResponseStoreUser = await storeUserCredentials(authData);
-    // final bool isStored =
-    //     eitherResponseStoreUser.fold((l) => false, (r) => true);
 
     // if (!isStored) {
     //   yield SignUpStateFailure(
