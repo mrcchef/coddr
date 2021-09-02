@@ -104,6 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     TopHomeScreen(
                       displayName: userModel.displayName,
+                      imageUrl: userModel.imageUrl,
                     ),
                     SizedBox(
                       height: Sizes.dimen_30.w,

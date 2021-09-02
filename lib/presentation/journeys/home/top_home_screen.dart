@@ -5,11 +5,16 @@ import 'package:flutter/material.dart';
 
 class TopHomeScreen extends StatelessWidget {
   final String displayName;
-
-  const TopHomeScreen({Key key, @required this.displayName}) : super(key: key);
+  final String imageUrl;
+  const TopHomeScreen({
+    Key key,
+    @required this.displayName,
+    this.imageUrl,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print('image URL' + imageUrl);
     return Container(
       height: Sizes.dimen_96.w,
       child: Row(
@@ -38,10 +43,15 @@ class TopHomeScreen extends StatelessWidget {
             child: Container(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(Sizes.dimen_10.h),
-                child: Image.asset(
-                  Images.defaultUserImage,
-                  fit: BoxFit.cover,
-                ),
+                child: imageUrl == null
+                    ? Image.asset(
+                        Images.defaultUserImage,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.network(
+                        imageUrl,
+                        fit: BoxFit.contain,
+                      ),
               ),
             ),
           ),

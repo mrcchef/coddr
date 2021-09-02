@@ -61,8 +61,11 @@ class _ProfileState extends State<Profile> {
         child: TextButton.icon(
           onPressed: () {
             print("edit button pressed");
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => EditProfile()));
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => EditProfile(),
+              ),
+            );
           },
           label: Text('Edit',
               style: TextStyle(
@@ -96,11 +99,12 @@ class _ProfileState extends State<Profile> {
 
           final curState = (state as ProfileLoaded);
           UserModel userModel = curState.userModel;
-
+          print(userModel.contactNumber);
+          print(userModel.handelCC);
           return ListView(
             padding: EdgeInsets.only(top: 0),
             children: [
-              ImageSection(),
+              ImageSection(userModel.imageUrl),
               SizedBox(
                 height: 18,
               ),

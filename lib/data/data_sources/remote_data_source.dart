@@ -64,7 +64,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         'state': userModel.state,
         'country': userModel.country,
         'occupation': userModel.occupation,
-        'institution': userModel.instition,
+        'institution': userModel.institution,
       },
     );
   }
