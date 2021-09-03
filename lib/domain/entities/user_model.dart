@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 class UserModel extends Equatable {
+  final String imageUrl;
   final String displayName;
   final String email;
   final String uid;
@@ -19,9 +21,10 @@ class UserModel extends Equatable {
   final String state;
   final String country;
   final String occupation;
-  final String instition;
+  final String institution;
 
   UserModel({
+    this.imageUrl,
     @required this.email,
     @required this.uid,
     this.displayName,
@@ -37,12 +40,13 @@ class UserModel extends Equatable {
     this.state,
     this.country,
     this.occupation,
-    this.instition,
+    this.institution,
   });
 
   @override
   List<Object> get props {
     return [
+      imageUrl,
       displayName,
       email,
       uid,
@@ -58,15 +62,16 @@ class UserModel extends Equatable {
       state,
       country,
       occupation,
-      instition,
+      institution,
     ];
   }
 
   UserModel copyWith({
+    File image,
     String displayName,
     String email,
     String uid,
-    String contanctNumber,
+    String contactNumber,
     int coins,
     int contest,
     int wins,
@@ -78,13 +83,14 @@ class UserModel extends Equatable {
     String state,
     String country,
     String occupation,
-    String instition,
+    String institution,
   }) {
     return UserModel(
+      imageUrl: imageUrl ?? this.imageUrl,
       displayName: displayName ?? this.displayName,
       email: email ?? this.email,
       uid: uid ?? this.uid,
-      contactNumber: contanctNumber ?? this.contactNumber,
+      contactNumber: contactNumber ?? this.contactNumber,
       coins: coins ?? this.coins,
       contest: contest ?? this.contest,
       wins: wins ?? this.wins,
@@ -96,16 +102,17 @@ class UserModel extends Equatable {
       state: state ?? this.state,
       country: country ?? this.country,
       occupation: occupation ?? this.occupation,
-      instition: instition ?? this.instition,
+      institution: institution ?? this.institution,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
+      'imageUrl' : imageUrl,
       'displayName': displayName,
       'email': email,
       'uid': uid,
-      'contanctNumber': contactNumber,
+      'contactNumber': contactNumber,
       'coins': coins,
       'contest': contest,
       'wins': wins,
@@ -117,16 +124,17 @@ class UserModel extends Equatable {
       'state': state,
       'country': country,
       'occupation': occupation,
-      'instition': instition,
+      'institution': institution,
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
+      imageUrl: map['imageUrl'],
       displayName: map['displayName'],
       email: map['email'],
       uid: map['uid'],
-      contactNumber: map['contanctNumber'],
+      contactNumber: map['contactNumber'],
       coins: map['coins'],
       contest: map['contest'],
       wins: map['wins'],
@@ -138,7 +146,7 @@ class UserModel extends Equatable {
       state: map['state'],
       country: map['country'],
       occupation: map['occupation'],
-      instition: map['instition'],
+      institution: map['institution'],
     );
   }
 

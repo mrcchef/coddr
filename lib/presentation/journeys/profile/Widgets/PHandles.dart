@@ -80,12 +80,12 @@ class PHandles extends StatelessWidget {
               ),
               ListTile(
                 title: Text(
-                  handelHE,
+                  'HackerEarth',
                   style: TextStyle(
                       fontWeight: FontWeight.bold, color: HexColor('0B2FB0')),
                 ),
                 subtitle: Text(
-                  "sahilpotdukhe142",
+                  handelHE,
                   style: TextStyle(color: Colors.black),
                 ),
                 trailing: TextButton.icon(
