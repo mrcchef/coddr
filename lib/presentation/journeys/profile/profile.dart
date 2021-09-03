@@ -18,6 +18,7 @@ import 'package:hexcolor/hexcolor.dart';
 enum Page { accountinfo, editinfo }
 
 class Profile extends StatefulWidget {
+  static const routeName = '/profile';
   @override
   _ProfileState createState() => _ProfileState();
 }
@@ -61,11 +62,7 @@ class _ProfileState extends State<Profile> {
         child: TextButton.icon(
           onPressed: () {
             print("edit button pressed");
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => EditProfile(),
-              ),
-            );
+            Navigator.of(context).popAndPushNamed(EditProfile.routeName);
           },
           label: Text('Edit',
               style: TextStyle(
