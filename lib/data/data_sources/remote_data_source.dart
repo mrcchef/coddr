@@ -44,6 +44,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         'displayName': authData['displayName'],
         'email': authData['email'],
         'uid': uid,
+        'imageUrl' : "",
       },
     );
   }

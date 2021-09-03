@@ -43,7 +43,7 @@ class TopHomeScreen extends StatelessWidget {
             child: Container(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(Sizes.dimen_10.h),
-                child: imageUrl == null
+                child: imageUrl == ""
                     ? Image.asset(
                         Images.defaultUserImage,
                         fit: BoxFit.cover,
