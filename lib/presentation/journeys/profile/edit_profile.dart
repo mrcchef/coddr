@@ -5,6 +5,7 @@ import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
+import 'package:coddr/presentation/journeys/profile/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,6 +18,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 
 class EditProfile extends StatefulWidget {
+  static const routeName = '\edit-profile';
   const EditProfile({Key key}) : super(key: key);
 
   //EditProfile(UserModel userModel);
@@ -105,7 +107,7 @@ class _EditProfileState extends State<EditProfile> {
         'handelHE': handelHE,
       });
       // print(url);
-
+      Navigator.popAndPushNamed(context, Profile.routeName);
     } on PlatformException catch (err) {
       var message = 'An error occured, please check your credentials!';
 

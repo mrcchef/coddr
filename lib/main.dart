@@ -8,6 +8,8 @@ import 'package:coddr/presentation/journeys/auth/sign_up_screen.dart';
 import 'package:coddr/presentation/journeys/auth/splash_screen.dart';
 //Files
 import 'package:coddr/presentation/journeys/home/home_screen.dart';
+import 'package:coddr/presentation/journeys/profile/edit_profile.dart';
+import 'package:coddr/presentation/journeys/profile/profile.dart';
 import 'package:coddr/presentation/journeys/upcoming_contests/upcoming_contests_screen.dart';
 import 'package:coddr/presentation/journeys/upcoming_fixtures/upcoming_fixtures_screen.dart';
 import 'package:coddr/presentation/themes/themes.dart';
@@ -93,6 +95,8 @@ class _MyAppState extends State<MyApp> {
           ),
           routes: {
             HomeScreen.routeName: (ctx) => HomeScreen(),
+            Profile.routeName: (ctx) => Profile(),
+            EditProfile.routeName: (ctx) => EditProfile(),
             SignInScreen.routeName: (ctx) => SignInScreen(),
             SignUpScreen.routeName: (ctx) => SignUpScreen(),
             UpcomingContestsScreen.routeName: (ctx) => UpcomingContestsScreen(),
