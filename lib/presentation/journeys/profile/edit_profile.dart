@@ -2,12 +2,15 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coddr/common/constants/size_constants.dart';
+import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/domain/entities/user_model.dart';
+import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -23,7 +26,21 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+  ProfileBloc _profileBloc;
   GlobalKey<FormState> _formkey = GlobalKey();
+
+  @override
+  void initState() {
+    _profileBloc = getItInstance<ProfileBloc>();
+    _profileBloc.add(FetchProfileData());
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _profileBloc.close();
+    super.dispose();
+  }
 
   var imageUrl, displayName, contactNumber;
   var handelCF, handelCC, handelHE, institution;
@@ -47,8 +64,12 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController namecontroller = TextEditingController();
   TextEditingController phonecontroller = TextEditingController();
   TextEditingController institutecontroller = TextEditingController();
-
+  TextEditingController cfHandleController = TextEditingController();
+  TextEditingController ccHandleController = TextEditingController();
+  TextEditingController heHandleController = TextEditingController();
   bool _isLoading = false;
+  String prevImageUrl;
+  String url;
   void _saveForm() async {
     if (!_formkey.currentState.validate()) {
       setState(() {
@@ -58,28 +79,32 @@ class _EditProfileState extends State<EditProfile> {
     }
     try {
       _formkey.currentState.save();
-      final ref = FirebaseStorage.instance
-        .ref()
-        .child('user_image')
-        .child(FirebaseAuth.instance.currentUser.uid)
-        .child(FirebaseAuth.instance.currentUser.uid + '.jpg');
-    await ref.putFile(_pickedImage).whenComplete(() => null);
-    final url = await ref.getDownloadURL();
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser.uid)
-        .update({
-      'imageUrl': url,
-      'displayName' : displayName,
-      'contactNumber' : contactNumber,
-      'institution' : institution,
-      'occupation' : occupation,
-      'handelCF': handelCF,
-      'handelCC': handelCC,
-      'handelHE': handelHE,
-    });
-   // print(url);
+      if (_pickedImage != null) {
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('user_image')
+            .child(FirebaseAuth.instance.currentUser.uid)
+            .child(FirebaseAuth.instance.currentUser.uid + '.jpg');
+        await ref.putFile(_pickedImage).whenComplete(() => null);
+        url = await ref.getDownloadURL();
+      } else {
+        url = prevImageUrl;
+      }
 
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser.uid)
+          .update({
+        'imageUrl': url,
+        'displayName': displayName,
+        'contactNumber': contactNumber,
+        'institution': institution,
+        'occupation': occupation,
+        'handelCF': handelCF,
+        'handelCC': handelCC,
+        'handelHE': handelHE,
+      });
+      // print(url);
 
     } on PlatformException catch (err) {
       var message = 'An error occured, please check your credentials!';
@@ -98,6 +123,7 @@ class _EditProfileState extends State<EditProfile> {
         _isLoading = false;
       });
     } catch (err) {
+      print("Error2");
       print(err);
       setState(() {
         _isLoading = false;
@@ -108,37 +134,59 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Form(
-        key: _formkey,
-        child: ListView(
-          children: [
-            SizedBox(
-              height: 25,
-            ),
-            //PEditImage(),
-            editImage(),
-            SizedBox(
-              height: 25,
-            ),
-            //PEditDetails(),
-            editDetails(),
-            //Pedithandles(),
-            editHandles(),
-            SizedBox(
-              height: 25,
-            ),
-            Center(
-              child: RaisedButton(
-                onPressed: _saveForm,
-                color: HexColor('#d91f2a'),
-                child: Text(
-                  'Save Changes',
-                  style: TextStyle(color: Colors.white),
+      body: BlocBuilder<ProfileBloc, ProfileState>(
+        bloc: _profileBloc,
+        builder: (context, state) {
+          if (state is ProfileLoding) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (state is ProfileError) {
+            return Center(child: Text(state.message));
+          }
+
+          final curState = (state as ProfileLoaded);
+          UserModel userModel = curState.userModel;
+          namecontroller.text = userModel.displayName;
+          phonecontroller.text = userModel.contactNumber;
+          institutecontroller.text = userModel.institution;
+          cfHandleController.text = userModel.handelCF;
+          ccHandleController.text = userModel.handelCC;
+          heHandleController.text = userModel.handelHE;
+          prevImageUrl = userModel.imageUrl;
+          return Form(
+            key: _formkey,
+            child: ListView(
+              children: [
+                SizedBox(
+                  height: 25,
                 ),
-              ),
-            )
-          ],
-        ),
+                //PEditImage(),
+                editImage(),
+                SizedBox(
+                  height: 25,
+                ),
+                //PEditDetails(),
+                editDetails(),
+                //Pedithandles(),
+                editHandles(),
+                SizedBox(
+                  height: 25,
+                ),
+                Center(
+                  child: RaisedButton(
+                    onPressed: _saveForm,
+                    color: HexColor('#d91f2a'),
+                    child: Text(
+                      'Save Changes',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -170,6 +218,7 @@ class _EditProfileState extends State<EditProfile> {
                       hintText: 'Enter Username',
                       hintStyle: TextStyle(fontSize: 14)),
                   style: TextStyle(color: Colors.black),
+                  controller: cfHandleController,
                   validator: (value) {
                     if (value.isEmpty) {
                       return 'Please Enter Name';
@@ -204,6 +253,7 @@ class _EditProfileState extends State<EditProfile> {
                     }
                     return null;
                   },
+                  controller: ccHandleController,
                   onSaved: (value) {
                     handelCC = value;
                   },
@@ -232,6 +282,7 @@ class _EditProfileState extends State<EditProfile> {
                     }
                     return null;
                   },
+                  controller: heHandleController,
                   onSaved: (value) {
                     handelHE = value;
                   },
@@ -299,6 +350,7 @@ class _EditProfileState extends State<EditProfile> {
               },
               onSaved: (value) {
                 contactNumber = value;
+                print(contactNumber);
               },
             ),
           ),

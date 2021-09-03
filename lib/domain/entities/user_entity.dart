@@ -7,7 +7,7 @@ class UserEntity extends Equatable {
   final String handle;
   final String email;
   final String platformName;
-  final String contanctNumber;
+  final String contactNumber;
 
   UserEntity({
     @required this.firstName,
@@ -15,7 +15,7 @@ class UserEntity extends Equatable {
     @required this.handle,
     @required this.email,
     @required this.platformName,
-    this.contanctNumber = "",
+    this.contactNumber = "",
   });
 
   @override
