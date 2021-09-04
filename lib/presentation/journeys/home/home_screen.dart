@@ -25,6 +25,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   ContestListingBloc _contestListingBloc;
   ProfileBloc _profileBloc;
+  UserModel userModel;
 
   @override
   void initState() {
@@ -75,52 +76,53 @@ class _HomeScreenState extends State<HomeScreen> {
     return BlocProvider<ContestListingBloc>.value(
       value: _contestListingBloc,
       child: Scaffold(
-          backgroundColor: Colors.white,
-          appBar: CoddrAppBar(
-            leftWidget: leftAppBarWidget,
-            middleWidget: middleAppBarWidget,
-            rightWidget: rightAppBarWidget,
-          ),
-          drawer: MainDrawer(),
-          body: BlocBuilder<ProfileBloc, ProfileState>(
-            bloc: _profileBloc,
-            builder: (context, state) {
-              if (state is ProfileLoding) {
-                return Center(child: CircularProgressIndicator());
-              }
+        backgroundColor: Colors.white,
+        appBar: CoddrAppBar(
+          leftWidget: leftAppBarWidget,
+          middleWidget: middleAppBarWidget,
+          rightWidget: rightAppBarWidget,
+        ),
+        body: BlocBuilder<ProfileBloc, ProfileState>(
+          bloc: _profileBloc,
+          builder: (context, state) {
+            if (state is ProfileLoding) {
+              return Center(child: CircularProgressIndicator());
+            }
 
-              if (state is ProfileError) {
-                return Center(child: Text(state.message));
-              }
+            if (state is ProfileError) {
+              return Center(child: Text(state.message));
+            }
 
-              final curState = (state as ProfileLoaded);
-              UserModel userModel = curState.userModel;
-              //print("HAHA" + userModel.imageUrl.toString());
-              return Padding(
-                padding: EdgeInsets.only(
-                    left: Sizes.dimen_16.w,
-                    right: Sizes.dimen_16.w,
-                    top: Sizes.dimen_12.h),
-                child: Column(
-                  children: [
-                    TopHomeScreen(
-                      displayName: userModel.displayName,
-                      imageUrl: userModel.imageUrl,
-                    ),
-                    SizedBox(
-                      height: Sizes.dimen_30.w,
-                    ),
-                    Text(
-                      "Get Started with your favourite platform",
-                      style: Theme.of(context).textTheme.headline5,
-                    ),
-                    Expanded(child: PlatformGrid()),
-                    CustomBottomNavigationBar(),
-                  ],
-                ),
-              );
-            },
-          )),
+            final curState = (state as ProfileLoaded);
+            userModel = curState.userModel;
+            //print("HAHA" + userModel.imageUrl.toString());
+            return Padding(
+              padding: EdgeInsets.only(
+                  left: Sizes.dimen_16.w,
+                  right: Sizes.dimen_16.w,
+                  top: Sizes.dimen_12.h),
+              child: Column(
+                children: [
+                  TopHomeScreen(
+                    displayName: userModel.displayName,
+                    imageUrl: userModel.imageUrl,
+                  ),
+                  SizedBox(
+                    height: Sizes.dimen_30.w,
+                  ),
+                  Text(
+                    "Get Started with your favourite platform",
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                  Expanded(child: PlatformGrid()),
+                  CustomBottomNavigationBar(),
+                ],
+              ),
+            );
+          },
+        ),
+        drawer: MainDrawer(),
+      ),
     );
   }
 }

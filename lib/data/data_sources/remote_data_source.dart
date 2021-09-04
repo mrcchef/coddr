@@ -72,7 +72,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
 
   Future<UserModel> fetchUserDetails(String uid) async {
     UserModel userModel;
-
     await FirebaseFirestore.instance
         .collection('users')
         .doc(uid)

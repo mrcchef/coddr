@@ -1,6 +1,8 @@
+import 'package:coddr/common/constants/size_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:coddr/common/extensions/size_extensions.dart';
 
 class Plocation extends StatelessWidget {
   final String city, state, country;
@@ -15,9 +17,9 @@ class Plocation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: EdgeInsets.all(Sizes.dimen_12.w),
         child: Container(
-          height: 140,
+          height: Sizes.dimen_140.w,
           decoration: BoxDecoration(
               color: HexColor('E1D9FE'),
               borderRadius: BorderRadius.circular(30)),
@@ -30,7 +32,7 @@ class Plocation extends StatelessWidget {
                   size: 50,
                 ),
               ),
-              Spacer(),
+              //Spacer(),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
