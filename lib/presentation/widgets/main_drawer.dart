@@ -42,7 +42,7 @@ class MainDrawer extends StatelessWidget {
             ),
             DrawerListTile('Profile', Icons.person_outline_outlined, () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (_) => Profile()));
+                  .popAndPushNamed(Profile.routeName);
             }),
             DrawerListTile('Activity', Icons.timeline, () {}),
             DrawerListTile('Settings', Icons.settings, () {}),

@@ -25,7 +25,7 @@ class UserDetails extends StatelessWidget {
           ),
           subtitle: Text(
             displayName,
-            style: TextStyle(fontSize: 12, color: Colors.black),
+            style: Theme.of(context).textTheme.bodyText1,
           ),
           leading: CircleAvatar(
             radius: 22,
@@ -43,7 +43,7 @@ class UserDetails extends StatelessWidget {
           ),
           subtitle: Text(
             contactNumber,
-            style: TextStyle(fontSize: 12, color: Colors.black),
+            style: Theme.of(context).textTheme.bodyText1,
             textDirection: TextDirection.rtl,
           ),
           trailing: CircleAvatar(
@@ -61,7 +61,7 @@ class UserDetails extends StatelessWidget {
           ),
           subtitle: Text(
             email,
-            style: TextStyle(fontSize: 12, color: Colors.black),
+            style: Theme.of(context).textTheme.bodyText2,
           ),
           leading: CircleAvatar(
             radius: 22,

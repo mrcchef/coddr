@@ -15,6 +15,7 @@ class TopHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('image URL' + imageUrl);
+    print(displayName);
     return Container(
       height: Sizes.dimen_96.w,
       child: Row(
@@ -26,11 +27,12 @@ class TopHomeScreen extends StatelessWidget {
               children: [
                 Text(
                   "Welcome\n$displayName",
+                  maxLines: 2,
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 Container(
                   height: Sizes.dimen_1.w,
-                  color: Colors.black,
+                  color: Colors.black26,
                 ),
                 Text(
                   "Earn money with your skill",

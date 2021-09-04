@@ -46,35 +46,72 @@ class _ProfileState extends State<Profile> {
       onTap: () {
         Navigator.of(context).pop();
       },
+      // child: Padding(
+      //   padding: EdgeInsets.only(bottom: Sizes.dimen_10.w),
       child: Icon(Icons.arrow_back_ios, color: Colors.black),
+      //),
     );
 
     Widget middleAppBarWidget = Padding(
-      padding: EdgeInsets.only(top: Sizes.dimen_6.h),
-      child: Text('Profile', style: Theme.of(context).textTheme.headline5),
+      padding: EdgeInsets.only(
+        top: Sizes.dimen_6.h,
+        left: Sizes.dimen_16.w,
+      ),
+      child: Text('Coddr', style: Theme.of(context).textTheme.headline5),
     );
 
     Widget rightAppBarWidget = Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: Sizes.dimen_16.w,
-          vertical: Sizes.dimen_8.h,
+        padding: EdgeInsets.only(
+          //horizontal: Sizes.dimen_16.w,
+          //vertical: Sizes.dimen_4.h,
+          top: Sizes.dimen_14.w,
+          right: Sizes.dimen_8.w,
         ),
-        child: TextButton.icon(
-          onPressed: () {
+        child: InkWell(
+          onTap: () {
             print("edit button pressed");
             Navigator.of(context).popAndPushNamed(EditProfile.routeName);
           },
-          label: Text('Edit',
-              style: TextStyle(
-                fontSize: 16,
-                color: HexColor('#d91f2a'),
-                fontWeight: FontWeight.bold,
-              )),
-          icon: Icon(
-            Icons.edit,
-            color: HexColor('#d91f2a'),
+          child: Row(
+            children: [
+              Text(
+                'Edit',
+                style: Theme.of(context).textTheme.bodyText1.copyWith(
+                      color: Colors.red[700],
+                      fontSize: Sizes.dimen_20.w,
+                    ),
+                // TextStyle(
+                //   fontSize: 16,
+                //   color: HexColor('#d91f2a'),
+                //   fontWeight: FontWeight.w400,
+                // ),
+              ),
+              SizedBox(width: Sizes.dimen_2.w),
+              Icon(
+                Icons.edit,
+                
+                color: Colors.red[700],
+              ),
+            ],
           ),
-        ));
+        )
+        // TextButton.icon(
+        //   onPressed: () {
+        //     print("edit button pressed");
+        //     Navigator.of(context).popAndPushNamed(EditProfile.routeName);
+        //   },
+        //   label: Text('Edit',
+        //       style: TextStyle(
+        //         fontSize: 16,
+        //         color: HexColor('#d91f2a'),
+        //         fontWeight: FontWeight.bold,
+        //       )),
+        //   icon: Icon(
+        //     Icons.edit,
+        //     color: HexColor('#d91f2a'),
+        //   ),
+        // ),
+        );
 
     return Scaffold(
       backgroundColor: Colors.white,
