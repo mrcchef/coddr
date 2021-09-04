@@ -65,7 +65,7 @@ class UpcomingContestsScreen extends StatelessWidget {
         middleWidget: middleAppBarWidget,
         rightWidget: rightAppBarWidget,
       ),
-      drawer: MainDrawer(),
+      //drawer: MainDrawer(),
       body: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: Sizes.dimen_16.w,
