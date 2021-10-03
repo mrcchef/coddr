@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
+
 class PUserAbout extends StatelessWidget {
   const PUserAbout({Key key}) : super(key: key);
 
@@ -36,8 +37,7 @@ class PUserAbout extends StatelessWidget {
                     ),
                     Spacer(),
                     Padding(
-                      padding:
-                      const EdgeInsets.fromLTRB(8.0, 20, 10, 10),
+                      padding: const EdgeInsets.fromLTRB(8.0, 20, 10, 10),
                       child: Icon(FontAwesomeIcons.laptop),
                     ),
                     SizedBox(

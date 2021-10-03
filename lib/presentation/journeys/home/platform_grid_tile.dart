@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
+import 'package:flutter/material.dart';
 
 class PlatformGridTile extends StatelessWidget {
   final Color color;

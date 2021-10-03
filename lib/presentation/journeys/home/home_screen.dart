@@ -92,35 +92,6 @@ class _HomeScreenState extends State<HomeScreen> {
               return Center(child: Text(state.message));
             }
 
-<<<<<<< HEAD
-              final curState = (state as ProfileLoaded);
-              UserModel userModel = curState.userModel;
-              return Padding(
-                padding: EdgeInsets.only(
-                    left: Sizes.dimen_16.w,
-                    right: Sizes.dimen_16.w,
-                    top: Sizes.dimen_12.h),
-                child: Column(
-                  children: [
-                    TopHomeScreen(
-                      displayName: userModel.displayName,
-                      imageUrl: userModel.imageUrl,
-                    ),
-                    SizedBox(
-                      height: Sizes.dimen_30.w,
-                    ),
-                    Text(
-                      "Get Started with your favourite platform",
-                      style: Theme.of(context).textTheme.headline5,
-                    ),
-                    Expanded(child: PlatformGrid()),
-                    CustomBottomNavigationBar(),
-                  ],
-                ),
-              );
-            },
-          )),
-=======
             final curState = (state as ProfileLoaded);
             userModel = curState.userModel;
             //print("HAHA" + userModel.imageUrl.toString());
@@ -151,7 +122,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         drawer: MainDrawer(),
       ),
->>>>>>> 269b71482d927438768ed036e908b950144eb0ce
     );
   }
 }

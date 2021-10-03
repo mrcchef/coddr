@@ -3,7 +3,6 @@ import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:coddr/presentation/widgets/CoddrAppBar.dart';
-import 'package:coddr/presentation/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 
 import 'fixture_card.dart';

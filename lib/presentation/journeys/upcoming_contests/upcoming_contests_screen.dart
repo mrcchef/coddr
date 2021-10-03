@@ -6,7 +6,6 @@ import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.da
 import 'package:coddr/presentation/journeys/upcoming_contests/contest_card.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:coddr/presentation/widgets/CoddrAppBar.dart';
-import 'package:coddr/presentation/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
