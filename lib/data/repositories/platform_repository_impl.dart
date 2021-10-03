@@ -112,7 +112,16 @@ class PlatformRepositoryImpl extends PlatformRepository {
     }
   }
 
-  bool isEmailVerified() {
-    return authenticationDataSourceImpl.isEmailVerified();
+  Future<bool> isEmailVerified() async {
+    return await authenticationDataSourceImpl.isEmailVerified();
+  }
+
+  Future<Either<AppError, void>> updateIsEmailVerified(String uid) async {
+    try {
+      await remoteDataSourceImpl.updateIsEmailVerified(uid);
+      return Right(null);
+    } on Exception {
+      return Left(AppError(appErrorType: AppErrorType.firebase));
+    }
   }
 }

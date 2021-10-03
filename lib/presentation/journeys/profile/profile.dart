@@ -25,12 +25,14 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   ProfileBloc _profileBloc;
+
   Page _selectedPage = Page.accountinfo;
 
   @override
   void initState() {
     _profileBloc = getItInstance<ProfileBloc>();
     _profileBloc.add(FetchProfileData());
+
     super.initState();
   }
 
@@ -114,6 +116,8 @@ class _ProfileState extends State<Profile> {
                 contactNumber: userModel.contactNumber == null
                     ? ""
                     : userModel.contactNumber,
+                isEmailVerified: userModel.isEmailVerified,
+                uid: userModel.uid,
               ),
               Divider(
                 thickness: 2.5,

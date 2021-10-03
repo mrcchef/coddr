@@ -5,13 +5,14 @@ import 'package:coddr/domain/entities/no_params.dart';
 import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/domain/usecases/fetch_user_detail.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final FetchUserDetail fetchUserDetail;
-  ProfileBloc({this.fetchUserDetail}) : super(ProfileLoding());
+  ProfileBloc({@required this.fetchUserDetail}) : super(ProfileLoding());
 
   @override
   Stream<ProfileState> mapEventToState(

@@ -1,4 +1,3 @@
-import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/common/screen_utils/screen_util.dart';
@@ -95,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
               final curState = (state as ProfileLoaded);
               UserModel userModel = curState.userModel;
-              //print("HAHA" + userModel.imageUrl.toString());
+
               return Padding(
                 padding: EdgeInsets.only(
                     left: Sizes.dimen_16.w,

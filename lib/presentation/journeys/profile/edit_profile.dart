@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coddr/common/constants/size_constants.dart';
+import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
@@ -14,8 +15,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
-
-import 'package:coddr/common/extensions/size_extensions.dart';
 
 class EditProfile extends StatefulWidget {
   static const routeName = '\edit-profile';

@@ -61,7 +61,21 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
     await firebaseAuth.currentUser.sendEmailVerification();
   }
 
-  bool isEmailVerified() {
+  Future<bool> isEmailVerified() async {
+    print("IsEmailVerified: ${firebaseAuth.currentUser.emailVerified}");
+
+    await firebaseAuth.currentUser.reload();
+
+    print("IsEmailVerified: ${firebaseAuth.currentUser.emailVerified}");
+    // usertask.
+    // addOnSuccessListener(new OnSuccessListener() {
+    // @override
+    // public void onSuccess(Void aVoid) {
+    // user = mAuth.getCurrentUser();
+    // boolean useremailveri = user.isEmailVerified();
+    // String useremailuid = user.getUid();
+    // }
+    // });
     return firebaseAuth.currentUser.emailVerified;
   }
 }

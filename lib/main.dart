@@ -1,6 +1,8 @@
 import 'package:coddr/dependencies/get_it.dart' as get_it;
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
+import 'package:coddr/presentation/blocs/email_verification/email_verification_bloc.dart';
 import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
+import 'package:coddr/presentation/blocs/send_verification_email/send_verification_email_bloc.dart';
 import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
 import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
@@ -36,6 +38,8 @@ class _MyAppState extends State<MyApp> {
   SignInBloc _signInBloc;
   SignUpBloc _signUpBloc;
   ProfileBloc _profileBloc;
+  EmailVerificationBloc _emailVerificationBloc;
+  SendVerificationEmailBloc _sendVerificationEmailBloc;
 
   @override
   void initState() {
@@ -44,6 +48,10 @@ class _MyAppState extends State<MyApp> {
     _signInBloc = get_it.getItInstance<SignInBloc>();
     _signUpBloc = get_it.getItInstance<SignUpBloc>();
     _profileBloc = get_it.getItInstance<ProfileBloc>();
+    _emailVerificationBloc = get_it.getItInstance<EmailVerificationBloc>();
+    _sendVerificationEmailBloc =
+        get_it.getItInstance<SendVerificationEmailBloc>();
+
     super.initState();
   }
 
@@ -51,6 +59,12 @@ class _MyAppState extends State<MyApp> {
   void dispose() {
     super.dispose();
     _authenticationBloc.close();
+    _signInBloc.close();
+    _signUpBloc.close();
+    _profileBloc.close();
+    _profileBloc.close();
+    _emailVerificationBloc.close();
+    _sendVerificationEmailBloc.close();
   }
 
   @override
@@ -69,6 +83,10 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<ProfileBloc>(
           create: (context) => _profileBloc,
         ),
+        BlocProvider<EmailVerificationBloc>(
+            create: (context) => _emailVerificationBloc),
+        BlocProvider<SendVerificationEmailBloc>(
+            create: (context) => _sendVerificationEmailBloc),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
