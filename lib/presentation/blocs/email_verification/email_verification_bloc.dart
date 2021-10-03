@@ -16,6 +16,7 @@ class EmailVerificationBloc
   EmailVerificationBloc({
     @required this.isEmailVerified,
     @required this.updateIsEmailVerified,
+    Object verifyEmail,
   }) : super(EmailVerificationInitial());
 
   @override
