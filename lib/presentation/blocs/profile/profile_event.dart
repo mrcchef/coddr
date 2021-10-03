@@ -8,3 +8,5 @@ abstract class ProfileEvent extends Equatable {
 }
 
 class FetchProfileData extends ProfileEvent {}
+
+class VerifyEmailButtonPressedEvent extends ProfileEvent {}

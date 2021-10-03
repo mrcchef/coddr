@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +21,18 @@ class UserModel extends Equatable {
   final String country;
   final String occupation;
   final String institution;
+  final bool isEmailVerified;
+  final bool isHandelCFVerified;
+  final bool isHandelCCVerified;
+  final bool isHandelATCVerified;
+  final bool isHandelHEVerified;
 
   UserModel({
+    this.isEmailVerified = false,
+    this.isHandelCFVerified = false,
+    this.isHandelCCVerified = false,
+    this.isHandelATCVerified = false,
+    this.isHandelHEVerified = false,
     this.imageUrl,
     @required this.email,
     @required this.uid,
@@ -45,29 +54,11 @@ class UserModel extends Equatable {
 
   @override
   List<Object> get props {
-    return [
-      imageUrl,
-      displayName,
-      email,
-      uid,
-      contactNumber,
-      coins,
-      contest,
-      wins,
-      handelCF,
-      handelATC,
-      handelCC,
-      handelHE,
-      city,
-      state,
-      country,
-      occupation,
-      institution,
-    ];
+    return [displayName, email];
   }
 
   UserModel copyWith({
-    File image,
+    String imageUrl,
     String displayName,
     String email,
     String uid,
@@ -84,6 +75,11 @@ class UserModel extends Equatable {
     String country,
     String occupation,
     String institution,
+    bool isEmailVerified,
+    bool isHandelCFVerified,
+    bool isHandelCCVerified,
+    bool isHandelATCVerified,
+    bool isHandelHEVerified,
   }) {
     return UserModel(
       imageUrl: imageUrl ?? this.imageUrl,
@@ -103,12 +99,17 @@ class UserModel extends Equatable {
       country: country ?? this.country,
       occupation: occupation ?? this.occupation,
       institution: institution ?? this.institution,
+      isEmailVerified: isEmailVerified ?? this.isEmailVerified,
+      isHandelATCVerified: isHandelATCVerified ?? this.isHandelATCVerified,
+      isHandelCCVerified: isHandelCCVerified ?? this.isHandelCCVerified,
+      isHandelCFVerified: isHandelCFVerified ?? this.isHandelCFVerified,
+      isHandelHEVerified: isHandelHEVerified ?? this.isHandelHEVerified,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'imageUrl' : imageUrl,
+      'imageUrl': imageUrl,
       'displayName': displayName,
       'email': email,
       'uid': uid,
@@ -125,6 +126,11 @@ class UserModel extends Equatable {
       'country': country,
       'occupation': occupation,
       'institution': institution,
+      'isEmailVerified': isEmailVerified,
+      'isHandelATCVerified': isHandelATCVerified,
+      'isHandelCCVerified': isHandelCCVerified,
+      'isHandelCFVerified': isHandelCFVerified,
+      'isHandelHEVerified': isHandelHEVerified,
     };
   }
 
@@ -147,6 +153,11 @@ class UserModel extends Equatable {
       country: map['country'],
       occupation: map['occupation'],
       institution: map['institution'],
+      isEmailVerified: map['isEmailVerified'],
+      isHandelATCVerified: map['isHandelATCVerified'],
+      isHandelCCVerified: map['isHandelCCVerified'],
+      isHandelCFVerified: map['isHandelCFVerified'],
+      isHandelHEVerified: map['isHandelHEVerified'],
     );
   }
 

@@ -1,3 +1,4 @@
+import 'package:coddr/common/constants/image_constants.dart';
 import 'package:flutter/material.dart';
 
 class ImageSection extends StatelessWidget {
@@ -31,7 +32,9 @@ class ImageSection extends StatelessWidget {
           right: 135,
           child: CircleAvatar(
             radius: 60,
-            backgroundImage: NetworkImage(imageUrl),
+            backgroundImage: (imageUrl != "")
+                ? NetworkImage(imageUrl)
+                : AssetImage(Images.defaultUserImage),
             //backgroundImage: AssetImage('assets/images/kshittiz2.jpg'),
           ),
         )

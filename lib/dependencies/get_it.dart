@@ -7,15 +7,19 @@ import 'package:coddr/domain/usecases/fetch_user_detail.dart';
 import 'package:coddr/domain/usecases/get_cf_contest_list.dart';
 import 'package:coddr/domain/usecases/get_cf_user.dart';
 import 'package:coddr/domain/usecases/get_emailId.dart';
+import 'package:coddr/domain/usecases/is_email_verified.dart';
 import 'package:coddr/domain/usecases/is_signed_in.dart';
 import 'package:coddr/domain/usecases/sign_in.dart';
 import 'package:coddr/domain/usecases/sign_out.dart';
 import 'package:coddr/domain/usecases/sign_up.dart';
 import 'package:coddr/domain/usecases/store_user_credentials.dart';
+import 'package:coddr/domain/usecases/update_is_email_verified.dart';
 import 'package:coddr/domain/usecases/verify_email.dart';
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
 import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.dart';
+import 'package:coddr/presentation/blocs/email_verification/email_verification_bloc.dart';
 import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
+import 'package:coddr/presentation/blocs/send_verification_email/send_verification_email_bloc.dart';
 import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
 import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
 import 'package:coddr/presentation/journeys/home/home_screen.dart';
@@ -66,8 +70,14 @@ Future init() async {
   getItInstance.registerLazySingleton<IsSignedIn>(
       () => IsSignedIn(platformRepositoryImpl: getItInstance()));
 
+  getItInstance.registerLazySingleton<IsEmailVerified>(
+      () => IsEmailVerified(platformRepositoryImpl: getItInstance()));
+
   getItInstance.registerLazySingleton<SignIn>(
       () => SignIn(platformRepositoryImpl: getItInstance()));
+
+  getItInstance.registerLazySingleton<UpdateIsEmailVerified>(
+      () => UpdateIsEmailVerified(platformRepositoryImpl: getItInstance()));
 
   getItInstance.registerLazySingleton<SignOut>(
       () => SignOut(platformRepositoryImpl: getItInstance()));
@@ -80,6 +90,16 @@ Future init() async {
 
   getItInstance.registerFactory<ContestListingBloc>(
       () => ContestListingBloc(getCFContestList: getItInstance()));
+
+  getItInstance.registerLazySingleton<EmailVerificationBloc>(() =>
+      EmailVerificationBloc(
+          isEmailVerified: getItInstance(),
+          updateIsEmailVerified: getItInstance()));
+
+  getItInstance.registerLazySingleton<SendVerificationEmailBloc>(
+      () => SendVerificationEmailBloc(
+            verifyEmail: getItInstance(),
+          ));
 
   getItInstance.registerFactory<ProfileBloc>(
       () => ProfileBloc(fetchUserDetail: getItInstance()));

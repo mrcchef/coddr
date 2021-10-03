@@ -14,6 +14,7 @@ abstract class RemoteDataSource {
   Future<List<CFUserModel>> getCFUser(List<String> handles);
   Future<UserModel> fetchUserDetails(String uid);
   Future<void> storeUserDetails(UserModel userModel);
+  Future<void> updateIsEmailVerified(String uid);
 }
 
 class RemoteDataSourceImpl extends RemoteDataSource {
@@ -44,7 +45,12 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         'displayName': authData['displayName'],
         'email': authData['email'],
         'uid': uid,
-        'imageUrl' : "",
+        'imageUrl': "",
+        'isEmailVerified': false,
+        'isHandelATCVerified': false,
+        'isHandelCCVerified': false,
+        'isHandelCFVerified': false,
+        'isHandelHEVerified': false,
       },
     );
   }
@@ -67,6 +73,12 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         'occupation': userModel.occupation,
         'institution': userModel.institution,
       },
+    );
+  }
+
+  Future<void> updateIsEmailVerified(String uid) async {
+    await FirebaseFirestore.instance.collection('users').doc(uid).update(
+      {'isEmailVerified': true},
     );
   }
 
