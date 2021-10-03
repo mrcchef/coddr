@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
 import 'package:coddr/presentation/journeys/profile/profile.dart';
+import 'package:coddr/presentation/widgets/CoddrAppBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -45,6 +47,7 @@ class _EditProfileState extends State<EditProfile> {
 
   var imageUrl, displayName, contactNumber;
   var handelCF, handelCC, handelHE, institution;
+  var city, country, state;
   String occupation = 'Student';
 
   //EDIT IMAGE
@@ -68,10 +71,16 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController cfHandleController = TextEditingController();
   TextEditingController ccHandleController = TextEditingController();
   TextEditingController heHandleController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController stateController = TextEditingController();
+  TextEditingController countryController = TextEditingController();
   bool _isLoading = false;
   String prevImageUrl;
   String url;
   void _saveForm() async {
+    setState(() {
+      _isLoading = true;
+    });
     if (!_formkey.currentState.validate()) {
       setState(() {
         _isLoading = false;
@@ -104,9 +113,15 @@ class _EditProfileState extends State<EditProfile> {
         'handelCF': handelCF,
         'handelCC': handelCC,
         'handelHE': handelHE,
+        'city': city,
+        'state': state,
+        'country': country,
       });
       // print(url);
       Navigator.popAndPushNamed(context, Profile.routeName);
+      setState(() {
+        _isLoading = false;
+      });
     } on PlatformException catch (err) {
       var message = 'An error occured, please check your credentials!';
 
@@ -134,7 +149,30 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    Widget leftAppBarWidget = InkWell(
+      onTap: () {
+        Navigator.of(context).popAndPushNamed(Profile.routeName);
+      },
+      // child: Padding(
+      //   padding: EdgeInsets.only(bottom: Sizes.dimen_10.w),
+      child: Icon(Icons.arrow_back_ios, color: Colors.black),
+      //),
+    );
+
+    Widget middleAppBarWidget = Padding(
+      padding: EdgeInsets.only(
+        top: Sizes.dimen_6.h,
+        left: Sizes.dimen_16.w,
+      ),
+      child: Text('Coddr', style: Theme.of(context).textTheme.headline5),
+    );
+
     return Scaffold(
+      appBar: CoddrAppBar(
+        leftWidget: leftAppBarWidget,
+        middleWidget: middleAppBarWidget,
+        rightWidget: Spacer(),
+      ),
       body: BlocBuilder<ProfileBloc, ProfileState>(
         bloc: _profileBloc,
         builder: (context, state) {
@@ -154,45 +192,57 @@ class _EditProfileState extends State<EditProfile> {
           cfHandleController.text = userModel.handelCF;
           ccHandleController.text = userModel.handelCC;
           heHandleController.text = userModel.handelHE;
+          cityController.text = userModel.city;
+          stateController.text = userModel.state;
+          countryController.text = userModel.country;
           prevImageUrl = userModel.imageUrl;
-          return Form(
-            key: _formkey,
-            child: ListView(
-              children: [
-                SizedBox(
-                  height: 25,
-                ),
-                //PEditImage(),
-                editImage(),
-                SizedBox(
-                  height: 25,
-                ),
-                //PEditDetails(),
-                editDetails(),
-                //Pedithandles(),
-                editHandles(),
-                SizedBox(
-                  height: 25,
-                ),
-                Center(
-                  child: RaisedButton(
-                    onPressed: _saveForm,
-                    color: HexColor('#d91f2a'),
-                    child: Text(
-                      'Save Changes',
-                      style: TextStyle(color: Colors.white),
-                    ),
+          return (_isLoading == false)
+              ? Form(
+                  key: _formkey,
+                  child: ListView(
+                    children: [
+                      SizedBox(
+                        height: 25,
+                      ),
+                      //PEditImage(),
+                      editImage(),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      //PEditDetails(),
+                      editDetails(),
+                      //Pedithandles(),
+                      editHandles(),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      //PEditDetails(),
+                      editLocation(),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Center(
+                        child: RaisedButton(
+                          onPressed: _saveForm,
+                          color: HexColor('#d91f2a'),
+                          child: Text(
+                            'Save Changes',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 )
-              ],
-            ),
-          );
+              : Center(
+                  child: CircularProgressIndicator(),
+                );
         },
       ),
     );
   }
 
-  Padding editHandles() {
+  Widget editHandles() {
     return Padding(
       padding: const EdgeInsets.all(18.0),
       child: Column(
@@ -286,6 +336,110 @@ class _EditProfileState extends State<EditProfile> {
                   controller: heHandleController,
                   onSaved: (value) {
                     handelHE = value;
+                  },
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget editLocation() {
+    return Padding(
+      padding: const EdgeInsets.all(18.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+              child: Text(
+            'Edit Location',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          )),
+          SizedBox(
+            height: 25,
+          ),
+          Row(
+            children: [
+              Text('City'),
+              Spacer(),
+              Container(
+                height: 20,
+                width: 230,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                      hintText: 'Enter City',
+                      hintStyle: TextStyle(fontSize: 14)),
+                  style: TextStyle(color: Colors.black),
+                  controller: cityController,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please Enter City';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    city = value;
+                  },
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Row(
+            children: [
+              Text('State'),
+              Spacer(),
+              Container(
+                height: 20,
+                width: 230,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                      hintText: 'Enter State',
+                      hintStyle: TextStyle(fontSize: 14)),
+                  style: TextStyle(color: Colors.black),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please Enter State';
+                    }
+                    return null;
+                  },
+                  controller: stateController,
+                  onSaved: (value) {
+                    state = value;
+                  },
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Row(
+            children: [
+              Text('Country'),
+              Spacer(),
+              Container(
+                height: 20,
+                width: 230,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                      hintText: 'Enter Country',
+                      hintStyle: TextStyle(fontSize: 14)),
+                  style: TextStyle(color: Colors.black),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please Enter Country';
+                    }
+                    return null;
+                  },
+                  controller: countryController,
+                  onSaved: (value) {
+                    country = value;
                   },
                 ),
               ),
@@ -436,7 +590,11 @@ class _EditProfileState extends State<EditProfile> {
             Container(
               child: CircleAvatar(
                 radius: 60.0,
-                backgroundImage: AssetImage('assets/images/kshittiz2.jpg'),
+                backgroundImage: (_pickedImage != null)
+                    ? (FileImage(_pickedImage))
+                    : (prevImageUrl != "")
+                        ? NetworkImage(prevImageUrl)
+                        : AssetImage(Images.defaultUserImage),
                 backgroundColor: Colors.transparent,
               ),
               decoration: new BoxDecoration(
@@ -459,17 +617,17 @@ class _EditProfileState extends State<EditProfile> {
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(70),
                         bottomRight: Radius.circular(70))),
-                child: Center(
-                  child: InkWell(
+                child: InkWell(
+                  child: Center(
                     child: Text(
                       'Edit',
                       style: TextStyle(color: Colors.white),
                     ),
-                    onTap: _pickImage,
                   ),
+                  onTap: _pickImage,
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
