@@ -19,7 +19,7 @@ class ContestCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Navigator.of(context)
-          .pushNamed(UpcomingFixturesScreen.routeName, arguments: title),
+          .pushNamed(UpcomingFixturesScreen.routeName),
       child: Container(
         height: Sizes.dimen_100.w,
         padding: EdgeInsets.symmetric(
