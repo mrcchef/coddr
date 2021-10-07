@@ -1,6 +1,8 @@
 import 'package:coddr/domain/entities/app_error.dart';
 import 'package:coddr/domain/entities/contest_entity.dart';
+import 'package:coddr/domain/entities/curated_contest_model.dart';
 import 'package:coddr/domain/entities/user_entity.dart';
+import 'package:coddr/domain/entities/user_model.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class PlatformRepository {
@@ -19,6 +21,19 @@ abstract class PlatformRepository {
   Future<Either<AppError, void>> storeUserCredentials(
       Map<String, String> authData);
 
-  Future<Either<AppError, List<UserEntity>>> getCFUserList(
-      List<String> params);
+  Future<Either<AppError, List<UserEntity>>> getCFUserList(List<String> params);
+
+  Future<Either<AppError, UserModel>> fetchUserDetail();
+
+  Future<Either<AppError, void>> verifyEmail();
+
+  Future<bool> isEmailVerified();
+
+  Future<Either<AppError, void>> updateIsEmailVerified(String uid);
+
+  Future<Either<AppError, List<CuratedContestModel>>> fetchCuratedContest(
+      String platformId, String contestId);
+
+  Future<Either<AppError, void>> createCuratedContest(
+      CuratedContestModel curatedContestModel);
 }

@@ -2,6 +2,7 @@ import 'package:coddr/data/data_sources/authentication_data_source.dart';
 import 'package:coddr/data/data_sources/remote_data_source.dart';
 import 'package:coddr/domain/entities/app_error.dart';
 import 'package:coddr/domain/entities/contest_entity.dart';
+import 'package:coddr/domain/entities/curated_contest_model.dart';
 import 'package:coddr/domain/entities/user_entity.dart';
 import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/domain/repositories/platform_repository.dart';
@@ -91,6 +92,7 @@ class PlatformRepositoryImpl extends PlatformRepository {
     }
   }
 
+  @override
   Future<Either<AppError, UserModel>> fetchUserDetail() async {
     final String uid = authenticationDataSourceImpl.getUid();
     print("uid:$uid");
@@ -103,6 +105,7 @@ class PlatformRepositoryImpl extends PlatformRepository {
     }
   }
 
+  @override
   Future<Either<AppError, void>> verifyEmail() async {
     try {
       authenticationDataSourceImpl.verifyEmail();
@@ -112,14 +115,39 @@ class PlatformRepositoryImpl extends PlatformRepository {
     }
   }
 
+  @override
   Future<bool> isEmailVerified() async {
     return await authenticationDataSourceImpl.isEmailVerified();
   }
 
+  @override
   Future<Either<AppError, void>> updateIsEmailVerified(String uid) async {
     try {
       await remoteDataSourceImpl.updateIsEmailVerified(uid);
       return Right(null);
+    } on Exception {
+      return Left(AppError(appErrorType: AppErrorType.firebase));
+    }
+  }
+
+  @override
+  Future<Either<AppError, List<CuratedContestModel>>> fetchCuratedContest(
+      String platformId, String contestId) async {
+    try {
+      List<CuratedContestModel> curatedContestModelList =
+          await remoteDataSourceImpl.fetchCuratedContest(platformId, contestId);
+      return Right(curatedContestModelList);
+    } on Exception {
+      return Left(AppError(appErrorType: AppErrorType.firebase));
+    }
+  }
+
+  @override
+  Future<Either<AppError, bool>> createCuratedContest(
+      CuratedContestModel curatedContestModel) async {
+    try {
+      await remoteDataSourceImpl.createCuratedContest(curatedContestModel);
+      return Right(true);
     } on Exception {
       return Left(AppError(appErrorType: AppErrorType.firebase));
     }
