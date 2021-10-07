@@ -8,19 +8,19 @@ import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
 import 'package:coddr/presentation/journeys/auth/sign_up_screen.dart';
 import 'package:coddr/presentation/journeys/auth/splash_screen.dart';
+import 'package:coddr/presentation/journeys/curated_contests/upcoming_fixtures_screen.dart';
 //Files
 import 'package:coddr/presentation/journeys/home/home_screen.dart';
 import 'package:coddr/presentation/journeys/profile/edit_profile.dart';
 import 'package:coddr/presentation/journeys/profile/profile.dart';
 import 'package:coddr/presentation/journeys/upcoming_contests/upcoming_contests_screen.dart';
-import 'package:coddr/presentation/journeys/upcoming_fixtures/upcoming_fixtures_screen.dart';
 import 'package:coddr/presentation/themes/themes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pedantic/pedantic.dart';
 
-import 'presentation/journeys/upcoming_fixtures/upcoming_fixtures_sp.dart';
+import 'presentation/journeys/curated_contests/curated_contests.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -120,7 +120,7 @@ class _MyAppState extends State<MyApp> {
             SignInScreen.routeName: (ctx) => SignInScreen(),
             SignUpScreen.routeName: (ctx) => SignUpScreen(),
             UpcomingContestsScreen.routeName: (ctx) => UpcomingContestsScreen(),
-            UpcomingFixturesScreen.routeName: (ctx) => UpcomingFixtures(),
+            UpcomingFixturesScreen.routeName: (ctx) => CuratedContests(),
           }),
     );
   }

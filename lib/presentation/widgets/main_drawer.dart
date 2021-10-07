@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
@@ -8,7 +7,6 @@ import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
 import 'package:coddr/presentation/journeys/profile/profile.dart';
 import 'package:coddr/presentation/widgets/drawer_list_tile.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
