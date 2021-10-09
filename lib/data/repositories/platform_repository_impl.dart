@@ -85,6 +85,7 @@ class PlatformRepositoryImpl extends PlatformRepository {
       List<String> params) async {
     try {
       List<UserEntity> userList = await remoteDataSourceImpl.getCFUser(params);
+      print(userList);
       return Right(userList);
     } on Exception {
       return Left(AppError(appErrorType: AppErrorType.api));

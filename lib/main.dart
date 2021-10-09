@@ -1,6 +1,7 @@
 import 'package:coddr/dependencies/get_it.dart' as get_it;
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
 import 'package:coddr/presentation/blocs/email_verification/email_verification_bloc.dart';
+import 'package:coddr/presentation/blocs/handel_verification/handel_verification_bloc.dart';
 import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
 import 'package:coddr/presentation/blocs/send_verification_email/send_verification_email_bloc.dart';
 import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
@@ -42,6 +43,7 @@ class _MyAppState extends State<MyApp> {
   ProfileBloc _profileBloc;
   EmailVerificationBloc _emailVerificationBloc;
   SendVerificationEmailBloc _sendVerificationEmailBloc;
+  HandelVerificationBloc _handelVerificationBloc;
 
   @override
   void initState() {
@@ -53,6 +55,7 @@ class _MyAppState extends State<MyApp> {
     _emailVerificationBloc = get_it.getItInstance<EmailVerificationBloc>();
     _sendVerificationEmailBloc =
         get_it.getItInstance<SendVerificationEmailBloc>();
+    _handelVerificationBloc = get_it.getItInstance<HandelVerificationBloc>();
 
     super.initState();
   }
@@ -67,6 +70,7 @@ class _MyAppState extends State<MyApp> {
     _profileBloc.close();
     _emailVerificationBloc.close();
     _sendVerificationEmailBloc.close();
+    _handelVerificationBloc.close();
   }
 
   @override
@@ -89,6 +93,8 @@ class _MyAppState extends State<MyApp> {
             create: (context) => _emailVerificationBloc),
         BlocProvider<SendVerificationEmailBloc>(
             create: (context) => _sendVerificationEmailBloc),
+        BlocProvider<HandelVerificationBloc>(
+            create: (context) => _handelVerificationBloc),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
