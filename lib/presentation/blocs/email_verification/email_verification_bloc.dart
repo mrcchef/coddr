@@ -25,7 +25,6 @@ class EmailVerificationBloc
   ) async* {
     if (event is VerifyEmailEvent) {
       yield EmailVerificationLoading();
-
       bool isVerified = await isEmailVerified();
       String uid = event.uid;
       if (isVerified) {

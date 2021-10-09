@@ -18,6 +18,7 @@ import 'package:coddr/domain/usecases/verify_email.dart';
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
 import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.dart';
 import 'package:coddr/presentation/blocs/email_verification/email_verification_bloc.dart';
+import 'package:coddr/presentation/blocs/handel_verification/handel_verification_bloc.dart';
 import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
 import 'package:coddr/presentation/blocs/send_verification_email/send_verification_email_bloc.dart';
 import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
@@ -103,6 +104,9 @@ Future init() async {
 
   getItInstance.registerFactory<ProfileBloc>(
       () => ProfileBloc(fetchUserDetail: getItInstance()));
+
+  getItInstance.registerFactory<HandelVerificationBloc>(
+      () => HandelVerificationBloc(getCFUser: getItInstance()));
 
   getItInstance.registerLazySingleton<StoreUserCredentials>(
       () => StoreUserCredentials(platformRepositoryImpl: getItInstance()));
