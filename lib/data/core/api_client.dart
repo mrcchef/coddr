@@ -40,7 +40,7 @@ class APIClient {
     }
     url = '${APIConstants.BASE_URL}$path';
     url += paramsPath;
-    //print(url);
+    print(url);
     return url;
   }
 }

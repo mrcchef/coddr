@@ -3,6 +3,7 @@ import 'package:coddr/data/core/api_client.dart';
 import 'package:coddr/data/data_sources/authentication_data_source.dart';
 import 'package:coddr/data/model/cf_contest_list_model.dart';
 import 'package:coddr/data/model/cf_contest_model.dart';
+import 'package:coddr/data/model/cf_standings_model.dart';
 import 'package:coddr/data/model/cf_user_list_model.dart';
 import 'package:coddr/data/model/cf_user_model.dart';
 import 'package:coddr/domain/entities/user_model.dart';
@@ -15,6 +16,8 @@ abstract class RemoteDataSource {
   Future<UserModel> fetchUserDetails(String uid);
   Future<void> storeUserDetails(UserModel userModel);
   Future<void> updateIsEmailVerified(String uid);
+  Future<CFStandingsModel> getCFStandings(
+      List<String> handles, String contestId);
 }
 
 class RemoteDataSourceImpl extends RemoteDataSource {
@@ -103,5 +106,15 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     List<CFUserModel> userList = CFUserListModel.fromJson(responseBody).user;
     print(userList);
     return userList;
+  }
+
+  Future<CFStandingsModel> getCFStandings(
+      List<String> handles, String contestId) async {
+    final responseBody = await apiClient.get('contest.standings?', params: {
+      'contestId': contestId,
+      'handles': handles,
+    });
+    CFStandingsModel standings = CFStandingsModel.fromJson(responseBody);
+    return standings;
   }
 }
