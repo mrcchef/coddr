@@ -34,7 +34,7 @@ class ImageSection extends StatelessWidget {
             radius: 60,
             backgroundImage: (imageUrl != "")
                 ? NetworkImage(imageUrl)
-                : AssetImage(Images.defaultUserImage),
+                : NetworkImage('https://stratosphere.co.in/img/user.jpg'),
             //backgroundImage: AssetImage('assets/images/kshittiz2.jpg'),
           ),
         )
