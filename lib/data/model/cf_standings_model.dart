@@ -18,7 +18,9 @@ class CFStandingsModel extends CFStandingsEntity {
             cfHandelStandingsEntity:
                 rows.map<CFHandelStandingsEntity>((element) {
               return CFHandelStandingsEntity(
-                  handle: element.party.members[0].handle,
+                  handle:
+                      element.party.members[0].handle
+                      ,
                   rank: element.rank,
                   points: element.points,
                   penalty: element.penalty);
@@ -219,16 +221,16 @@ class Party {
       this.startTimeSeconds});
 
   factory Party.fromJson(Map<String, dynamic> json) {
-    List<Members> members = [];
+    List<Members> _members = [];
     if (json['members'] != null) {
-      members = [];
       json['members'].forEach((v) {
-        members.add(new Members.fromJson(v));
+        _members.add(new Members.fromJson(v));
       });
     }
     return Party(
       contestId: json['contestId'],
       participantType: json['participantType'],
+      members: _members,
       ghost: json['ghost'],
       startTimeSeconds: json['startTimeSeconds'],
     );
@@ -253,6 +255,8 @@ class Members {
   Members({this.handle});
 
   factory Members.fromJson(Map<String, dynamic> json) {
+    print("JSON HANDLE");
+    print(json['handle']);
     return Members(
       handle: json['handle'],
     );
