@@ -1,10 +1,11 @@
 import 'package:coddr/domain/entities/cf_handel_standings_entity.dart';
 import 'package:coddr/domain/entities/cf_standings_entity.dart';
+import 'package:flutter/cupertino.dart';
 
 class CFStandingsModel extends CFStandingsEntity {
-  Contest contest;
-  List<Problems> problems;
-  List<Rows> rows;
+  final Contest contest;
+  final List<Problems> problems;
+  final List<Rows> rows;
 
   CFStandingsModel({this.contest, this.problems, this.rows})
       : super(
@@ -35,21 +36,27 @@ class CFStandingsModel extends CFStandingsEntity {
     return result;
   }
 
-  CFStandingsModel.fromJson(Map<String, dynamic> json) {
-    contest =
+  factory CFStandingsModel.fromJson(Map<String, dynamic> json) {
+    Contest _contest =
         json['contest'] != null ? new Contest.fromJson(json['contest']) : null;
+    List<Problems> _problems = [];
+    List<Rows> _rows = [];
+
     if (json['problems'] != null) {
-      problems = [];
       json['problems'].forEach((v) {
-        problems.add(new Problems.fromJson(v));
+        _problems.add(new Problems.fromJson(v));
       });
     }
     if (json['rows'] != null) {
-      rows = [];
       json['rows'].forEach((v) {
-        rows.add(new Rows.fromJson(v));
+        _rows.add(new Rows.fromJson(v));
       });
     }
+    return CFStandingsModel(
+      contest: _contest,
+      problems: _problems,
+      rows: _rows,
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -87,15 +94,17 @@ class Contest {
       this.startTimeSeconds,
       this.relativeTimeSeconds});
 
-  Contest.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    type = json['type'];
-    phase = json['phase'];
-    frozen = json['frozen'];
-    durationSeconds = json['durationSeconds'];
-    startTimeSeconds = json['startTimeSeconds'];
-    relativeTimeSeconds = json['relativeTimeSeconds'];
+  factory Contest.fromJson(Map<String, dynamic> json) {
+    return Contest(
+      id: json['id'],
+      name: json['name'],
+      type: json['type'],
+      phase: json['phase'],
+      frozen: json['frozen'],
+      durationSeconds: json['durationSeconds'],
+      startTimeSeconds: json['startTimeSeconds'],
+      relativeTimeSeconds: json['relativeTimeSeconds'],
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -121,12 +130,14 @@ class Problems {
 
   Problems({this.contestId, this.index, this.name, this.type, this.tags});
 
-  Problems.fromJson(Map<String, dynamic> json) {
-    contestId = json['contestId'];
-    index = json['index'];
-    name = json['name'];
-    type = json['type'];
-    tags = json['tags'].cast<String>();
+  factory Problems.fromJson(Map<String, dynamic> json) {
+    return Problems(
+      contestId: json['contestId'],
+      index: json['index'],
+      name: json['name'],
+      type: json['type'],
+      tags: json['tags'].cast<String>(),
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -158,19 +169,21 @@ class Rows {
       this.unsuccessfulHackCount,
       this.problemResults});
 
-  Rows.fromJson(Map<String, dynamic> json) {
-    party = json['party'] != null ? new Party.fromJson(json['party']) : null;
-    rank = json['rank'];
-    points = json['points'];
-    penalty = json['penalty'];
-    successfulHackCount = json['successfulHackCount'];
-    unsuccessfulHackCount = json['unsuccessfulHackCount'];
+  factory Rows.fromJson(Map<String, dynamic> json) {
+    List<ProblemResults> problemResults = [];
     if (json['problemResults'] != null) {
-      problemResults = [];
       json['problemResults'].forEach((v) {
         problemResults.add(new ProblemResults.fromJson(v));
       });
     }
+    return Rows(
+      party: json['party'] != null ? new Party.fromJson(json['party']) : null,
+      rank: json['rank'],
+      points: json['points'].toInt(),
+      penalty: json['penalty'],
+      successfulHackCount: json['successfulHackCount'],
+      unsuccessfulHackCount: json['unsuccessfulHackCount'],
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -205,17 +218,20 @@ class Party {
       this.ghost,
       this.startTimeSeconds});
 
-  Party.fromJson(Map<String, dynamic> json) {
-    contestId = json['contestId'];
+  factory Party.fromJson(Map<String, dynamic> json) {
+    List<Members> members = [];
     if (json['members'] != null) {
       members = [];
       json['members'].forEach((v) {
         members.add(new Members.fromJson(v));
       });
     }
-    participantType = json['participantType'];
-    ghost = json['ghost'];
-    startTimeSeconds = json['startTimeSeconds'];
+    return Party(
+      contestId: json['contestId'],
+      participantType: json['participantType'],
+      ghost: json['ghost'],
+      startTimeSeconds: json['startTimeSeconds'],
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -236,8 +252,10 @@ class Members {
 
   Members({this.handle});
 
-  Members.fromJson(Map<String, dynamic> json) {
-    handle = json['handle'];
+  factory Members.fromJson(Map<String, dynamic> json) {
+    return Members(
+      handle: json['handle'],
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -259,11 +277,13 @@ class ProblemResults {
       this.type,
       this.bestSubmissionTimeSeconds});
 
-  ProblemResults.fromJson(Map<String, dynamic> json) {
-    points = json['points'];
-    rejectedAttemptCount = json['rejectedAttemptCount'];
-    type = json['type'];
-    bestSubmissionTimeSeconds = json['bestSubmissionTimeSeconds'];
+  factory ProblemResults.fromJson(Map<String, dynamic> json) {
+    return ProblemResults(
+      points: json['points'].toInt(),
+      rejectedAttemptCount: json['rejectedAttemptCount'],
+      type: json['type'],
+      bestSubmissionTimeSeconds: json['bestSubmissionTimeSeconds'],
+    );
   }
 
   Map<String, dynamic> toJson() {

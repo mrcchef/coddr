@@ -8,8 +8,17 @@ class CFStandingsListModel {
 
   CFStandingsListModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    result =
-        json['result'] != null ? new CFStandingsModel.fromJson(json['result']) : null;
+    result = json['result'] != null
+        ? new CFStandingsModel.fromJson(json['result'])
+        : null;
+
+    //CFStandingsModel temp = CFStandingsModel.fromJson(json['result']);
+    //print("Temp =");
+    //print(temp);
+    print("RESULT CFSTANDINGSLISTMODEL");
+    print(result);
+    print("jsonResult = ");
+    print(json['result']);
   }
 
   Map<String, dynamic> toJson() {
@@ -21,4 +30,3 @@ class CFStandingsListModel {
     return data;
   }
 }
-
