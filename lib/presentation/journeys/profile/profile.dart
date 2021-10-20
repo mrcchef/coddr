@@ -90,7 +90,6 @@ class _ProfileState extends State<Profile> {
               SizedBox(width: Sizes.dimen_2.w),
               Icon(
                 Icons.edit,
-                
                 color: Colors.red[700],
               ),
             ],
@@ -167,9 +166,12 @@ class _ProfileState extends State<Profile> {
                 thickness: 2.5,
               ),
               PHandles(
+                email: userModel.email,
                 handelCF: userModel.handelCF == null ? "" : userModel.handelCF,
                 handelCC: userModel.handelCC == null ? "" : userModel.handelCC,
                 handelHE: userModel.handelHE == null ? "" : userModel.handelHE,
+                isHandelCFVerified:
+                    (userModel.isHandelCFVerified) ? true : false,
               ),
               Divider(
                 thickness: 2.5,
