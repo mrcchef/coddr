@@ -1,16 +1,16 @@
 import 'package:coddr/common/constants/size_constants.dart';
-import 'package:coddr/presentation/journeys/upcoming_fixtures/fixturecardnew.dart';
+import 'package:coddr/presentation/journeys/upcoming_fixtures/curated_contest_card.dart';
 import 'package:flutter/material.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 
 
-class FixturesList extends StatefulWidget {
+class CuratedContestList extends StatefulWidget {
 
   @override
-  _FixturesListState createState() => _FixturesListState();
+  _CuratedContestListState createState() => _CuratedContestListState();
 }
 
-class _FixturesListState extends State<FixturesList> {
+class _CuratedContestListState extends State<CuratedContestList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -20,7 +20,7 @@ class _FixturesListState extends State<FixturesList> {
         itemBuilder: (_, index) {
           return Padding(
             padding:  EdgeInsets.all(Sizes.dimen_8.w),
-            child: FixtureCardNew(),
+            child: CuratedContestCard(),
           );
         });
   }

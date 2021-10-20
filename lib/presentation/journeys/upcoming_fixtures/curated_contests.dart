@@ -1,17 +1,17 @@
 import 'package:coddr/common/constants/size_constants.dart';
-import 'package:coddr/presentation/journeys/upcoming_fixtures/FixturesList.dart';
+import 'package:coddr/presentation/journeys/upcoming_fixtures/curated_contest_list.dart';
 import 'package:coddr/presentation/journeys/upcoming_fixtures/platformlabel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 
 
-class UpcomingFixtures extends StatefulWidget {
+class CuratedContests extends StatefulWidget {
   @override
-  _UpcomingFixturesState createState() => _UpcomingFixturesState();
+  _CuratedContestsState createState() => _CuratedContestsState();
 }
 
-class _UpcomingFixturesState extends State<UpcomingFixtures> {
+class _CuratedContestsState extends State<CuratedContests> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +25,7 @@ class _UpcomingFixturesState extends State<UpcomingFixtures> {
               style: TextStyle(fontSize: Sizes.dimen_22.w, fontWeight: FontWeight.w600),
             ),
           ),
-         FixturesList(),
+         CuratedContestList(),
           Padding(
             padding:  EdgeInsets.all(Sizes.dimen_8.w),
             child: Row(
@@ -46,7 +46,7 @@ class _UpcomingFixturesState extends State<UpcomingFixtures> {
               ],
             ),
           ),
-          FixturesList(),
+          CuratedContestList(),
         ],
       ),
     );

@@ -20,7 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pedantic/pedantic.dart';
 
-import 'presentation/journeys/upcoming_fixtures/upcoming_fixtures_sp.dart';
+import 'presentation/journeys/upcoming_fixtures/curated_contests.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -120,7 +120,7 @@ class _MyAppState extends State<MyApp> {
             SignInScreen.routeName: (ctx) => SignInScreen(),
             SignUpScreen.routeName: (ctx) => SignUpScreen(),
             UpcomingContestsScreen.routeName: (ctx) => UpcomingContestsScreen(),
-            UpcomingFixturesScreen.routeName: (ctx) => UpcomingFixtures(),
+            UpcomingFixturesScreen.routeName: (ctx) => CuratedContests(),
           }),
     );
   }

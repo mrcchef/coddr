@@ -2,7 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:coddr/presentation/journeys/RankList/ContestCardInfo.dart';
 import 'package:coddr/presentation/journeys/RankList/LeaderboardPage.dart';
 import 'package:coddr/presentation/journeys/RankList/WinningsPage.dart';
-import 'package:coddr/presentation/journeys/upcoming_fixtures/fixturecardnew.dart';
+import 'package:coddr/presentation/journeys/upcoming_fixtures/curated_contest_card.dart';
 import 'package:coddr/presentation/journeys/upcoming_fixtures/platformlabel.dart';
 import 'package:flutter/material.dart';
 import 'package:coddr/common/constants/size_constants.dart';
@@ -24,7 +24,7 @@ class _RankListPageState extends State<RankListPage> {
           child: Column(children: [
             PlatformLabel(),
             ContestCardinfo(),
-            FixtureCardNew(),
+            CuratedContestCard(),
             SizedBox(
               height: Sizes.dimen_50.w,
               child: AppBar(
