@@ -3,6 +3,7 @@ import 'package:coddr/data/core/api_client.dart';
 import 'package:coddr/data/data_sources/authentication_data_source.dart';
 import 'package:coddr/data/model/cf_contest_list_model.dart';
 import 'package:coddr/data/model/cf_contest_model.dart';
+import 'package:coddr/data/model/cf_standings_list_model.dart';
 import 'package:coddr/data/model/cf_standings_model.dart';
 import 'package:coddr/data/model/cf_user_list_model.dart';
 import 'package:coddr/data/model/cf_user_model.dart';
@@ -110,11 +111,14 @@ class RemoteDataSourceImpl extends RemoteDataSource {
 
   Future<CFStandingsModel> getCFStandings(
       List<String> handles, String contestId) async {
-    final responseBody = await apiClient.get('contest.standings?', params: {
-      'contestId': contestId,
+    final responseBody =
+        await apiClient.get('contest.standings?contestId=$contestId&', params: {
       'handles': handles,
     });
-    CFStandingsModel standings = CFStandingsModel.fromJson(responseBody);
+    print(responseBody);
+    CFStandingsModel standings = CFStandingsListModel.fromJson(responseBody).result;
+    print(standings);
+
     return standings;
   }
 }

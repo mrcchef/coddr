@@ -23,5 +23,5 @@ class CFStandingsEntity extends Equatable {
   });
 
   @override
-  List<Object> get props => [contestId,contestName];
+  List<Object> get props => [contestId,contestName,cfHandelStandingsEntity];
 }
