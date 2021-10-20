@@ -7,16 +7,14 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.6.1"
+    version: "2.8.1"
   awesome_dialog:
     dependency: "direct main"
     description:
       name: awesome_dialog
       url: "https://pub.dartlang.org"
     source: hosted
-   // version: "2.1.1"
-    version: "2.8.1"
-
+    version: "2.1.1"
   bloc:
     dependency: transitive
     description:
