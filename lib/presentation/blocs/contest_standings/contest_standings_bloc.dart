@@ -26,7 +26,6 @@ class ContestStandingsBloc
       yield eitherList.fold((appError) => ContestStandingsFailed(),
           (contestStandings) {
         print(contestStandings);
-        print("AbhijeetMotiGaand");
         return ContestStandingsFetched(
           cfStandings: contestStandings,
         );
