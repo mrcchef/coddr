@@ -1,4 +1,5 @@
 import 'package:coddr/domain/entities/app_error.dart';
+import 'package:coddr/domain/entities/cf_standings_entity.dart';
 import 'package:coddr/domain/entities/contest_entity.dart';
 import 'package:coddr/domain/entities/curated_contest_model.dart';
 import 'package:coddr/domain/entities/user_entity.dart';
@@ -36,4 +37,6 @@ abstract class PlatformRepository {
 
   Future<Either<AppError, void>> createCuratedContest(
       CuratedContestModel curatedContestModel);
+  Future<Either<AppError, CFStandingsEntity>> getCFStandings(
+      List<String> handles, String contestId);
 }

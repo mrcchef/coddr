@@ -1,6 +1,7 @@
 import 'package:coddr/data/data_sources/authentication_data_source.dart';
 import 'package:coddr/data/data_sources/remote_data_source.dart';
 import 'package:coddr/domain/entities/app_error.dart';
+import 'package:coddr/domain/entities/cf_standings_entity.dart';
 import 'package:coddr/domain/entities/contest_entity.dart';
 import 'package:coddr/domain/entities/curated_contest_model.dart';
 import 'package:coddr/domain/entities/user_entity.dart';
@@ -23,6 +24,18 @@ class PlatformRepositoryImpl extends PlatformRepository {
       List<ContestEntity> contestList =
           await remoteDataSourceImpl.getCFContest();
       return Right(contestList);
+    } on Exception {
+      return Left(AppError(appErrorType: AppErrorType.api));
+    }
+  }
+
+  @override
+  Future<Either<AppError, CFStandingsEntity>> getCFStandings(
+      List<String> handles, String contestId) async {
+    try {
+      CFStandingsEntity standings =
+          await remoteDataSourceImpl.getCFStandings(handles, contestId);
+      return Right(standings);
     } on Exception {
       return Left(AppError(appErrorType: AppErrorType.api));
     }
@@ -86,6 +99,7 @@ class PlatformRepositoryImpl extends PlatformRepository {
       List<String> params) async {
     try {
       List<UserEntity> userList = await remoteDataSourceImpl.getCFUser(params);
+      print(userList);
       return Right(userList);
     } on Exception {
       return Left(AppError(appErrorType: AppErrorType.api));
