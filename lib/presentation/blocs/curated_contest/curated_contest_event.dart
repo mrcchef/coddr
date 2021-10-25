@@ -8,12 +8,12 @@ abstract class CuratedContestEvent extends Equatable {
 }
 
 class FetchCuratedContestEvent extends CuratedContestEvent {
-  final ContestEntity contestEntity;
+  final FetchCuratedContestArgument fetchCuratedContestArgument;
 
   FetchCuratedContestEvent({
-    @required this.contestEntity,
+    @required this.fetchCuratedContestArgument,
   });
 
   @override
-  List<Object> get props => [contestEntity];
+  List<Object> get props => [fetchCuratedContestArgument];
 }

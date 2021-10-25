@@ -1,11 +1,16 @@
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
+import 'package:coddr/domain/entities/curated_contest_model.dart';
 import 'package:coddr/presentation/journeys/RankList/RankListPage.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class CuratedContestCard extends StatefulWidget {
+  final CuratedContestModel curatedContestModel;
+
+  const CuratedContestCard({Key key, this.curatedContestModel})
+      : super(key: key);
   @override
   _CuratedContestCardState createState() => _CuratedContestCardState();
 }
@@ -33,7 +38,7 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
                     Column(
                       children: [
                         Text('Total Prize'),
-                        Text('₹ 2000'),
+                        Text('₹ ${widget.curatedContestModel.prize}'),
                       ],
                     ),
                     Spacer(),
@@ -45,7 +50,7 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
                               color: Colors.indigo,
                               fontWeight: FontWeight.bold),
                         ),
-                        Text('7860'),
+                        Text(widget.curatedContestModel.contestId),
                       ],
                     ),
                     Spacer(),
@@ -61,7 +66,7 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
                             child: Padding(
                               padding: EdgeInsets.all(Sizes.dimen_4.w),
                               child: Text(
-                                '₹ 200',
+                                '₹ ${widget.curatedContestModel.entryFees}',
                                 style: TextStyle(color: Colors.white),
                               ),
                             )),
@@ -84,9 +89,10 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
                 padding: EdgeInsets.all(Sizes.dimen_8.w),
                 child: Row(
                   children: [
-                    Text('6 spots left'),
+                    Text(
+                        '${int.parse(widget.curatedContestModel.totalSpots) - int.parse(widget.curatedContestModel.filledSpots)} spots left'),
                     Spacer(),
-                    Text('10 spots'),
+                    Text('${widget.curatedContestModel.totalSpots} spots'),
                   ],
                 ),
               )

@@ -8,21 +8,25 @@ class CuratedContestModel extends Equatable {
   final String entryFees;
   final String prize;
   final String totalSpots;
-  final String filledSports;
+  final String filledSpots;
   final bool isPrivate;
   final String password;
   final String parentContestId;
   final String platformId;
+  final Map<int, int> positionToReward;
+  final Map<int, String> positionToUsername;
   CuratedContestModel({
     @required this.contestId,
     @required this.entryFees,
     @required this.prize,
     @required this.totalSpots,
-    @required this.filledSports,
+    @required this.filledSpots,
     @required this.isPrivate,
     @required this.password,
     @required this.parentContestId,
     @required this.platformId,
+    @required this.positionToReward,
+    @required this.positionToUsername,
   });
 
   CuratedContestModel copyWith({
@@ -35,17 +39,21 @@ class CuratedContestModel extends Equatable {
     String password,
     String parentContestId,
     String platformId,
+    String positionToReward,
+    String positionToUsername,
   }) {
     return CuratedContestModel(
       contestId: contestId ?? this.contestId,
       entryFees: entryFees ?? this.entryFees,
       prize: prize ?? this.prize,
       totalSpots: totalSpots ?? this.totalSpots,
-      filledSports: filledSports ?? this.filledSports,
+      filledSpots: filledSports ?? this.filledSpots,
       isPrivate: isPrivate ?? this.isPrivate,
       password: password ?? this.password,
       parentContestId: parentContestId ?? this.parentContestId,
       platformId: platformId ?? this.platformId,
+      positionToReward: positionToReward ?? this.positionToReward,
+      positionToUsername: positionToUsername ?? this.positionToUsername,
     );
   }
 
@@ -55,11 +63,13 @@ class CuratedContestModel extends Equatable {
       'entryFees': entryFees,
       'prize': prize,
       'totalSpots': totalSpots,
-      'filledSports': filledSports,
+      'filledSports': filledSpots,
       'isPrivate': isPrivate,
       'password': password,
       'parentContestId': parentContestId,
       'platformId': platformId,
+      'positionToReward': positionToReward,
+      'positionToUsername': positionToUsername,
     };
   }
 
@@ -69,11 +79,13 @@ class CuratedContestModel extends Equatable {
       entryFees: map['entryFees'],
       prize: map['prize'],
       totalSpots: map['totalSpots'],
-      filledSports: map['filledSports'],
+      filledSpots: map['filledSports'],
       isPrivate: map['isPrivate'],
       password: map['password'],
       parentContestId: map['parentContestId'],
       platformId: map['platformId'],
+      positionToReward: map['positionToReward'],
+      positionToUsername: map['positionToUsername'],
     );
   }
 
@@ -84,7 +96,7 @@ class CuratedContestModel extends Equatable {
 
   @override
   String toString() {
-    return 'CuratedContestModel(contestId: $contestId, entryFees: $entryFees, prize: $prize, totalSpots: $totalSpots, filledSports: $filledSports, isPrivate: $isPrivate, password: $password, parentContestId: $parentContestId, platformId: $platformId,)';
+    return 'CuratedContestModel(contestId: $contestId, entryFees: $entryFees, prize: $prize, totalSpots: $totalSpots, filledSports: $filledSpots, isPrivate: $isPrivate, password: $password, parentContestId: $parentContestId, platformId: $platformId,)';
   }
 
   @override
@@ -96,11 +108,13 @@ class CuratedContestModel extends Equatable {
         other.entryFees == entryFees &&
         other.prize == prize &&
         other.totalSpots == totalSpots &&
-        other.filledSports == filledSports &&
+        other.filledSpots == filledSpots &&
         other.isPrivate == isPrivate &&
         other.password == password &&
         other.parentContestId == parentContestId &&
-        other.platformId == platformId;
+        other.platformId == platformId &&
+        other.positionToReward == positionToReward &&
+        other.positionToUsername == positionToUsername;
   }
 
   @override
@@ -109,11 +123,13 @@ class CuratedContestModel extends Equatable {
         entryFees.hashCode ^
         prize.hashCode ^
         totalSpots.hashCode ^
-        filledSports.hashCode ^
+        filledSpots.hashCode ^
         isPrivate.hashCode ^
         password.hashCode ^
         parentContestId.hashCode ^
-        platformId.hashCode;
+        platformId.hashCode ^
+        positionToReward.hashCode ^
+        positionToUsername.hashCode;
   }
 
   @override

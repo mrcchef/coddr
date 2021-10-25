@@ -20,4 +20,8 @@ class CuratedContestFetchedState extends CuratedContestState {
 
 class CuratedContestFetchingState extends CuratedContestState {}
 
-class CuratedContestErrorState extends CuratedContestState {}
+class CuratedContestErrorState extends CuratedContestState {
+  final String message;
+
+  CuratedContestErrorState(this.message);
+}

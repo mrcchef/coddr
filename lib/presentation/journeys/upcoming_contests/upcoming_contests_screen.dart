@@ -123,6 +123,9 @@ class UpcomingContestsScreen extends StatelessWidget {
                             time:
                                 '${DateFormat('HH:mm').format(startTime)} - ${DateFormat('HH:mm').format(endTime)}',
                             date: DateFormat('dd/MMM/yyyy').format(startTime),
+                            contestId: upcomingContestList[index].id,
+                            platfromId:
+                                upcomingContestList[index].platformHandle,
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) =>

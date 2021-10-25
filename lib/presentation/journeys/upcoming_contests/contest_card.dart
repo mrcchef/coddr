@@ -1,6 +1,6 @@
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
-import 'package:coddr/presentation/journeys/curated_contests/upcoming_fixtures_screen.dart';
+import 'package:coddr/presentation/journeys/curated_contests/curated_contests.dart';
 import 'package:flutter/material.dart';
 
 class ContestCard extends StatelessWidget {
@@ -8,18 +8,25 @@ class ContestCard extends StatelessWidget {
   final Color color;
   final String time;
   final String date;
+  final int contestId;
+  final String platformId;
 
   ContestCard({
     @required this.title,
     @required this.color,
     @required this.time,
     @required this.date,
+    @required this.contestId,
+    @required this.platformId,
   });
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () =>
-          Navigator.of(context).pushNamed(UpcomingFixturesScreen.routeName),
+      onTap: () => Navigator.of(context)
+          .pushNamed(CuratedContests.routeName, arguments: {
+        'contestId': contestId,
+        'platformId': platformId,
+      }),
       child: Container(
         height: Sizes.dimen_100.w,
         padding: EdgeInsets.symmetric(

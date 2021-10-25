@@ -1,6 +1,8 @@
 import 'package:coddr/dependencies/get_it.dart' as get_it;
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
 import 'package:coddr/presentation/blocs/contest_standings/contest_standings_bloc.dart';
+import 'package:coddr/presentation/blocs/create_curated_contest/create_curated_contest_bloc.dart';
+import 'package:coddr/presentation/blocs/curated_contest/curated_contest_bloc.dart';
 import 'package:coddr/presentation/blocs/email_verification/email_verification_bloc.dart';
 import 'package:coddr/presentation/blocs/handel_verification/handel_verification_bloc.dart';
 import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
@@ -10,7 +12,6 @@ import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
 import 'package:coddr/presentation/journeys/auth/sign_up_screen.dart';
 import 'package:coddr/presentation/journeys/auth/splash_screen.dart';
-import 'package:coddr/presentation/journeys/curated_contests/upcoming_fixtures_screen.dart';
 //Files
 import 'package:coddr/presentation/journeys/home/home_screen.dart';
 import 'package:coddr/presentation/journeys/profile/edit_profile.dart';
@@ -46,6 +47,8 @@ class _MyAppState extends State<MyApp> {
   SendVerificationEmailBloc _sendVerificationEmailBloc;
   HandelVerificationBloc _handelVerificationBloc;
   ContestStandingsBloc _contestStandingsBloc;
+  CuratedContestBloc _curatedContestBloc;
+  CreateCuratedContestBloc _createCuratedContestBloc;
 
   @override
   void initState() {
@@ -59,7 +62,9 @@ class _MyAppState extends State<MyApp> {
         get_it.getItInstance<SendVerificationEmailBloc>();
     _handelVerificationBloc = get_it.getItInstance<HandelVerificationBloc>();
     _contestStandingsBloc = get_it.getItInstance<ContestStandingsBloc>();
-
+    _curatedContestBloc = get_it.getItInstance<CuratedContestBloc>();
+    _createCuratedContestBloc =
+        get_it.getItInstance<CreateCuratedContestBloc>();
     super.initState();
   }
 
@@ -75,6 +80,8 @@ class _MyAppState extends State<MyApp> {
     _sendVerificationEmailBloc.close();
     _handelVerificationBloc.close();
     _contestStandingsBloc.close();
+    _curatedContestBloc.close();
+    _createCuratedContestBloc.close();
   }
 
   @override
@@ -100,7 +107,11 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<HandelVerificationBloc>(
             create: (context) => _handelVerificationBloc),
         BlocProvider<ContestStandingsBloc>(
-          create: (context) => _contestStandingsBloc),
+            create: (context) => _contestStandingsBloc),
+        BlocProvider<CuratedContestBloc>(
+            create: (context) => _curatedContestBloc),
+        BlocProvider<CreateCuratedContestBloc>(
+            create: (context) => _createCuratedContestBloc),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -132,7 +143,7 @@ class _MyAppState extends State<MyApp> {
             SignInScreen.routeName: (ctx) => SignInScreen(),
             SignUpScreen.routeName: (ctx) => SignUpScreen(),
             UpcomingContestsScreen.routeName: (ctx) => UpcomingContestsScreen(),
-            UpcomingFixturesScreen.routeName: (ctx) => CuratedContests(),
+            CuratedContests.routeName: (ctx) => CuratedContests(),
           }),
     );
   }

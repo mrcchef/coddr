@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:coddr/domain/entities/contest_entity.dart';
 import 'package:coddr/domain/entities/curated_contest_model.dart';
+import 'package:coddr/domain/entities/fetch_curated_contest_argument.dart';
 import 'package:coddr/domain/usecases/fetch_curated_contest.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -21,10 +21,11 @@ class CuratedContestBloc
     if (event is FetchCuratedContestEvent) {
       yield CuratedContestFetchingState();
 
-      final eitherResponse = await fetchCuratedContest(event.contestEntity);
+      final eitherResponse =
+          await fetchCuratedContest(event.fetchCuratedContestArgument);
 
       yield eitherResponse.fold(
-          (appError) => CuratedContestErrorState(),
+          (appError) => CuratedContestErrorState("API failed"),
           (curatedContestList) => CuratedContestFetchedState(
               curatedContestList: curatedContestList));
     }
