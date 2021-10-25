@@ -5,13 +5,13 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 
 
-class FixtureCardNew extends StatefulWidget {
+class CuratedContestCard extends StatefulWidget {
 
   @override
-  _FixtureCardNewState createState() => _FixtureCardNewState();
+  _CuratedContestCardState createState() => _CuratedContestCardState();
 }
 
-class _FixtureCardNewState extends State<FixtureCardNew> {
+class _CuratedContestCardState extends State<CuratedContestCard> {
   @override
   Widget build(BuildContext context) {
     return Card(

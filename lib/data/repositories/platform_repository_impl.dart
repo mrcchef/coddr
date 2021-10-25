@@ -143,11 +143,11 @@ class PlatformRepositoryImpl extends PlatformRepository {
   }
 
   @override
-  Future<Either<AppError, bool>> createCuratedContest(
+  Future<Either<AppError, void>> createCuratedContest(
       CuratedContestModel curatedContestModel) async {
     try {
       await remoteDataSourceImpl.createCuratedContest(curatedContestModel);
-      return Right(true);
+      return Right(null);
     } on Exception {
       return Left(AppError(appErrorType: AppErrorType.firebase));
     }

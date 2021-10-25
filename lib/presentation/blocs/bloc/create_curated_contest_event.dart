@@ -7,8 +7,8 @@ abstract class CreateCuratedContestEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class CreateCuratedContest extends CreateCuratedContestEvent {
+class CreateCuratedContestEventt extends CreateCuratedContestEvent {
   final CuratedContestModel curatedContestModel;
 
-  CreateCuratedContest({@required this.curatedContestModel});
+  CreateCuratedContestEventt({@required this.curatedContestModel});
 }
