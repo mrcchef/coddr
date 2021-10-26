@@ -1,11 +1,10 @@
 import 'package:coddr/common/constants/size_constants.dart';
+import 'package:coddr/presentation/journeys/RankList/codeforces_website.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 
-
 class ContestCardinfo extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,7 +20,8 @@ class ContestCardinfo extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(Sizes.dimen_8.w),
                 child: RaisedButton(
-                  onPressed: () {},
+                  onPressed: () => Navigator.of(context)
+                      .pushNamed(CodeForcesWebsite.routeName),
                   color: Colors.red,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(Sizes.dimen_20.w)),
