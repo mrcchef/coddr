@@ -9,6 +9,7 @@ import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
 import 'package:coddr/presentation/blocs/send_verification_email/send_verification_email_bloc.dart';
 import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
 import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
+import 'package:coddr/presentation/journeys/RankList/codeforces_website.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
 import 'package:coddr/presentation/journeys/auth/sign_up_screen.dart';
 import 'package:coddr/presentation/journeys/auth/splash_screen.dart';
@@ -141,6 +142,7 @@ class _MyAppState extends State<MyApp> {
             SignInScreen.routeName: (ctx) => SignInScreen(),
             SignUpScreen.routeName: (ctx) => SignUpScreen(),
             UpcomingContestsScreen.routeName: (ctx) => UpcomingContestsScreen(),
+            CodeForcesWebsite.routeName: (ctx) => CodeForcesWebsite(),
           }),
     );
   }
