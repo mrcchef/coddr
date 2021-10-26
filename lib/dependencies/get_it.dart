@@ -3,6 +3,8 @@ import 'package:coddr/data/core/api_client.dart';
 import 'package:coddr/data/data_sources/authentication_data_source.dart';
 import 'package:coddr/data/data_sources/remote_data_source.dart';
 import 'package:coddr/data/repositories/platform_repository_impl.dart';
+import 'package:coddr/domain/usecases/create_curated_contest.dart';
+import 'package:coddr/domain/usecases/fetch_curated_contest.dart';
 import 'package:coddr/domain/usecases/fetch_user_detail.dart';
 import 'package:coddr/domain/usecases/get_cf_contest_list.dart';
 import 'package:coddr/domain/usecases/get_cf_standings.dart';
@@ -19,6 +21,8 @@ import 'package:coddr/domain/usecases/verify_email.dart';
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
 import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.dart';
 import 'package:coddr/presentation/blocs/contest_standings/contest_standings_bloc.dart';
+import 'package:coddr/presentation/blocs/create_curated_contest/create_curated_contest_bloc.dart';
+import 'package:coddr/presentation/blocs/curated_contest/curated_contest_bloc.dart';
 import 'package:coddr/presentation/blocs/email_verification/email_verification_bloc.dart';
 import 'package:coddr/presentation/blocs/handel_verification/handel_verification_bloc.dart';
 import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
@@ -69,6 +73,14 @@ Future init() async {
 
   getItInstance.registerLazySingleton<GetCFStandings>(
       () => GetCFStandings(platformRepository: getItInstance()));
+
+  getItInstance
+      .registerFactory<CreateCuratedContest>(() => CreateCuratedContest(
+            platformRepository: getItInstance(),
+          ));
+
+  getItInstance.registerLazySingleton<FetchCuratedContest>(
+      () => FetchCuratedContest(platformRepository: getItInstance()));
 
   getItInstance.registerLazySingleton<GetEmailId>(
       () => GetEmailId(platformRepositoryImpl: getItInstance()));
@@ -139,6 +151,14 @@ Future init() async {
   getItInstance
       .registerFactory<ContestStandingsBloc>(() => ContestStandingsBloc(
             getCFStandings: getItInstance(),
+          ));
+  getItInstance.registerFactory<CuratedContestBloc>(() => CuratedContestBloc(
+        fetchCuratedContest: getItInstance(),
+      ));
+
+  getItInstance
+      .registerFactory<CreateCuratedContestBloc>(() => CreateCuratedContestBloc(
+            createCuratedContest: getItInstance(),
           ));
 
   // getItInstance.registerSingleton<SignUpBloc>(SignUpBloc(

@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 
 class CuratedContestModel extends Equatable {
   final String contestId;
-  final String entryFees;
-  final String prize;
-  final String totalSpots;
-  final String filledSpots;
+  final int entryFees;
+  final int prize;
+  final int totalSpots;
+  final int filledSpots;
   final bool isPrivate;
   final String password;
   final String parentContestId;
   final String platformId;
-  final Map<int, int> positionToReward;
-  final Map<int, String> positionToUsername;
+  final Map<String, int> positionToReward;
+  final Map<String, String> positionToUsername;
   CuratedContestModel({
     @required this.contestId,
     @required this.entryFees,
@@ -34,7 +34,7 @@ class CuratedContestModel extends Equatable {
     String entryFees,
     String prize,
     String totalSpots,
-    String filledSports,
+    String filledSpots,
     bool isPrivate,
     String password,
     String parentContestId,
@@ -47,7 +47,7 @@ class CuratedContestModel extends Equatable {
       entryFees: entryFees ?? this.entryFees,
       prize: prize ?? this.prize,
       totalSpots: totalSpots ?? this.totalSpots,
-      filledSpots: filledSports ?? this.filledSpots,
+      filledSpots: filledSpots ?? this.filledSpots,
       isPrivate: isPrivate ?? this.isPrivate,
       password: password ?? this.password,
       parentContestId: parentContestId ?? this.parentContestId,
@@ -63,7 +63,7 @@ class CuratedContestModel extends Equatable {
       'entryFees': entryFees,
       'prize': prize,
       'totalSpots': totalSpots,
-      'filledSports': filledSpots,
+      'filledSpots': filledSpots,
       'isPrivate': isPrivate,
       'password': password,
       'parentContestId': parentContestId,
@@ -79,13 +79,13 @@ class CuratedContestModel extends Equatable {
       entryFees: map['entryFees'],
       prize: map['prize'],
       totalSpots: map['totalSpots'],
-      filledSpots: map['filledSports'],
+      filledSpots: map['filledSpots'],
       isPrivate: map['isPrivate'],
       password: map['password'],
       parentContestId: map['parentContestId'],
       platformId: map['platformId'],
-      positionToReward: map['positionToReward'],
-      positionToUsername: map['positionToUsername'],
+      positionToReward: Map<String, int>.from(map['positionToReward']),
+      positionToUsername: Map<String, String>.from(map['positionToUsername']),
     );
   }
 
@@ -96,7 +96,7 @@ class CuratedContestModel extends Equatable {
 
   @override
   String toString() {
-    return 'CuratedContestModel(contestId: $contestId, entryFees: $entryFees, prize: $prize, totalSpots: $totalSpots, filledSports: $filledSpots, isPrivate: $isPrivate, password: $password, parentContestId: $parentContestId, platformId: $platformId,)';
+    return 'CuratedContestModel(contestId: $contestId, entryFees: $entryFees, prize: $prize, totalSpots: $totalSpots, filledSpots: $filledSpots, isPrivate: $isPrivate, password: $password, parentContestId: $parentContestId, platformId: $platformId,)';
   }
 
   @override

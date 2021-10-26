@@ -23,8 +23,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pedantic/pedantic.dart';
 
-import 'presentation/journeys/curated_contests/curated_contests.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -143,7 +141,6 @@ class _MyAppState extends State<MyApp> {
             SignInScreen.routeName: (ctx) => SignInScreen(),
             SignUpScreen.routeName: (ctx) => SignUpScreen(),
             UpcomingContestsScreen.routeName: (ctx) => UpcomingContestsScreen(),
-            CuratedContests.routeName: (ctx) => CuratedContests(),
           }),
     );
   }

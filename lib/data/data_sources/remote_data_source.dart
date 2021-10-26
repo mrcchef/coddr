@@ -119,8 +119,9 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   @override
   Future<List<CuratedContestModel>> fetchCuratedContest(
       String platformId, String contestId) async {
-    List<CuratedContestModel> curatedContestModelList;
-
+    List<CuratedContestModel> curatedContestModelList = [];
+    print(contestId);
+    print(platformId);
     await FirebaseFirestore.instance
         .collection('contests')
         .doc(platformId)
@@ -134,7 +135,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       }
     });
 
-    print(curatedContestModelList);
+    print("curated contest $curatedContestModelList");
     return curatedContestModelList;
   }
 

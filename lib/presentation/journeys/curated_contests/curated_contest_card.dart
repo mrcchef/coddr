@@ -16,6 +16,12 @@ class CuratedContestCard extends StatefulWidget {
 }
 
 class _CuratedContestCardState extends State<CuratedContestCard> {
+  double getPercentage() {
+    double val = widget.curatedContestModel.filledSpots /
+        widget.curatedContestModel.totalSpots;
+    return val;
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -79,7 +85,7 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
                 animation: true,
                 lineHeight: Sizes.dimen_8.w,
                 animationDuration: 2000,
-                percent: 0.4,
+                percent: getPercentage(),
                 // center: Text("40"),
                 linearStrokeCap: LinearStrokeCap.roundAll,
                 progressColor: Colors.red[600],
@@ -90,7 +96,7 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
                 child: Row(
                   children: [
                     Text(
-                        '${int.parse(widget.curatedContestModel.totalSpots) - int.parse(widget.curatedContestModel.filledSpots)} spots left'),
+                        '${widget.curatedContestModel.totalSpots - widget.curatedContestModel.filledSpots} spots left'),
                     Spacer(),
                     Text('${widget.curatedContestModel.totalSpots} spots'),
                   ],

@@ -13,6 +13,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CuratedContests extends StatefulWidget {
   static const String routeName = "/curated-contests";
+  final int constestId;
+  final String platformId;
+
+  const CuratedContests(
+      {Key key, @required this.constestId, @required this.platformId})
+      : super(key: key);
 
   @override
   _CuratedContestsState createState() => _CuratedContestsState();
@@ -25,12 +31,11 @@ class _CuratedContestsState extends State<CuratedContests> {
   @override
   void initState() {
     _curatedContestBloc = getItInstance<CuratedContestBloc>();
-    Map<String, dynamic> input = ModalRoute.of(context).settings.arguments;
     _curatedContestBloc.add(
       FetchCuratedContestEvent(
         fetchCuratedContestArgument: FetchCuratedContestArgument(
-          contestId: input['constedId'],
-          platfromId: input['platformId'],
+          contestId: widget.constestId,
+          platfromId: widget.platformId,
         ),
       ),
     );
@@ -62,7 +67,7 @@ class _CuratedContestsState extends State<CuratedContests> {
               style: Theme.of(context).textTheme.headline2,
             ),
           );
-        List<CuratedContestModel> publicContest, privateContest;
+        List<CuratedContestModel> publicContest = [], privateContest = [];
 
         if (state is CuratedContestFetchedState) {
           List<CuratedContestModel> curatedContestList =

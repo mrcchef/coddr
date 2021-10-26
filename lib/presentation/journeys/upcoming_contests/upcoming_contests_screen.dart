@@ -104,6 +104,7 @@ class UpcomingContestsScreen extends StatelessWidget {
                   else if (state is ContestListFetchedState) {
                     List<ContestEntity> upcomingContestList =
                         extractContests(state.contestList);
+
                     return SingleChildScrollView(
                       child: ListView.separated(
                         shrinkWrap: true,
@@ -124,7 +125,7 @@ class UpcomingContestsScreen extends StatelessWidget {
                                 '${DateFormat('HH:mm').format(startTime)} - ${DateFormat('HH:mm').format(endTime)}',
                             date: DateFormat('dd/MMM/yyyy').format(startTime),
                             contestId: upcomingContestList[index].id,
-                            platfromId:
+                            platformId:
                                 upcomingContestList[index].platformHandle,
                           );
                         },

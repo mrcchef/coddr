@@ -2,12 +2,9 @@ import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/common/screen_utils/screen_util.dart';
 import 'package:coddr/dependencies/get_it.dart';
-import 'package:coddr/domain/entities/get_cf_standings_arguments.dart';
 import 'package:coddr/domain/entities/user_model.dart';
-import 'package:coddr/domain/usecases/get_cf_standings.dart';
 import 'package:coddr/domain/usecases/get_cf_user.dart';
 import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.dart';
-import 'package:coddr/presentation/blocs/contest_standings/contest_standings_bloc.dart';
 import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
 import 'package:coddr/presentation/journeys/home/platform_grid.dart';
 import 'package:coddr/presentation/widgets/CoddrAppBar.dart';
@@ -27,7 +24,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   ContestListingBloc _contestListingBloc;
-  ContestStandingsBloc _contestStandingsBloc;
   ProfileBloc _profileBloc;
   UserModel userModel;
   GetCFUser getCFUser;
@@ -35,12 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     _contestListingBloc = getItInstance<ContestListingBloc>();
-    _contestStandingsBloc = getItInstance<ContestStandingsBloc>();
-    _contestStandingsBloc.add(CFStandingsListing(
-        getCFStandingsArguments: GetCFStandingsArguments(
-      handles: ['mr_cchef', 'kshittiz21'],
-      contestId: '1593',
-    )));
     _profileBloc = getItInstance<ProfileBloc>();
     _profileBloc.add(FetchProfileData());
     getCFUser = getItInstance<GetCFUser>();
@@ -50,7 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     _contestListingBloc.close();
-    _contestStandingsBloc.close();
     _profileBloc.close();
     super.dispose();
   }

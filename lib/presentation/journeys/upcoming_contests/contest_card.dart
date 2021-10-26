@@ -22,11 +22,21 @@ class ContestCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context)
-          .pushNamed(CuratedContests.routeName, arguments: {
-        'contestId': contestId,
-        'platformId': platformId,
-      }),
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => CuratedContests(
+            constestId: contestId,
+            platformId: platformId,
+          ),
+        ),
+      ),
+      // .pushNamed(
+      //   CuratedContests.routeName,
+      //   arguments: {
+      //     'contestId': contestId,
+      //     'platformId': platformId,
+      //   },
+      // ),
       child: Container(
         height: Sizes.dimen_100.w,
         padding: EdgeInsets.symmetric(

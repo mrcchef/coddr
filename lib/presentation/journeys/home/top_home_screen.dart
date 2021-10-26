@@ -1,4 +1,3 @@
-import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/presentation/widgets/Loading.dart';
@@ -65,33 +64,31 @@ class TopHomeScreen extends StatelessWidget {
           //       : AssetImage(Images.defaultUserImage),
           // ),
           ClipRect(
-            child: Stack(
-              children:[
-                Positioned.fill(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Loading(),
-                    )),
-                Container(
-                  child: CircleAvatar(
-                    foregroundColor: Colors.black,
-                    radius: Sizes.dimen_60.w,
-                    backgroundColor: Colors.transparent,
-                    backgroundImage: (imageUrl != "")
-                          ? NetworkImage(imageUrl)
-                          : NetworkImage('https://stratosphere.co.in/img/user.jpg'),
-                  ),
-                  decoration: new BoxDecoration(
-                    // border color
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      width: 5.0,
-                      color: HexColor('#6f6434'),
-                    ),
+            child: Stack(children: [
+              Positioned.fill(
+                  child: Align(
+                alignment: Alignment.center,
+                child: Loading(),
+              )),
+              Container(
+                child: CircleAvatar(
+                  foregroundColor: Colors.black,
+                  radius: Sizes.dimen_60.w,
+                  backgroundColor: Colors.transparent,
+                  backgroundImage: (imageUrl != "")
+                      ? NetworkImage(imageUrl)
+                      : NetworkImage('https://stratosphere.co.in/img/user.jpg'),
+                ),
+                decoration: new BoxDecoration(
+                  // border color
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    width: Sizes.dimen_1.w,
+                    color: HexColor('#6f6434'),
                   ),
                 ),
-              ]
-            ),
+              ),
+            ]),
           ),
         ],
       ),

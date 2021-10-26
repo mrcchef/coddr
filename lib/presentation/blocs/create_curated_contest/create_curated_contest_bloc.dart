@@ -11,7 +11,7 @@ class CreateCuratedContestBloc
     extends Bloc<CreateCuratedContestEvent, CreateCuratedContestState> {
   CreateCuratedContest createCuratedContest;
 
-  CreateCuratedContestBloc({@required createCuratedContest})
+  CreateCuratedContestBloc({@required this.createCuratedContest})
       : super(CreateCuratedContestInitial());
 
   @override
