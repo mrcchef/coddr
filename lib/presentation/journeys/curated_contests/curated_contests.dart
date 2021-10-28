@@ -5,6 +5,7 @@ import 'package:coddr/domain/entities/curated_contest_model.dart';
 import 'package:coddr/domain/entities/fetch_curated_contest_argument.dart';
 import 'package:coddr/presentation/blocs/create_curated_contest/create_curated_contest_bloc.dart';
 import 'package:coddr/presentation/blocs/curated_contest/curated_contest_bloc.dart';
+import 'package:coddr/presentation/journeys/ContestCreate/CreateContest.dart';
 import 'package:coddr/presentation/journeys/curated_contests/curated_contest_list.dart';
 import 'package:coddr/presentation/journeys/curated_contests/platform_label.dart';
 import 'package:flutter/cupertino.dart';
@@ -107,7 +108,10 @@ class _CuratedContestsState extends State<CuratedContests> {
                     ),
                     Spacer(),
                     RaisedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context, MaterialPageRoute(builder: (context) => CreateContest()));
+                        },
                         color: Colors.red[900],
                         shape: RoundedRectangleBorder(
                             borderRadius:
