@@ -44,6 +44,12 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
+  Future<void> _getData() async {
+    setState(() {
+      _profileBloc.add(FetchProfileData());
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -85,44 +91,47 @@ class _HomeScreenState extends State<HomeScreen> {
           middleWidget: middleAppBarWidget,
           rightWidget: rightAppBarWidget,
         ),
-        body: BlocBuilder<ProfileBloc, ProfileState>(
-          bloc: _profileBloc,
-          builder: (context, state) {
-            if (state is ProfileLoding) {
-              return Center(child: CircularProgressIndicator());
-            }
-
-            if (state is ProfileError) {
-              return Center(child: Text(state.message));
-            }
-
-            final curState = (state as ProfileLoaded);
-            userModel = curState.userModel;
-            //print("HAHA" + userModel.imageUrl.toString());
-            return Padding(
-              padding: EdgeInsets.only(
-                  left: Sizes.dimen_16.w,
-                  right: Sizes.dimen_16.w,
-                  top: Sizes.dimen_12.h),
-              child: Column(
-                children: [
-                  TopHomeScreen(
-                    displayName: userModel.displayName,
-                    imageUrl: userModel.imageUrl,
-                  ),
-                  SizedBox(
-                    height: Sizes.dimen_30.w,
-                  ),
-                  Text(
-                    "Get Started with your favourite platform",
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                  Expanded(child: PlatformGrid()),
-                  CustomBottomNavigationBar(),
-                ],
-              ),
-            );
-          },
+        body: RefreshIndicator(
+          onRefresh: _getData,
+          child: BlocBuilder<ProfileBloc, ProfileState>(
+            bloc: _profileBloc,
+            builder: (context, state) {
+              if (state is ProfileLoding) {
+                return Center(child: CircularProgressIndicator());
+              }
+              
+              if (state is ProfileError) {
+                return Center(child: Text(state.message));
+              }
+              
+              final curState = (state as ProfileLoaded);
+              userModel = curState.userModel;
+              //print("HAHA" + userModel.imageUrl.toString());
+              return Padding(
+                padding: EdgeInsets.only(
+                    left: Sizes.dimen_16.w,
+                    right: Sizes.dimen_16.w,
+                    top: Sizes.dimen_12.h),
+                child: Column(
+                  children: [
+                    TopHomeScreen(
+                      displayName: userModel.displayName,
+                      imageUrl: userModel.imageUrl,
+                    ),
+                    SizedBox(
+                      height: Sizes.dimen_30.w,
+                    ),
+                    Text(
+                      "Get Started with your favourite platform",
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    Expanded(child: PlatformGrid()),
+                    CustomBottomNavigationBar(),
+                  ],
+                ),
+              );
+            },
+          ),
         ),
         drawer: MainDrawer(),
       ),
