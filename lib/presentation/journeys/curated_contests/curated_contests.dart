@@ -18,12 +18,18 @@ class CuratedContests extends StatefulWidget {
   final int constestId;
   final String platformId;
   final UserModel userModel;
+  final DateTime startTime;
+  final DateTime endtime;
+  final String title;
 
   const CuratedContests({
     Key key,
     @required this.constestId,
     @required this.platformId,
     @required this.userModel,
+    @required this.startTime,
+    @required this.endtime,
+    @required this.title,
   }) : super(key: key);
 
   @override
@@ -137,6 +143,9 @@ class _CuratedContestsState extends State<CuratedContests> {
               ),
               CuratedContestList(
                 curatedContest: publicContest,
+                startTime: widget.startTime,
+                endtime: widget.endtime,
+                title: widget.title,
               ),
               Padding(
                 padding: EdgeInsets.all(Sizes.dimen_8.w),
@@ -177,6 +186,9 @@ class _CuratedContestsState extends State<CuratedContests> {
               ),
               CuratedContestList(
                 curatedContest: privateContest,
+                startTime: widget.startTime,
+                endtime: widget.endtime,
+                title: widget.title,
               ),
             ],
           ),
