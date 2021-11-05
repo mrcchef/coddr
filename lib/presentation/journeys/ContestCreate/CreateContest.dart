@@ -200,7 +200,7 @@ class _CreateContestState extends State<CreateContest> {
             Padding(
               padding: EdgeInsets.fromLTRB(Sizes.dimen_8.w, 0, 0, 0),
               child: Text(
-                '₹ 1000',
+                '₹ $maxPrizePool',
                 style: TextStyle(fontSize: Sizes.dimen_20.w),
               ),
             ),

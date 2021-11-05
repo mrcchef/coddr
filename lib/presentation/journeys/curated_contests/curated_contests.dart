@@ -60,10 +60,8 @@ class _CuratedContestsState extends State<CuratedContests> {
   Widget build(BuildContext context) {
     List<CuratedContestModel> publicContest = [], privateContest = [];
 
-    String getNextContestId(String type) {
-      String id = widget.constestId.toString() +
-          type +
-          (publicContest.length + 1).toString();
+    String getNextContestId(String type, int len) {
+      String id = widget.constestId.toString() + type + len.toString();
       return id;
     }
 
@@ -119,7 +117,8 @@ class _CuratedContestsState extends State<CuratedContests> {
                                 parentContestId: widget.constestId,
                                 platformId: widget.platformId,
                                 userModel: widget.userModel,
-                                contestId: getNextContestId("PBL"),
+                                contestId: getNextContestId(
+                                    "PBL", publicContest.length + 1),
                               ),
                             ),
                           );
@@ -159,7 +158,8 @@ class _CuratedContestsState extends State<CuratedContests> {
                                 parentContestId: widget.constestId,
                                 platformId: widget.platformId,
                                 userModel: widget.userModel,
-                                contestId: getNextContestId("PVT"),
+                                contestId: getNextContestId(
+                                    "PVT", privateContest.length + 1),
                               ),
                             ),
                           );
