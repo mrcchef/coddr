@@ -8,9 +8,17 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 class CuratedContestCard extends StatefulWidget {
   final CuratedContestModel curatedContestModel;
+  final DateTime startTime;
+  final DateTime endtime;
+  final String title;
 
-  const CuratedContestCard({Key key, @required this.curatedContestModel})
-      : super(key: key);
+  const CuratedContestCard({
+    Key key,
+    @required this.curatedContestModel,
+    @required this.startTime,
+    @required this.endtime,
+    @required this.title,
+  }) : super(key: key);
   @override
   _CuratedContestCardState createState() => _CuratedContestCardState();
 }
@@ -31,6 +39,9 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
             MaterialPageRoute(
                 builder: (context) => RankListPage(
                       curatedContestModel: widget.curatedContestModel,
+                      startTime: widget.startTime,
+                      endtime: widget.endtime,
+                      title: widget.title,
                     )));
       },
       child: Card(

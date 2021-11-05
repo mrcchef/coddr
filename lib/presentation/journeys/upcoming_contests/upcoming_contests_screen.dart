@@ -150,6 +150,8 @@ class _UpcomingContestsScreenState extends State<UpcomingContestsScreen> {
                             platformId:
                                 upcomingContestList[index].platformHandle,
                             userModel: userModel,
+                            startTime: startTime,
+                            endtime: endTime,
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) =>
