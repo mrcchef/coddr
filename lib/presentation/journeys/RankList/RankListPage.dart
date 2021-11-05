@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/dependencies/get_it.dart';
+import 'package:coddr/domain/entities/curated_contest_model.dart';
 import 'package:coddr/domain/entities/get_cf_standings_arguments.dart';
 import 'package:coddr/presentation/blocs/contest_standings/contest_standings_bloc.dart';
 import 'package:coddr/presentation/journeys/RankList/ContestCardInfo.dart';
@@ -12,6 +13,10 @@ import 'package:coddr/presentation/journeys/curated_contests/platform_label.dart
 import 'package:flutter/material.dart';
 
 class RankListPage extends StatefulWidget {
+  final CuratedContestModel curatedContestModel;
+
+  const RankListPage({Key key, @required this.curatedContestModel})
+      : super(key: key);
   @override
   _RankListPageState createState() => _RankListPageState();
 }
@@ -44,7 +49,9 @@ class _RankListPageState extends State<RankListPage> {
           child: Column(children: [
             PlatformLabel(),
             ContestCardinfo(),
-            CuratedContestCard(),
+            CuratedContestCard(
+              curatedContestModel: widget.curatedContestModel,
+            ),
             SizedBox(
               height: Sizes.dimen_50.w,
               child: AppBar(

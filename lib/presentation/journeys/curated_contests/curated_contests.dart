@@ -61,8 +61,9 @@ class _CuratedContestsState extends State<CuratedContests> {
     List<CuratedContestModel> publicContest = [], privateContest = [];
 
     String getNextContestId(String type) {
-      String id =
-          widget.constestId.toString() + type + publicContest.length.toString();
+      String id = widget.constestId.toString() +
+          type +
+          (publicContest.length + 1).toString();
       return id;
     }
 

@@ -9,7 +9,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 class CuratedContestCard extends StatefulWidget {
   final CuratedContestModel curatedContestModel;
 
-  const CuratedContestCard({Key key, this.curatedContestModel})
+  const CuratedContestCard({Key key, @required this.curatedContestModel})
       : super(key: key);
   @override
   _CuratedContestCardState createState() => _CuratedContestCardState();
@@ -27,7 +27,11 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => RankListPage()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => RankListPage(
+                      curatedContestModel: widget.curatedContestModel,
+                    )));
       },
       child: Card(
         shape: CircleBorder(),
