@@ -129,6 +129,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         .get()
         .then((value) {
       for (int i = 0; i < value.docs.length; i++) {
+        print(value.docs[i].data());
         CuratedContestModel model =
             CuratedContestModel.fromMap(value.docs[i].data());
         curatedContestModelList.add(model);
@@ -144,9 +145,11 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       CuratedContestModel curatedContestModel) async {
     await FirebaseFirestore.instance
         .collection('contests')
-        .doc()
-        .collection(curatedContestModel.platformId)
-        .add(curatedContestModel.toMap());
+        .doc(curatedContestModel.platformId)
+        .collection(curatedContestModel.parentContestId)
+        .doc(curatedContestModel.contestId)
+        .set(curatedContestModel.toMap());
+    // .add(curatedContestModel.toMap());
   }
 
   Future<CFStandingsModel> getCFStandings(

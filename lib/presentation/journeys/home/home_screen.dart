@@ -99,11 +99,11 @@ class _HomeScreenState extends State<HomeScreen> {
               if (state is ProfileLoding) {
                 return Center(child: CircularProgressIndicator());
               }
-              
+
               if (state is ProfileError) {
                 return Center(child: Text(state.message));
               }
-              
+
               final curState = (state as ProfileLoaded);
               userModel = curState.userModel;
               //print("HAHA" + userModel.imageUrl.toString());
@@ -125,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       "Get Started with your favourite platform",
                       style: Theme.of(context).textTheme.headline5,
                     ),
-                    Expanded(child: PlatformGrid()),
+                    Expanded(child: PlatformGrid(userModel: userModel)),
                     CustomBottomNavigationBar(),
                   ],
                 ),

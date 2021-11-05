@@ -1,5 +1,6 @@
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
+import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/journeys/curated_contests/curated_contests.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,7 @@ class ContestCard extends StatelessWidget {
   final String date;
   final int contestId;
   final String platformId;
+  final UserModel userModel;
 
   ContestCard({
     @required this.title,
@@ -18,6 +20,7 @@ class ContestCard extends StatelessWidget {
     @required this.date,
     @required this.contestId,
     @required this.platformId,
+    @required this.userModel,
   });
   @override
   Widget build(BuildContext context) {
@@ -27,16 +30,10 @@ class ContestCard extends StatelessWidget {
           builder: (context) => CuratedContests(
             constestId: contestId,
             platformId: platformId,
+            userModel: userModel,
           ),
         ),
       ),
-      // .pushNamed(
-      //   CuratedContests.routeName,
-      //   arguments: {
-      //     'contestId': contestId,
-      //     'platformId': platformId,
-      //   },
-      // ),
       child: Container(
         height: Sizes.dimen_100.w,
         padding: EdgeInsets.symmetric(

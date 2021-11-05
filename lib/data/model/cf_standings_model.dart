@@ -1,6 +1,5 @@
 import 'package:coddr/domain/entities/cf_handel_standings_entity.dart';
 import 'package:coddr/domain/entities/cf_standings_entity.dart';
-import 'package:flutter/cupertino.dart';
 
 class CFStandingsModel extends CFStandingsEntity {
   final Contest contest;
@@ -18,9 +17,7 @@ class CFStandingsModel extends CFStandingsEntity {
             cfHandelStandingsEntity:
                 rows.map<CFHandelStandingsEntity>((element) {
               return CFHandelStandingsEntity(
-                  handle:
-                      element.party.members[0].handle
-                      ,
+                  handle: element.party.members[0].handle,
                   rank: element.rank,
                   points: element.points,
                   penalty: element.penalty);

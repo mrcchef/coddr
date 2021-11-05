@@ -3,6 +3,7 @@ import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/domain/entities/curated_contest_model.dart';
 import 'package:coddr/domain/entities/fetch_curated_contest_argument.dart';
+import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/blocs/create_curated_contest/create_curated_contest_bloc.dart';
 import 'package:coddr/presentation/blocs/curated_contest/curated_contest_bloc.dart';
 import 'package:coddr/presentation/journeys/ContestCreate/CreateContest.dart';
@@ -16,10 +17,14 @@ class CuratedContests extends StatefulWidget {
   static const String routeName = "/curated-contests";
   final int constestId;
   final String platformId;
+  final UserModel userModel;
 
-  const CuratedContests(
-      {Key key, @required this.constestId, @required this.platformId})
-      : super(key: key);
+  const CuratedContests({
+    Key key,
+    @required this.constestId,
+    @required this.platformId,
+    @required this.userModel,
+  }) : super(key: key);
 
   @override
   _CuratedContestsState createState() => _CuratedContestsState();
@@ -53,6 +58,14 @@ class _CuratedContestsState extends State<CuratedContests> {
 
   @override
   Widget build(BuildContext context) {
+    List<CuratedContestModel> publicContest = [], privateContest = [];
+
+    String getNextContestId(String type) {
+      String id =
+          widget.constestId.toString() + type + publicContest.length.toString();
+      return id;
+    }
+
     return BlocBuilder<CuratedContestBloc, CuratedContestState>(
       bloc: _curatedContestBloc,
       builder: (context, state) {
@@ -68,7 +81,6 @@ class _CuratedContestsState extends State<CuratedContests> {
               style: Theme.of(context).textTheme.headline2,
             ),
           );
-        List<CuratedContestModel> publicContest = [], privateContest = [];
 
         if (state is CuratedContestFetchedState) {
           List<CuratedContestModel> curatedContestList =
@@ -87,10 +99,39 @@ class _CuratedContestsState extends State<CuratedContests> {
               PlatformLabel(),
               Padding(
                 padding: EdgeInsets.all(Sizes.dimen_8.w),
-                child: Text(
-                  'Public Contest',
-                  style: TextStyle(
-                      fontSize: Sizes.dimen_22.w, fontWeight: FontWeight.w600),
+                child: Row(
+                  children: [
+                    Text(
+                      'Public Contest',
+                      style: TextStyle(
+                          fontSize: Sizes.dimen_22.w,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    Spacer(),
+                    RaisedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CreateContest(
+                                isPrivate: false,
+                                parentContestId: widget.constestId,
+                                platformId: widget.platformId,
+                                userModel: widget.userModel,
+                                contestId: getNextContestId("PBL"),
+                              ),
+                            ),
+                          );
+                        },
+                        color: Colors.red[900],
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(Sizes.dimen_20.w)),
+                        child: Text(
+                          'Create Contest',
+                          style: TextStyle(color: Colors.white),
+                        ))
+                  ],
                 ),
               ),
               CuratedContestList(
@@ -110,7 +151,17 @@ class _CuratedContestsState extends State<CuratedContests> {
                     RaisedButton(
                         onPressed: () {
                           Navigator.push(
-                              context, MaterialPageRoute(builder: (context) => CreateContest()));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CreateContest(
+                                isPrivate: true,
+                                parentContestId: widget.constestId,
+                                platformId: widget.platformId,
+                                userModel: widget.userModel,
+                                contestId: getNextContestId("PVT"),
+                              ),
+                            ),
+                          );
                         },
                         color: Colors.red[900],
                         shape: RoundedRectangleBorder(

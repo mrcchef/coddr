@@ -15,6 +15,8 @@ class CuratedContestModel extends Equatable {
   final String platformId;
   final Map<String, int> positionToReward;
   final Map<String, String> positionToUsername;
+  final List<Map<String, String>>
+      participants; // Suggestion: Convert all the maps into Classes
   CuratedContestModel({
     @required this.contestId,
     @required this.entryFees,
@@ -27,20 +29,22 @@ class CuratedContestModel extends Equatable {
     @required this.platformId,
     @required this.positionToReward,
     @required this.positionToUsername,
+    @required this.participants,
   });
 
   CuratedContestModel copyWith({
     String contestId,
-    String entryFees,
-    String prize,
-    String totalSpots,
-    String filledSpots,
+    int entryFees,
+    int prize,
+    int totalSpots,
+    int filledSpots,
     bool isPrivate,
     String password,
     String parentContestId,
     String platformId,
-    String positionToReward,
-    String positionToUsername,
+    Map<String, int> positionToReward,
+    Map<String, String> positionToUsername,
+    List<Map<String, String>> participants,
   }) {
     return CuratedContestModel(
       contestId: contestId ?? this.contestId,
@@ -54,6 +58,7 @@ class CuratedContestModel extends Equatable {
       platformId: platformId ?? this.platformId,
       positionToReward: positionToReward ?? this.positionToReward,
       positionToUsername: positionToUsername ?? this.positionToUsername,
+      participants: participants ?? this.participants,
     );
   }
 
@@ -70,10 +75,19 @@ class CuratedContestModel extends Equatable {
       'platformId': platformId,
       'positionToReward': positionToReward,
       'positionToUsername': positionToUsername,
+      'participants': participants,
     };
   }
 
   factory CuratedContestModel.fromMap(Map<String, dynamic> map) {
+    List<Map<String, String>> temp = [];
+
+    for (int i = 0; i < List<dynamic>.from(map['participants']).length; i++) {
+      Map<String, String> temp2 =
+          Map<String, String>.from(map['participants'][i]);
+      temp.add(temp2);
+    }
+
     return CuratedContestModel(
       contestId: map['contestId'],
       entryFees: map['entryFees'],
@@ -86,6 +100,7 @@ class CuratedContestModel extends Equatable {
       platformId: map['platformId'],
       positionToReward: Map<String, int>.from(map['positionToReward']),
       positionToUsername: Map<String, String>.from(map['positionToUsername']),
+      participants: temp,
     );
   }
 
@@ -96,7 +111,7 @@ class CuratedContestModel extends Equatable {
 
   @override
   String toString() {
-    return 'CuratedContestModel(contestId: $contestId, entryFees: $entryFees, prize: $prize, totalSpots: $totalSpots, filledSpots: $filledSpots, isPrivate: $isPrivate, password: $password, parentContestId: $parentContestId, platformId: $platformId,)';
+    return 'CuratedContestModel(contestId: $contestId, entryFees: $entryFees, prize: $prize, totalSpots: $totalSpots, filledSpots: $filledSpots, isPrivate: $isPrivate, password: $password, parentContestId: $parentContestId, platformId: $platformId,participants:$participants)';
   }
 
   @override
@@ -114,7 +129,8 @@ class CuratedContestModel extends Equatable {
         other.parentContestId == parentContestId &&
         other.platformId == platformId &&
         other.positionToReward == positionToReward &&
-        other.positionToUsername == positionToUsername;
+        other.positionToUsername == positionToUsername &&
+        other.participants == participants;
   }
 
   @override
@@ -129,7 +145,8 @@ class CuratedContestModel extends Equatable {
         parentContestId.hashCode ^
         platformId.hashCode ^
         positionToReward.hashCode ^
-        positionToUsername.hashCode;
+        positionToUsername.hashCode ^
+        participants.hashCode;
   }
 
   @override

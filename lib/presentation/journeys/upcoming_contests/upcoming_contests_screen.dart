@@ -1,7 +1,9 @@
 import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
+import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/domain/entities/contest_entity.dart';
+import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.dart';
 import 'package:coddr/presentation/journeys/upcoming_contests/contest_card.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
@@ -10,9 +12,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-class UpcomingContestsScreen extends StatelessWidget {
+class UpcomingContestsScreen extends StatefulWidget {
   static const routeName = '/upcoming_contests_screen';
+
+  @override
+  State<UpcomingContestsScreen> createState() => _UpcomingContestsScreenState();
+}
+
+class _UpcomingContestsScreenState extends State<UpcomingContestsScreen> {
   ContestListingBloc _contestListingBloc;
+
+  @override
+  void initState() {
+    _contestListingBloc = getItInstance<ContestListingBloc>();
+    _contestListingBloc.add(PlatformSelectedEvent());
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _contestListingBloc.close();
+    super.dispose();
+  }
 
   final List<Color> cardColors = [
     AppColor.lightGreen,
@@ -34,6 +55,7 @@ class UpcomingContestsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserModel userModel = ModalRoute.of(context).settings.arguments;
     Widget leftAppBarWidget = InkWell(
       onTap: () {
         Navigator.of(context).pop();
@@ -56,7 +78,7 @@ class UpcomingContestsScreen extends StatelessWidget {
         color: Colors.black,
       ),
     );
-    _contestListingBloc = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CoddrAppBar(
@@ -127,6 +149,7 @@ class UpcomingContestsScreen extends StatelessWidget {
                             contestId: upcomingContestList[index].id,
                             platformId:
                                 upcomingContestList[index].platformHandle,
+                            userModel: userModel,
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) =>

@@ -1,14 +1,20 @@
 import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
-import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.dart';
+import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/journeys/home/platform_grid_tile.dart';
 import 'package:coddr/presentation/journeys/upcoming_contests/upcoming_contests_screen.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PlatformGrid extends StatelessWidget {
+  final UserModel userModel;
+
+  const PlatformGrid({
+    Key key,
+    @required this.userModel,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GridView(
@@ -25,11 +31,8 @@ class PlatformGrid extends StatelessWidget {
           color: AppColor.lightViolet,
           imagePath: Images.codeforcesLogo,
           function: () {
-            final ContestListingBloc contestListingBloc =
-                BlocProvider.of<ContestListingBloc>(context);
             Navigator.of(context).pushNamed(UpcomingContestsScreen.routeName,
-                arguments: contestListingBloc);
-            contestListingBloc.add(PlatformSelectedEvent());
+                arguments: userModel);
           },
         ),
         PlatformGridTile(
