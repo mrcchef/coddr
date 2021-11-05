@@ -91,7 +91,7 @@ class _RankListPageState extends State<RankListPage> {
             Expanded(
               child: TabBarView(
                 children: [
-                  WinningsPage(),
+                  WinningsPage(curatedContestModel: widget.curatedContestModel),
                   LeaderBoard(),
                 ],
               ),
