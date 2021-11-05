@@ -18,6 +18,9 @@ class PrizeBreakup extends StatelessWidget {
   final String platformId;
   final UserModel userModel;
   final String contestId;
+  final DateTime startTime;
+  final DateTime endtime;
+  final String title;
 
   const PrizeBreakup({
     Key key,
@@ -31,6 +34,9 @@ class PrizeBreakup extends StatelessWidget {
     @required this.platformId,
     @required this.userModel,
     @required this.contestId,
+    @required this.startTime,
+    @required this.endtime,
+    @required this.title,
   }) : super(key: key);
 
   int getPrize(int percent, int prize) {
@@ -90,6 +96,9 @@ class PrizeBreakup extends StatelessWidget {
                 constestId: parentContestId,
                 platformId: platformId,
                 userModel: userModel,
+                startTime: startTime,
+                endtime: endtime,
+                title: title,
               ),
             ),
           );

@@ -11,6 +11,9 @@ class CreateContest extends StatefulWidget {
   final String platformId;
   final UserModel userModel;
   final String contestId;
+  final DateTime startTime;
+  final DateTime endtime;
+  final String title;
 
   CreateContest({
     @required this.isPrivate,
@@ -18,6 +21,9 @@ class CreateContest extends StatefulWidget {
     @required this.platformId,
     @required this.userModel,
     @required this.contestId,
+    @required this.startTime,
+    @required this.endtime,
+    @required this.title,
   });
   @override
   _CreateContestState createState() => _CreateContestState();
@@ -234,6 +240,9 @@ class _CreateContestState extends State<CreateContest> {
                               entryFees: int.parse(entryfeescontroller.text),
                               userModel: widget.userModel,
                               contestId: widget.contestId,
+                              startTime: widget.startTime,
+                              endtime: widget.endtime,
+                              title: widget.title,
                             ),
                           ),
                         );
