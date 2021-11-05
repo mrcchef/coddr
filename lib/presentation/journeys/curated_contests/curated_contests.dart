@@ -126,6 +126,9 @@ class _CuratedContestsState extends State<CuratedContests> {
                                 platformId: widget.platformId,
                                 userModel: widget.userModel,
                                 contestId: getNextContestId("PBL"),
+                                startTime: widget.startTime,
+                                endtime: widget.endtime,
+                                title: widget.title,
                               ),
                             ),
                           );
@@ -169,6 +172,9 @@ class _CuratedContestsState extends State<CuratedContests> {
                                 platformId: widget.platformId,
                                 userModel: widget.userModel,
                                 contestId: getNextContestId("PVT"),
+                                startTime: widget.startTime,
+                                endtime: widget.endtime,
+                                title: widget.title,
                               ),
                             ),
                           );
