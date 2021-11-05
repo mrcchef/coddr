@@ -12,6 +12,8 @@ class ContestCard extends StatelessWidget {
   final int contestId;
   final String platformId;
   final UserModel userModel;
+  final DateTime startTime;
+  final DateTime endtime;
 
   ContestCard({
     @required this.title,
@@ -21,6 +23,8 @@ class ContestCard extends StatelessWidget {
     @required this.contestId,
     @required this.platformId,
     @required this.userModel,
+    @required this.startTime,
+    @required this.endtime,
   });
   @override
   Widget build(BuildContext context) {
@@ -31,6 +35,9 @@ class ContestCard extends StatelessWidget {
             constestId: contestId,
             platformId: platformId,
             userModel: userModel,
+            startTime: startTime,
+            endtime: endtime,
+            title: title,
           ),
         ),
       ),

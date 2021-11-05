@@ -3,18 +3,25 @@ import 'package:coddr/presentation/journeys/RankList/codeforces_website.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
+import 'package:intl/intl.dart';
 
 class ContestCardinfo extends StatelessWidget {
+  final DateTime startTime;
+  final DateTime endtime;
+  final String title;
+  ContestCardinfo({
+    @required this.startTime,
+    @required this.endtime,
+    @required this.title,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Container(
       color: AppColor.lightGreen,
       child: Column(
         children: [
-          Center(
-              child: Text(
-                  'Educational  Codeforces Round 114\n(Rated for Div.2)',
-                  textAlign: TextAlign.center)),
+          Center(child: Text(title, textAlign: TextAlign.center)),
           Row(
             children: [
               Padding(
@@ -35,7 +42,7 @@ class ContestCardinfo extends StatelessWidget {
               TextButton(
                 onPressed: () {},
                 child: Text(
-                  'Contest Timing:\n20:00-22:00',
+                  'Contest Timing:\n${DateFormat('HH:mm').format(startTime)} - ${DateFormat('HH:mm').format(endtime)}',
                   textAlign: TextAlign.center,
                 ),
               )

@@ -14,9 +14,17 @@ import 'package:flutter/material.dart';
 
 class RankListPage extends StatefulWidget {
   final CuratedContestModel curatedContestModel;
+  final DateTime startTime;
+  final DateTime endtime;
+  final String title;
 
-  const RankListPage({Key key, @required this.curatedContestModel})
-      : super(key: key);
+  const RankListPage({
+    Key key,
+    @required this.curatedContestModel,
+    @required this.startTime,
+    @required this.endtime,
+    @required this.title,
+  }) : super(key: key);
   @override
   _RankListPageState createState() => _RankListPageState();
 }
@@ -48,9 +56,16 @@ class _RankListPageState extends State<RankListPage> {
         body: SafeArea(
           child: Column(children: [
             PlatformLabel(),
-            ContestCardinfo(),
+            ContestCardinfo(
+              startTime: widget.startTime,
+              endtime: widget.endtime,
+              title: widget.title,
+            ),
             CuratedContestCard(
               curatedContestModel: widget.curatedContestModel,
+              startTime: widget.startTime,
+              endtime: widget.endtime,
+              title: widget.title,
             ),
             SizedBox(
               height: Sizes.dimen_50.w,
