@@ -252,8 +252,6 @@ class Members {
   Members({this.handle});
 
   factory Members.fromJson(Map<String, dynamic> json) {
-    print("JSON HANDLE");
-    print(json['handle']);
     return Members(
       handle: json['handle'],
     );

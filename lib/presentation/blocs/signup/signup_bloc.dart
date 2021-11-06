@@ -72,40 +72,5 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       yield SignUpStateSuccess();
     } else
       yield SignUpStateFailure(message: "Sign Up Failed");
-
-    // final bool isEmailCreated = await eitherResponse.fold((l) {
-    //   print("failed");
-    //   return false;
-    // }, (r) {
-    //   print("email created");
-    //   return true;
-    // });
-
-    // if (!isEmailCreated)
-    //   yield SignUpStateFailure(message: "Account does not created");
-    // else {
-    //   yield SignUpStateVerifying();
-    // final eitherResponseVerifyEmail = await verifyEmail(NoParams());
-
-    // final bool isVerificationEmailSent = eitherResponseVerifyEmail.fold((l) {
-    // return false;
-    // }, (r) {
-    //   return true;
-    // });
-
-    // if (!isVerificationEmailSent) {
-    // yield SignUpStateFailure();
-    // } else
-    // {
-    // print("verification email sent");
-
-    // if (!isStored) {
-    //   yield SignUpStateFailure(
-    //       message: "Credentials does not stored in Firebase");
-    // } else {
-    //   print("success");
-    //   yield SignUpStateSuccess();
-    // }
-    // }
   }
 }

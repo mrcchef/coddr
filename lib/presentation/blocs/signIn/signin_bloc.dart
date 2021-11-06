@@ -18,7 +18,6 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   Stream<SignInState> mapEventToState(
     SignInEvent event,
   ) async* {
-    print(event);
     if (event is SignInWithCredentialsPressedEvent) {
       yield* _mapSignInWithCredentialsPressedToState(
         email: event.email,
@@ -49,7 +48,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
 
     final eitherResponse =
         await signIn(UserCredentials(email: email, password: password));
-    print("Singin bloc");
+
     yield eitherResponse.fold(
         (l) => SignInStateFaliure(message: "Logined Failed"),
         (r) => SignInStateSuccess());

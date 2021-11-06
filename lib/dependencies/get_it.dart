@@ -16,6 +16,7 @@ import 'package:coddr/domain/usecases/sign_in.dart';
 import 'package:coddr/domain/usecases/sign_out.dart';
 import 'package:coddr/domain/usecases/sign_up.dart';
 import 'package:coddr/domain/usecases/store_user_credentials.dart';
+import 'package:coddr/domain/usecases/update_is_Handle_verified.dart';
 import 'package:coddr/domain/usecases/update_is_email_verified.dart';
 import 'package:coddr/domain/usecases/verify_email.dart';
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
@@ -91,6 +92,9 @@ Future init() async {
   getItInstance.registerLazySingleton<IsEmailVerified>(
       () => IsEmailVerified(platformRepositoryImpl: getItInstance()));
 
+  getItInstance.registerLazySingleton<UpdateIsHandleVerified>(
+      () => UpdateIsHandleVerified(platformRepositoryImpl: getItInstance()));
+
   getItInstance.registerLazySingleton<SignIn>(
       () => SignIn(platformRepositoryImpl: getItInstance()));
 
@@ -122,8 +126,9 @@ Future init() async {
   getItInstance.registerFactory<ProfileBloc>(
       () => ProfileBloc(fetchUserDetail: getItInstance()));
 
-  getItInstance.registerFactory<HandelVerificationBloc>(
-      () => HandelVerificationBloc(getCFUser: getItInstance()));
+  getItInstance.registerFactory<HandelVerificationBloc>(() =>
+      HandelVerificationBloc(
+          getCFUser: getItInstance(), updateIsHandleVerified: getItInstance()));
 
   getItInstance.registerLazySingleton<StoreUserCredentials>(
       () => StoreUserCredentials(platformRepositoryImpl: getItInstance()));

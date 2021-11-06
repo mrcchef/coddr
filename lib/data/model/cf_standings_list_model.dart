@@ -11,14 +11,6 @@ class CFStandingsListModel {
     result = json['result'] != null
         ? new CFStandingsModel.fromJson(json['result'])
         : null;
-
-    //CFStandingsModel temp = CFStandingsModel.fromJson(json['result']);
-    //print("Temp =");
-    //print(temp);
-    print("RESULT CFSTANDINGSLISTMODEL");
-    print(result);
-    print("jsonResult = ");
-    print(json['result']);
   }
 
   Map<String, dynamic> toJson() {

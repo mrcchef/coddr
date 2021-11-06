@@ -8,9 +8,14 @@ abstract class HandelVerificationEvent extends Equatable {
 }
 
 class VerifyCFHandelEvent extends HandelVerificationEvent {
-  final String handel, email;
+  final String handel, email, uid, platformId;
 
-  VerifyCFHandelEvent({@required this.handel, @required this.email});
+  VerifyCFHandelEvent({
+    @required this.uid,
+    @required this.platformId,
+    @required this.handel,
+    @required this.email,
+  });
 
   @override
   List<Object> get props => [handel, email];

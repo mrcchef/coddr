@@ -35,12 +35,33 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
     return val;
   }
 
+  bool isParticipant() {
+    bool check = false;
+    widget.curatedContestModel.participants.forEach((element) {
+      if (element['email'] == widget.userModel.email) check = true;
+    });
+    return check;
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: widget.userModel == null
           ? null
           : () {
+              if (isParticipant())
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RankListPage(
+                      curatedContestModel: widget.curatedContestModel,
+                      startTime: widget.startTime,
+                      endtime: widget.endtime,
+                      title: widget.title,
+                    ),
+                  ),
+                );
+
               if (!widget.userModel.isHandelCFVerified)
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
@@ -49,23 +70,19 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
                   ),
                 );
               else if (widget.userModel.coins <
-                  widget.curatedContestModel.entryFees)
+                  widget.curatedContestModel.entryFees) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text("Insufficient coins!!"),
                     backgroundColor: Colors.red,
                   ),
                 );
-              else
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => RankListPage(
-                              curatedContestModel: widget.curatedContestModel,
-                              startTime: widget.startTime,
-                              endtime: widget.endtime,
-                              title: widget.title,
-                            )));
+              } else if (!widget.isPrivate) {
+                // need a page for confirmation
+              } else {
+                // it's a private page
+                // need a page to enter password
+              }
             },
       child: Card(
         shape: CircleBorder(),

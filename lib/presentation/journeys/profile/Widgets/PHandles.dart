@@ -5,8 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class PHandles extends StatelessWidget {
-  final String handelCF, handelCC, handelHE, email;
-  bool isHandelCFVerified;
+  final String handelCF, handelCC, handelHE, email, uid;
+  final bool isHandelCFVerified;
 
   PHandles({
     Key key,
@@ -15,6 +15,7 @@ class PHandles extends StatelessWidget {
     @required this.handelHE,
     @required this.email,
     @required this.isHandelCFVerified,
+    @required this.uid,
   }) : super(key: key);
 
   @override
@@ -25,6 +26,8 @@ class PHandles extends StatelessWidget {
             .add(VerifyCFHandelEvent(
           handel: handelCF,
           email: email,
+          platformId: "CF",
+          uid: uid,
         ));
       },
       icon: Icon(
@@ -53,7 +56,7 @@ class PHandles extends StatelessWidget {
 
     Widget cfHandelTrailingWidget =
         (isHandelCFVerified) ? verifiedHandelButton : unVerifiedHandelButton;
-
+    print(isHandelCFVerified);
     return Padding(
         padding: const EdgeInsets.all(12.0),
         child: Container(
@@ -73,10 +76,11 @@ class PHandles extends StatelessWidget {
                 builder: (context, state) {
                   if (state is HandelVerificationLoading)
                     cfHandelTrailingWidget = CircularProgressIndicator();
-                  else if (state is HandelVerificationCompleted)
-                    cfHandelTrailingWidget = verifiedHandelButton;
-                  else
+                  else if (state is HandelVerificationCFEmailPrivate) {
                     cfHandelTrailingWidget = unVerifiedHandelButton;
+                  } else if (state is HandelVerificationCompleted) {
+                    cfHandelTrailingWidget = verifiedHandelButton;
+                  }
                   return ListTile(
                     minVerticalPadding: 0,
                     title: Text(
@@ -129,17 +133,18 @@ class PHandles extends StatelessWidget {
                   style: TextStyle(color: Colors.black),
                 ),
                 trailing: TextButton.icon(
-                    onPressed: () {},
-                    icon: Icon(
-                      FontAwesomeIcons.checkCircle,
-                      color: Colors.green,
-                      size: 20,
-                    ),
-                    label: Text(
-                      'Verified',
-                      style: TextStyle(
-                          color: Colors.green, fontWeight: FontWeight.bold),
-                    )),
+                  onPressed: () {},
+                  label: Text(
+                    'Verify',
+                    style: TextStyle(
+                        color: Colors.red, fontWeight: FontWeight.bold),
+                  ),
+                  icon: Icon(
+                    FontAwesomeIcons.questionCircle,
+                    color: Colors.red,
+                    size: 20,
+                  ),
+                ),
               ),
             ],
           ),

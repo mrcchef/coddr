@@ -23,6 +23,7 @@ abstract class RemoteDataSource {
   Future<void> createCuratedContest(CuratedContestModel curatedContestModel);
   Future<CFStandingsModel> getCFStandings(
       List<String> handles, String contestId);
+  Future<void> updateIsHandleVerified(String uid, String platformId);
 }
 
 class RemoteDataSourceImpl extends RemoteDataSource {
@@ -49,9 +50,9 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   Future<List<CFUserModel>> getCFUser(List<String> handles) async {
     final responseBody =
         await apiClient.get('user.info?', params: {'handles': handles});
-    print("getCFUser response body:" + responseBody);
+
     List<CFUserModel> userList = CFUserListModel.fromJson(responseBody).user;
-    print(userList);
+
     return userList;
   }
 
@@ -69,6 +70,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         'isHandelCCVerified': false,
         'isHandelCFVerified': false,
         'isHandelHEVerified': false,
+        'coins': 0,
       },
     );
   }
@@ -103,6 +105,18 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   }
 
   @override
+  Future<void> updateIsHandleVerified(String uid, String platformId) async {
+    String value;
+    if (platformId == 'CF')
+      value = 'isHandelCFVerified';
+    else if (platformId == 'CC') value = 'isHandelCCVerified';
+
+    await FirebaseFirestore.instance.collection('users').doc(uid).update(
+      {value: true},
+    );
+  }
+
+  @override
   Future<UserModel> fetchUserDetails(String uid) async {
     UserModel userModel;
     await FirebaseFirestore.instance
@@ -111,9 +125,8 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         .get()
         .then((value) {
       userModel = UserModel.fromMap(value.data());
-      print("value data: ${value.data()}");
     });
-    print(userModel);
+
     return userModel;
   }
 
@@ -130,14 +143,12 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         .get()
         .then((value) {
       for (int i = 0; i < value.docs.length; i++) {
-        print(value.docs[i].data());
         CuratedContestModel model =
             CuratedContestModel.fromMap(value.docs[i].data());
         curatedContestModelList.add(model);
       }
     });
 
-    print("curated contest $curatedContestModelList");
     return curatedContestModelList;
   }
 
@@ -150,7 +161,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         .collection(curatedContestModel.parentContestId)
         .doc(curatedContestModel.contestId)
         .set(curatedContestModel.toMap());
-    // .add(curatedContestModel.toMap());
   }
 
   Future<CFStandingsModel> getCFStandings(
@@ -159,10 +169,9 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         await apiClient.get('contest.standings?contestId=$contestId&', params: {
       'handles': handles,
     });
-    print(responseBody);
+
     CFStandingsModel standings =
         CFStandingsListModel.fromJson(responseBody).result;
-    print(standings);
 
     return standings;
   }

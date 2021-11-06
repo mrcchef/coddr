@@ -99,7 +99,6 @@ class PlatformRepositoryImpl extends PlatformRepository {
       List<String> params) async {
     try {
       List<UserEntity> userList = await remoteDataSourceImpl.getCFUser(params);
-      print(userList);
       return Right(userList);
     } on Exception {
       return Left(AppError(appErrorType: AppErrorType.api));
@@ -109,10 +108,10 @@ class PlatformRepositoryImpl extends PlatformRepository {
   @override
   Future<Either<AppError, UserModel>> fetchUserDetail() async {
     final String uid = authenticationDataSourceImpl.getUid();
-    print("uid:$uid");
+
     try {
       UserModel usermodel = await remoteDataSourceImpl.fetchUserDetails(uid);
-      print("usermodel:$usermodel");
+
       return Right(usermodel);
     } on Exception {
       return Left(AppError(appErrorType: AppErrorType.database));
@@ -138,6 +137,17 @@ class PlatformRepositoryImpl extends PlatformRepository {
   Future<Either<AppError, void>> updateIsEmailVerified(String uid) async {
     try {
       await remoteDataSourceImpl.updateIsEmailVerified(uid);
+      return Right(null);
+    } on Exception {
+      return Left(AppError(appErrorType: AppErrorType.firebase));
+    }
+  }
+
+  @override
+  Future<Either<AppError, void>> updateIsHandleVerified(
+      String uid, String platformId) async {
+    try {
+      await remoteDataSourceImpl.updateIsHandleVerified(uid, platformId);
       return Right(null);
     } on Exception {
       return Left(AppError(appErrorType: AppErrorType.firebase));

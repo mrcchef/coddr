@@ -54,7 +54,7 @@ class UserModel extends Equatable {
 
   @override
   List<Object> get props {
-    return [displayName, email];
+    return [displayName, email, isHandelCFVerified, handelCF];
   }
 
   UserModel copyWith({

@@ -32,17 +32,9 @@ class ContestListingBloc
         (appError) =>
             ContestListErrorState(appErrorType: appError.appErrorType),
         (contestList) {
-          print(contestList);
           return ContestListFetchedState(contestList: contestList);
         },
       );
-
-      // GetCFUser getCFUser = getItInstance<GetCFUser>();
-      // final userList = await getCFUser(['Kshittiz21']);
-      // yield userList.fold((l) => null, (r) {
-      //   print(r);
-      //   return null;
-      // });
     }
   }
 }

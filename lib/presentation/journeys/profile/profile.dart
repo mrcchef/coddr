@@ -163,6 +163,7 @@ class _ProfileState extends State<Profile> {
                 thickness: 2.5,
               ),
               PHandles(
+                uid: userModel.uid,
                 email: userModel.email,
                 handelCF: userModel.handelCF == null ? "" : userModel.handelCF,
                 handelCC: userModel.handelCC == null ? "" : userModel.handelCC,
