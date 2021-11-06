@@ -22,6 +22,7 @@ class HandelVerificationBloc
       List<String> handels = [];
       UserEntity userEntity;
       handels.add(event.handel);
+      print("Handel verification bloc: $handels");
       final eitherResponse = await getCFUser(handels);
       bool isSuccessful =
           eitherResponse.fold((error) => false, (userEntityList) {
@@ -29,10 +30,12 @@ class HandelVerificationBloc
         userEntity = userEntityList[0];
         return true;
       });
+
       if (isSuccessful == false)
         yield HandelVerificationFailed();
       else {
-        if (userEntity.email == null) yield HandelVerificationCFEmailPrivate();
+        if (userEntity.email == null)
+          yield HandelVerificationCFEmailPrivate();
         else if (userEntity.email == event.email)
           yield HandelVerificationCompleted();
         else

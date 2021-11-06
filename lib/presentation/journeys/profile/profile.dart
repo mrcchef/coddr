@@ -24,9 +24,6 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   ProfileBloc _profileBloc;
-
-  Page _selectedPage = Page.accountinfo;
-
   @override
   void initState() {
     _profileBloc = getItInstance<ProfileBloc>();

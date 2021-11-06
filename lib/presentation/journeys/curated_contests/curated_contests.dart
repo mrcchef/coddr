@@ -148,6 +148,8 @@ class _CuratedContestsState extends State<CuratedContests> {
                 startTime: widget.startTime,
                 endtime: widget.endtime,
                 title: widget.title,
+                isPrivate: false,
+                userModel: widget.userModel,
               ),
               Padding(
                 padding: EdgeInsets.all(Sizes.dimen_8.w),
@@ -162,22 +164,31 @@ class _CuratedContestsState extends State<CuratedContests> {
                     Spacer(),
                     RaisedButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CreateContest(
-                                isPrivate: true,
-                                parentContestId: widget.constestId,
-                                platformId: widget.platformId,
-                                userModel: widget.userModel,
-                                contestId: getNextContestId(
-                                    "PVT", privateContest.length + 1),
-                                startTime: widget.startTime,
-                                endtime: widget.endtime,
-                                title: widget.title,
+                          if (!widget.userModel.isHandelCFVerified)
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content:
+                                    Text("Codeforces Handle is not verfied!!"),
+                                backgroundColor: Colors.red,
                               ),
-                            ),
-                          );
+                            );
+                          else
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CreateContest(
+                                  isPrivate: true,
+                                  parentContestId: widget.constestId,
+                                  platformId: widget.platformId,
+                                  userModel: widget.userModel,
+                                  contestId: getNextContestId(
+                                      "PVT", privateContest.length + 1),
+                                  startTime: widget.startTime,
+                                  endtime: widget.endtime,
+                                  title: widget.title,
+                                ),
+                              ),
+                            );
                         },
                         color: Colors.red[900],
                         shape: RoundedRectangleBorder(
@@ -195,6 +206,8 @@ class _CuratedContestsState extends State<CuratedContests> {
                 startTime: widget.startTime,
                 endtime: widget.endtime,
                 title: widget.title,
+                isPrivate: true,
+                userModel: widget.userModel,
               ),
             ],
           ),

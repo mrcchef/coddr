@@ -49,6 +49,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   Future<List<CFUserModel>> getCFUser(List<String> handles) async {
     final responseBody =
         await apiClient.get('user.info?', params: {'handles': handles});
+    print("getCFUser response body:" + responseBody);
     List<CFUserModel> userList = CFUserListModel.fromJson(responseBody).user;
     print(userList);
     return userList;

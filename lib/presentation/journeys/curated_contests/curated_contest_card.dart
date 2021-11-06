@@ -1,6 +1,7 @@
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/domain/entities/curated_contest_model.dart';
+import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/journeys/RankList/RankListPage.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -11,6 +12,8 @@ class CuratedContestCard extends StatefulWidget {
   final DateTime startTime;
   final DateTime endtime;
   final String title;
+  final bool isPrivate;
+  final UserModel userModel;
 
   const CuratedContestCard({
     Key key,
@@ -18,6 +21,8 @@ class CuratedContestCard extends StatefulWidget {
     @required this.startTime,
     @required this.endtime,
     @required this.title,
+    @required this.isPrivate,
+    @required this.userModel,
   }) : super(key: key);
   @override
   _CuratedContestCardState createState() => _CuratedContestCardState();
@@ -33,17 +38,35 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => RankListPage(
-                      curatedContestModel: widget.curatedContestModel,
-                      startTime: widget.startTime,
-                      endtime: widget.endtime,
-                      title: widget.title,
-                    )));
-      },
+      onTap: widget.userModel == null
+          ? null
+          : () {
+              if (!widget.userModel.isHandelCFVerified)
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Codeforces Handle is not verfied!!"),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              else if (widget.userModel.coins <
+                  widget.curatedContestModel.entryFees)
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Insufficient coins!!"),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              else
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RankListPage(
+                              curatedContestModel: widget.curatedContestModel,
+                              startTime: widget.startTime,
+                              endtime: widget.endtime,
+                              title: widget.title,
+                            )));
+            },
       child: Card(
         shape: CircleBorder(),
         child: Container(

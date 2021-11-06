@@ -66,6 +66,8 @@ class _RankListPageState extends State<RankListPage> {
               startTime: widget.startTime,
               endtime: widget.endtime,
               title: widget.title,
+              isPrivate: false,
+              userModel: null,
             ),
             SizedBox(
               height: Sizes.dimen_50.w,

@@ -19,7 +19,6 @@ class PHandles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final Widget unVerifiedHandelButton = TextButton.icon(
       onPressed: () {
         BlocProvider.of<HandelVerificationBloc>(context)
@@ -73,9 +72,7 @@ class PHandles extends StatelessWidget {
               BlocBuilder<HandelVerificationBloc, HandelVerificationState>(
                 builder: (context, state) {
                   if (state is HandelVerificationLoading)
-                    cfHandelTrailingWidget = Center(
-                      child: CircularProgressIndicator(),
-                    );
+                    cfHandelTrailingWidget = CircularProgressIndicator();
                   else if (state is HandelVerificationCompleted)
                     cfHandelTrailingWidget = verifiedHandelButton;
                   else
