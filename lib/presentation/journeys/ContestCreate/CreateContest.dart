@@ -184,15 +184,15 @@ class _CreateContestState extends State<CreateContest> {
                 ),
               ],
             ),
-            Flexible(
-              child: Padding(
-                padding: EdgeInsets.all(Sizes.dimen_8.w),
-                child: Text(
-                  'Pool Prize: ₹ ${getPoolPrize().toString()}',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ),
-            ),
+            // Flexible(
+            //   child: Padding(
+            //     padding: EdgeInsets.all(Sizes.dimen_8.w),
+            //     child: Text(
+            //       'Pool Prize: ₹ ${getPoolPrize().toString()}',
+            //       style: Theme.of(context).textTheme.bodyText1,
+            //     ),
+            //   ),
+            // ),
             Divider(
               thickness: Sizes.dimen_2.w,
             ),

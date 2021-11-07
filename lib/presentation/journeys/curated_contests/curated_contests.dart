@@ -75,8 +75,14 @@ class _CuratedContestsState extends State<CuratedContests> {
       bloc: _curatedContestBloc,
       builder: (context, state) {
         if (state is CuratedContestFetchingState)
-          return Center(
-            child: CircularProgressIndicator(),
+          return Container(
+            color: Colors.white,
+            child: Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.white,
+
+              ),
+            ),
           );
 
         if (state is CuratedContestErrorState)

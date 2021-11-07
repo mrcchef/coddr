@@ -122,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: Theme.of(context).textTheme.headline5,
                     ),
                     Expanded(child: PlatformGrid(userModel: userModel)),
-                    CustomBottomNavigationBar(),
+                    //CustomBottomNavigationBar(),
                   ],
                 ),
               );

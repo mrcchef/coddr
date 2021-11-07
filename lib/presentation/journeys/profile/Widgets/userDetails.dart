@@ -85,7 +85,7 @@ class _UserDetailsState extends State<UserDetails> {
                 ),
                 leading: CircleAvatar(
                   radius: 22,
-                  backgroundImage: AssetImage('assets/logos/HackerRank.png'),
+                  backgroundImage: AssetImage('assets/images/default_user.png'),
                 ),
               ),
               ListTile(
