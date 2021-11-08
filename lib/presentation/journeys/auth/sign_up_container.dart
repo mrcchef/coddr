@@ -29,7 +29,6 @@ class _SignUpContainerState extends State<SignUpContainer> {
   }
 
   void _submit(BuildContext context) {
-    print("signup submit");
     if (!_formKey.currentState.validate()) {
       // Invalid!
       return;
@@ -39,7 +38,6 @@ class _SignUpContainerState extends State<SignUpContainer> {
   }
 
   void _onFormSubmitted(BuildContext context) {
-    print("SignUp event added");
     BlocProvider.of<SignUpBloc>(context).add(
       SignUpWithCredentialsPressedEvent(
         email: _authData['email'],

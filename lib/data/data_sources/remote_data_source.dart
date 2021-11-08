@@ -165,8 +165,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   Future<List<CuratedContestModel>> fetchCuratedContest(
       String platformId, String contestId) async {
     List<CuratedContestModel> curatedContestModelList = [];
-    print(contestId);
-    print(platformId);
     await FirebaseFirestore.instance
         .collection('contests')
         .doc(platformId)

@@ -174,8 +174,7 @@ class _CreateContestState extends State<CreateContest> {
                         if (value.isEmpty) {
                           return 'Please Enter Fees';
                         }
-                        print(value);
-                        print(widget.userModel.coins);
+
                         if (int.parse(value) > widget.userModel.coins) {
                           return 'Insufficent coins';
                         }

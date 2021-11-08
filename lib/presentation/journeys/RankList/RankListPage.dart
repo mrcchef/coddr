@@ -34,6 +34,7 @@ class _RankListPageState extends State<RankListPage> {
 
   void initState() {
     super.initState();
+
     _contestStandingsBloc = getItInstance<ContestStandingsBloc>();
     _contestStandingsBloc.add(CFStandingsListing(
         getCFStandingsArguments: GetCFStandingsArguments(

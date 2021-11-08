@@ -22,7 +22,6 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
       email: email,
       password: password,
     );
-    print(userCredential);
   }
 
   @override
@@ -40,9 +39,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
 
   @override
   Future<void> signOut() async {
-    print("before: ${firebaseAuth.currentUser.uid}");
     await firebaseAuth.signOut();
-    print("after: ${firebaseAuth.currentUser.uid}");
   }
 
   @override
@@ -62,20 +59,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
   }
 
   Future<bool> isEmailVerified() async {
-    print("IsEmailVerified: ${firebaseAuth.currentUser.emailVerified}");
-
     await firebaseAuth.currentUser.reload();
-
-    print("IsEmailVerified: ${firebaseAuth.currentUser.emailVerified}");
-    // usertask.
-    // addOnSuccessListener(new OnSuccessListener() {
-    // @override
-    // public void onSuccess(Void aVoid) {
-    // user = mAuth.getCurrentUser();
-    // boolean useremailveri = user.isEmailVerified();
-    // String useremailuid = user.getUid();
-    // }
-    // });
     return firebaseAuth.currentUser.emailVerified;
   }
 }

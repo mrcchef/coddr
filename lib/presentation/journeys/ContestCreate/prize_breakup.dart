@@ -57,7 +57,8 @@ class PrizeBreakup extends StatelessWidget {
     Map<String, String> host = {
       'displayName': userModel.displayName,
       'uid': userModel.uid,
-      'email': userModel.email
+      'email': userModel.email,
+      'handelCF': userModel.handelCF,
     };
     participants.add(host);
 

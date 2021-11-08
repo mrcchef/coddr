@@ -38,7 +38,6 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
 
   bool isParticipant() {
     bool check = false;
-    print(widget.userModel.email);
     widget.curatedContestModel.participants.forEach((element) {
       if (element['email'] == widget.userModel.email) check = true;
       print(element['email']);
