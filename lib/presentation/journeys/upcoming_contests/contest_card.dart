@@ -29,7 +29,8 @@ class ContestCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context).push(
+      //Navigator.push(context, MaterialPageRoute(builder: (context)=>CartPage()));
+      onTap: () => Navigator.push(context,
         MaterialPageRoute(
           builder: (context) => CuratedContests(
             constestId: contestId,

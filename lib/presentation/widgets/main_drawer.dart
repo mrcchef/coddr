@@ -97,8 +97,8 @@ class _MainDrawerState extends State<MainDrawer> {
                 DrawerListTile('Profile', Icons.person_outline_outlined, () {
                   Navigator.of(context).popAndPushNamed(Profile.routeName);
                 }),
-                DrawerListTile('Activity', Icons.timeline, () {}),
-                DrawerListTile('Settings', Icons.settings, () {}),
+                // DrawerListTile('Activity', Icons.timeline, () {}),
+                // DrawerListTile('Settings', Icons.settings, () {}),
                 DrawerListTile(
                     'About Us', Icons.sentiment_satisfied_alt_outlined, () {}),
                 DrawerListTile('Sign Out', Icons.logout, () {
