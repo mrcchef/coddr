@@ -24,4 +24,7 @@ class CuratedContestErrorState extends CuratedContestState {
   final String message;
 
   CuratedContestErrorState(this.message);
+
+  @override
+  List<Object> get props => [message];
 }

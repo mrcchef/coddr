@@ -11,4 +11,7 @@ class CreateCuratedContestEventt extends CreateCuratedContestEvent {
   final CuratedContestModel curatedContestModel;
 
   CreateCuratedContestEventt({@required this.curatedContestModel});
+
+  @override
+  List<Object> get props => [curatedContestModel];
 }

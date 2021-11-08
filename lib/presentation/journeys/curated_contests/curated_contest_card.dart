@@ -3,6 +3,7 @@ import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/domain/entities/curated_contest_model.dart';
 import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/journeys/RankList/RankListPage.dart';
+import 'package:coddr/presentation/journeys/curated_contests/confirm_participation.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -10,7 +11,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 class CuratedContestCard extends StatefulWidget {
   final CuratedContestModel curatedContestModel;
   final DateTime startTime;
-  final DateTime endtime;
+  final DateTime endTime;
   final String title;
   final bool isPrivate;
   final UserModel userModel;
@@ -19,7 +20,7 @@ class CuratedContestCard extends StatefulWidget {
     Key key,
     @required this.curatedContestModel,
     @required this.startTime,
-    @required this.endtime,
+    @required this.endTime,
     @required this.title,
     @required this.isPrivate,
     @required this.userModel,
@@ -37,8 +38,10 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
 
   bool isParticipant() {
     bool check = false;
+    print(widget.userModel.email);
     widget.curatedContestModel.participants.forEach((element) {
       if (element['email'] == widget.userModel.email) check = true;
+      print(element['email']);
     });
     return check;
   }
@@ -56,13 +59,12 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
                     builder: (context) => RankListPage(
                       curatedContestModel: widget.curatedContestModel,
                       startTime: widget.startTime,
-                      endtime: widget.endtime,
+                      endTime: widget.endTime,
                       title: widget.title,
                     ),
                   ),
                 );
-
-              if (!widget.userModel.isHandelCFVerified)
+              else if (!widget.userModel.isHandelCFVerified)
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text("Codeforces Handle is not verfied!!"),
@@ -79,6 +81,14 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
                 );
               } else if (!widget.isPrivate) {
                 // need a page for confirmation
+                Navigator.of(context).pop();
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ConfirmParticipation(
+                        userModel: widget.userModel,
+                        curatedContestModel: widget.curatedContestModel,
+                        startTime: widget.startTime,
+                        endTime: widget.endTime,
+                        title: widget.title)));
               } else {
                 // it's a private page
                 // need a page to enter password

@@ -15,14 +15,14 @@ import 'package:flutter/material.dart';
 class RankListPage extends StatefulWidget {
   final CuratedContestModel curatedContestModel;
   final DateTime startTime;
-  final DateTime endtime;
+  final DateTime endTime;
   final String title;
 
   const RankListPage({
     Key key,
     @required this.curatedContestModel,
     @required this.startTime,
-    @required this.endtime,
+    @required this.endTime,
     @required this.title,
   }) : super(key: key);
   @override
@@ -58,13 +58,13 @@ class _RankListPageState extends State<RankListPage> {
             PlatformLabel(),
             ContestCardinfo(
               startTime: widget.startTime,
-              endtime: widget.endtime,
+              endtime: widget.endTime,
               title: widget.title,
             ),
             CuratedContestCard(
               curatedContestModel: widget.curatedContestModel,
               startTime: widget.startTime,
-              endtime: widget.endtime,
+              endTime: widget.endTime,
               title: widget.title,
               isPrivate: false,
               userModel: null,

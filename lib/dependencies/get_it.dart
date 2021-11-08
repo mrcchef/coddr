@@ -16,8 +16,10 @@ import 'package:coddr/domain/usecases/sign_in.dart';
 import 'package:coddr/domain/usecases/sign_out.dart';
 import 'package:coddr/domain/usecases/sign_up.dart';
 import 'package:coddr/domain/usecases/store_user_credentials.dart';
+import 'package:coddr/domain/usecases/update_curated_contest.dart';
 import 'package:coddr/domain/usecases/update_is_Handle_verified.dart';
 import 'package:coddr/domain/usecases/update_is_email_verified.dart';
+import 'package:coddr/domain/usecases/update_user_model.dart';
 import 'package:coddr/domain/usecases/verify_email.dart';
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
 import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.dart';
@@ -30,6 +32,7 @@ import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
 import 'package:coddr/presentation/blocs/send_verification_email/send_verification_email_bloc.dart';
 import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
 import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
+import 'package:coddr/presentation/blocs/update_curated_contest/update_curated_contest_bloc.dart';
 import 'package:coddr/presentation/journeys/home/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
@@ -95,6 +98,12 @@ Future init() async {
   getItInstance.registerLazySingleton<UpdateIsHandleVerified>(
       () => UpdateIsHandleVerified(platformRepositoryImpl: getItInstance()));
 
+  getItInstance.registerLazySingleton<UpdateUserModel>(
+      () => UpdateUserModel(platformRepository: getItInstance()));
+
+  getItInstance.registerLazySingleton<UpdateCuratedContest>(
+      () => UpdateCuratedContest(platformRepository: getItInstance()));
+
   getItInstance.registerLazySingleton<SignIn>(
       () => SignIn(platformRepositoryImpl: getItInstance()));
 
@@ -121,6 +130,11 @@ Future init() async {
   getItInstance.registerLazySingleton<SendVerificationEmailBloc>(
       () => SendVerificationEmailBloc(
             verifyEmail: getItInstance(),
+          ));
+  getItInstance.registerLazySingleton<UpdateCuratedContestBloc>(
+      () => UpdateCuratedContestBloc(
+            updateCuratedContest: getItInstance(),
+            updateUserModel: getItInstance(),
           ));
 
   getItInstance.registerFactory<ProfileBloc>(
