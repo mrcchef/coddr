@@ -178,6 +178,7 @@ Future init() async {
   getItInstance
       .registerFactory<CreateCuratedContestBloc>(() => CreateCuratedContestBloc(
             createCuratedContest: getItInstance(),
+            updateUserModel: getItInstance(),
           ));
 
   // getItInstance.registerSingleton<SignUpBloc>(SignUpBloc(

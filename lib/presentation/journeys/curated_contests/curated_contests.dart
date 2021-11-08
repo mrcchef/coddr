@@ -64,6 +64,7 @@ class _CuratedContestsState extends State<CuratedContests> {
 
   @override
   Widget build(BuildContext context) {
+    List<CuratedContestModel> curatedContestList;
     List<CuratedContestModel> publicContest = [], privateContest = [];
 
     String getNextContestId(String type, int len) {
@@ -80,7 +81,6 @@ class _CuratedContestsState extends State<CuratedContests> {
             child: Center(
               child: CircularProgressIndicator(
                 backgroundColor: Colors.white,
-
               ),
             ),
           );
@@ -94,8 +94,7 @@ class _CuratedContestsState extends State<CuratedContests> {
           );
 
         if (state is CuratedContestFetchedState) {
-          List<CuratedContestModel> curatedContestList =
-              state.curatedContestList;
+          curatedContestList = state.curatedContestList;
           curatedContestList.forEach((element) {
             if (element.isPrivate)
               privateContest.add(element);
@@ -121,6 +120,7 @@ class _CuratedContestsState extends State<CuratedContests> {
                     Spacer(),
                     RaisedButton(
                         onPressed: () {
+                          Navigator.of(context).pop();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -170,6 +170,7 @@ class _CuratedContestsState extends State<CuratedContests> {
                     Spacer(),
                     RaisedButton(
                         onPressed: () {
+                          print(privateContest.length);
                           if (!widget.userModel.isHandelCFVerified)
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -178,7 +179,8 @@ class _CuratedContestsState extends State<CuratedContests> {
                                 backgroundColor: Colors.red,
                               ),
                             );
-                          else
+                          else {
+                            Navigator.of(context).pop();
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -195,6 +197,7 @@ class _CuratedContestsState extends State<CuratedContests> {
                                 ),
                               ),
                             );
+                          }
                         },
                         color: Colors.red[900],
                         shape: RoundedRectangleBorder(

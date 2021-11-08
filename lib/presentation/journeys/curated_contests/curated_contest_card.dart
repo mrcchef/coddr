@@ -79,7 +79,16 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
                     backgroundColor: Colors.red,
                   ),
                 );
-              } else if (!widget.isPrivate) {
+              } else if (widget.curatedContestModel.totalSpots -
+                      widget.curatedContestModel.filledSpots ==
+                  0)
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Contest filled!!"),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              else {
                 // need a page for confirmation
                 Navigator.of(context).pop();
                 Navigator.of(context).push(MaterialPageRoute(
@@ -89,9 +98,6 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
                         startTime: widget.startTime,
                         endTime: widget.endTime,
                         title: widget.title)));
-              } else {
-                // it's a private page
-                // need a page to enter password
               }
             },
       child: Card(

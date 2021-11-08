@@ -29,6 +29,7 @@ class ConfirmParticipation extends StatelessWidget {
   Widget build(BuildContext context) {
     CuratedContestModel newCuratedContestModel;
     UserModel newUserModel;
+    TextEditingController passwordController = TextEditingController();
 
     return Scaffold(
       body: BlocListener<UpdateCuratedContestBloc, UpdateCuratedContestState>(
@@ -51,6 +52,7 @@ class ConfirmParticipation extends StatelessWidget {
                 backgroundColor: Colors.green,
               ),
             );
+
             Navigator.pop(context);
             Navigator.push(
               context,
@@ -68,6 +70,26 @@ class ConfirmParticipation extends StatelessWidget {
           child: Column(
             children: [
               PlatformLabel(),
+              if (curatedContestModel.isPrivate)
+                Padding(
+                  padding: EdgeInsets.all(Sizes.dimen_8.w),
+                  child: TextFormField(
+                    controller: passwordController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter Password',
+                      labelText: 'password',
+                      contentPadding: EdgeInsets.fromLTRB(Sizes.dimen_20.w,
+                          Sizes.dimen_10.w, Sizes.dimen_20.w, Sizes.dimen_10.w),
+                    ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter a password';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
               Text(
                 "Confirm Participation",
                 style: Theme.of(context).textTheme.headline5,
@@ -90,35 +112,47 @@ class ConfirmParticipation extends StatelessWidget {
                             style: TextStyle(fontSize: Sizes.dimen_24.w));
 
                         void Function() onPressed = () {
-                          Map<String, String> hm = {
-                            'displayName': userModel.displayName,
-                            'uid': userModel.uid,
-                            'email': userModel.email
-                          };
-                          List<Map<String, String>> participants =
-                              curatedContestModel.participants;
-                          participants.add(hm);
+                          if (passwordController.text !=
+                              curatedContestModel.password) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Wrong Password"),
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
+                          } else {
+                            Map<String, String> hm = {
+                              'displayName': userModel.displayName,
+                              'uid': userModel.uid,
+                              'email': userModel.email
+                            };
+                            List<Map<String, String>> participants =
+                                curatedContestModel.participants;
+                            participants.add(hm);
 
-                          newUserModel = userModel.copyWith(
-                            coins:
-                                userModel.coins - curatedContestModel.entryFees,
-                            contest: userModel.contest + 1,
-                          );
+                            newUserModel = userModel.copyWith(
+                              coins: userModel.coins -
+                                  curatedContestModel.entryFees,
+                              contest: userModel.contest + 1,
+                            );
 
-                          print("newUserModel $newUserModel");
+                            print("newUserModel $newUserModel");
 
-                          newCuratedContestModel = curatedContestModel.copyWith(
-                            filledSpots: curatedContestModel.filledSpots + 1,
-                            participants: participants,
-                          );
+                            newCuratedContestModel =
+                                curatedContestModel.copyWith(
+                              filledSpots: curatedContestModel.filledSpots + 1,
+                              participants: participants,
+                            );
 
-                          BlocProvider.of<UpdateCuratedContestBloc>(context)
-                              .add(
-                            UpdateCuratedContestEventt(
-                              curatedContestModel: newCuratedContestModel,
-                              userModel: newUserModel,
-                            ),
-                          );
+                            BlocProvider.of<UpdateCuratedContestBloc>(context)
+                                .add(
+                              UpdateCuratedContestEventt(
+                                curatedContestModel: newCuratedContestModel,
+                                userModel: newUserModel,
+                              ),
+                            );
+                          }
                         };
 
                         if (state is CuratedContestUpdatingState) {
