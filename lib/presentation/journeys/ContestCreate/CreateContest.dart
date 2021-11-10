@@ -85,7 +85,6 @@ class _CreateContestState extends State<CreateContest> {
                             Sizes.dimen_10.w,
                             Sizes.dimen_20.w,
                             Sizes.dimen_10.w),
-                        // fillColor: Colors.red
                       ),
                       validator: (value) {
                         if (value.isEmpty) {
@@ -175,6 +174,10 @@ class _CreateContestState extends State<CreateContest> {
                         if (value.isEmpty) {
                           return 'Please Enter Fees';
                         }
+
+                        if (int.parse(value) > widget.userModel.coins) {
+                          return 'Insufficent coins';
+                        }
                         if (maxPrizePool < getPoolPrize())
                           return 'Pool prize exceeds max pool prize';
                         return null;
@@ -184,15 +187,15 @@ class _CreateContestState extends State<CreateContest> {
                 ),
               ],
             ),
-            Flexible(
-              child: Padding(
-                padding: EdgeInsets.all(Sizes.dimen_8.w),
-                child: Text(
-                  'Pool Prize: ₹ ${getPoolPrize().toString()}',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ),
-            ),
+            // Flexible(
+            //   child: Padding(
+            //     padding: EdgeInsets.all(Sizes.dimen_8.w),
+            //     child: Text(
+            //       'Pool Prize: ₹ ${getPoolPrize().toString()}',
+            //       style: Theme.of(context).textTheme.bodyText1,
+            //     ),
+            //   ),
+            // ),
             Divider(
               thickness: Sizes.dimen_2.w,
             ),
@@ -206,7 +209,7 @@ class _CreateContestState extends State<CreateContest> {
             Padding(
               padding: EdgeInsets.fromLTRB(Sizes.dimen_8.w, 0, 0, 0),
               child: Text(
-                '₹ 1000',
+                '₹ $maxPrizePool',
                 style: TextStyle(fontSize: Sizes.dimen_20.w),
               ),
             ),
@@ -226,6 +229,7 @@ class _CreateContestState extends State<CreateContest> {
                         style: TextStyle(fontSize: Sizes.dimen_24.w)),
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
+                        Navigator.pop(context);
                         Navigator.push(
                           context,
                           MaterialPageRoute(

@@ -1,4 +1,3 @@
-import 'package:coddr/common/constants/image_constants.dart';
 import 'package:flutter/material.dart';
 
 class ImageSection extends StatelessWidget {

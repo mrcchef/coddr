@@ -1,8 +1,7 @@
 import 'package:coddr/common/constants/size_constants.dart';
-import 'package:coddr/domain/entities/curated_contest_model.dart';
-import 'package:coddr/presentation/journeys/RankList/NumberingRank.dart';
-import 'package:flutter/material.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
+import 'package:coddr/domain/entities/curated_contest_model.dart';
+import 'package:flutter/material.dart';
 
 class WinningsPage extends StatelessWidget {
   final CuratedContestModel curatedContestModel;

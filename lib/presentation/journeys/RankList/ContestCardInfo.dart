@@ -1,8 +1,8 @@
 import 'package:coddr/common/constants/size_constants.dart';
+import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/presentation/journeys/RankList/codeforces_website.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:flutter/material.dart';
-import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:intl/intl.dart';
 
 class ContestCardinfo extends StatelessWidget {

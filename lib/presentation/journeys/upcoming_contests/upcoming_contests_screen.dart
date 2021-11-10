@@ -120,7 +120,9 @@ class _UpcomingContestsScreenState extends State<UpcomingContestsScreen> {
                   if (state is ContestListFetchingState)
                     return Center(
                       child: CircularProgressIndicator(
-                        backgroundColor: Colors.black,
+                        color: Colors.red,
+                        backgroundColor: Colors.green,
+
                       ),
                     );
                   else if (state is ContestListFetchedState) {

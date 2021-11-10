@@ -24,9 +24,6 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   ProfileBloc _profileBloc;
-
-  Page _selectedPage = Page.accountinfo;
-
   @override
   void initState() {
     _profileBloc = getItInstance<ProfileBloc>();
@@ -70,7 +67,6 @@ class _ProfileState extends State<Profile> {
         ),
         child: InkWell(
           onTap: () {
-            print("edit button pressed");
             Navigator.of(context).popAndPushNamed(EditProfile.routeName);
           },
           child: Row(
@@ -133,8 +129,6 @@ class _ProfileState extends State<Profile> {
 
           final curState = (state as ProfileLoaded);
           UserModel userModel = curState.userModel;
-          print(userModel.contactNumber);
-          print(userModel.handelCC);
           return ListView(
             padding: EdgeInsets.only(top: 0),
             children: [
@@ -166,6 +160,7 @@ class _ProfileState extends State<Profile> {
                 thickness: 2.5,
               ),
               PHandles(
+                uid: userModel.uid,
                 email: userModel.email,
                 handelCF: userModel.handelCF == null ? "" : userModel.handelCF,
                 handelCC: userModel.handelCC == null ? "" : userModel.handelCC,

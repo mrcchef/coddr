@@ -26,7 +26,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       yield eitherResponse
           .fold((error) => ProfileError(message: "User detail fetching failed"),
               (userModel) {
-        print("userModel: $userModel");
         return ProfileLoaded(userModel: userModel);
       });
     }

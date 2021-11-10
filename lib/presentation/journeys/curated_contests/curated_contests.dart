@@ -64,12 +64,11 @@ class _CuratedContestsState extends State<CuratedContests> {
 
   @override
   Widget build(BuildContext context) {
+    List<CuratedContestModel> curatedContestList;
     List<CuratedContestModel> publicContest = [], privateContest = [];
 
-    String getNextContestId(String type) {
-      String id = widget.constestId.toString() +
-          type +
-          (publicContest.length + 1).toString();
+    String getNextContestId(String type, int len) {
+      String id = widget.constestId.toString() + type + len.toString();
       return id;
     }
 
@@ -77,8 +76,13 @@ class _CuratedContestsState extends State<CuratedContests> {
       bloc: _curatedContestBloc,
       builder: (context, state) {
         if (state is CuratedContestFetchingState)
-          return Center(
-            child: CircularProgressIndicator(),
+          return Container(
+            color: Colors.white,
+            child: Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.white,
+              ),
+            ),
           );
 
         if (state is CuratedContestErrorState)
@@ -90,8 +94,7 @@ class _CuratedContestsState extends State<CuratedContests> {
           );
 
         if (state is CuratedContestFetchedState) {
-          List<CuratedContestModel> curatedContestList =
-              state.curatedContestList;
+          curatedContestList = state.curatedContestList;
           curatedContestList.forEach((element) {
             if (element.isPrivate)
               privateContest.add(element);
@@ -117,6 +120,7 @@ class _CuratedContestsState extends State<CuratedContests> {
                     Spacer(),
                     RaisedButton(
                         onPressed: () {
+                          Navigator.of(context).pop();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -125,7 +129,8 @@ class _CuratedContestsState extends State<CuratedContests> {
                                 parentContestId: widget.constestId,
                                 platformId: widget.platformId,
                                 userModel: widget.userModel,
-                                contestId: getNextContestId("PBL"),
+                                contestId: getNextContestId(
+                                    "PBL", publicContest.length + 1),
                                 startTime: widget.startTime,
                                 endtime: widget.endtime,
                                 title: widget.title,
@@ -149,6 +154,8 @@ class _CuratedContestsState extends State<CuratedContests> {
                 startTime: widget.startTime,
                 endtime: widget.endtime,
                 title: widget.title,
+                isPrivate: false,
+                userModel: widget.userModel,
               ),
               Padding(
                 padding: EdgeInsets.all(Sizes.dimen_8.w),
@@ -163,21 +170,34 @@ class _CuratedContestsState extends State<CuratedContests> {
                     Spacer(),
                     RaisedButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CreateContest(
-                                isPrivate: true,
-                                parentContestId: widget.constestId,
-                                platformId: widget.platformId,
-                                userModel: widget.userModel,
-                                contestId: getNextContestId("PVT"),
-                                startTime: widget.startTime,
-                                endtime: widget.endtime,
-                                title: widget.title,
+                          print(privateContest.length);
+                          if (!widget.userModel.isHandelCFVerified)
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content:
+                                    Text("Codeforces Handle is not verfied!!"),
+                                backgroundColor: Colors.red,
                               ),
-                            ),
-                          );
+                            );
+                          else {
+                            Navigator.of(context).pop();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CreateContest(
+                                  isPrivate: true,
+                                  parentContestId: widget.constestId,
+                                  platformId: widget.platformId,
+                                  userModel: widget.userModel,
+                                  contestId: getNextContestId(
+                                      "PVT", privateContest.length + 1),
+                                  startTime: widget.startTime,
+                                  endtime: widget.endtime,
+                                  title: widget.title,
+                                ),
+                              ),
+                            );
+                          }
                         },
                         color: Colors.red[900],
                         shape: RoundedRectangleBorder(
@@ -195,6 +215,8 @@ class _CuratedContestsState extends State<CuratedContests> {
                 startTime: widget.startTime,
                 endtime: widget.endtime,
                 title: widget.title,
+                isPrivate: true,
+                userModel: widget.userModel,
               ),
             ],
           ),

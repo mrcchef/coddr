@@ -15,6 +15,7 @@ class APIClient {
       Uri.parse(url),
       headers: {'Content-Type': 'application/json'},
     );
+
     if (response.statusCode == 200) {
       final responseBody = json.decode(response.body);
       return responseBody;
@@ -40,7 +41,6 @@ class APIClient {
     }
     url = '${APIConstants.BASE_URL}$path';
     url += paramsPath;
-    print(url);
     return url;
   }
 }

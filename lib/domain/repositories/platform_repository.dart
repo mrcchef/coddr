@@ -39,4 +39,11 @@ abstract class PlatformRepository {
       CuratedContestModel curatedContestModel);
   Future<Either<AppError, CFStandingsEntity>> getCFStandings(
       List<String> handles, String contestId);
+  Future<Either<AppError, void>> updateIsHandleVerified(
+      String uid, String platformId);
+
+  Future<Either<AppError, void>> updateCuratedContest(
+      CuratedContestModel curatedContestModel);
+
+  Future<Either<AppError, void>> updateUserModel(UserModel userModel);
 }

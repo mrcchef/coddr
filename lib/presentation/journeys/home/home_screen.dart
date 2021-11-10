@@ -3,7 +3,6 @@ import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/common/screen_utils/screen_util.dart';
 import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/domain/entities/user_model.dart';
-import 'package:coddr/domain/usecases/get_cf_user.dart';
 import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.dart';
 import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
 import 'package:coddr/presentation/journeys/home/platform_grid.dart';
@@ -26,14 +25,12 @@ class _HomeScreenState extends State<HomeScreen> {
   ContestListingBloc _contestListingBloc;
   ProfileBloc _profileBloc;
   UserModel userModel;
-  GetCFUser getCFUser;
 
   @override
   void initState() {
     _contestListingBloc = getItInstance<ContestListingBloc>();
     _profileBloc = getItInstance<ProfileBloc>();
     _profileBloc.add(FetchProfileData());
-    getCFUser = getItInstance<GetCFUser>();
     super.initState();
   }
 
@@ -57,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
     print(screenWidth);
     print(screenHeight);
     ScreenUtil.init(height: screenHeight, width: screenWidth);
-    getCFUser(["mr_cchef"]);
 
     Widget leftAppBarWidget = InkWell(
       onTap: () {
@@ -126,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: Theme.of(context).textTheme.headline5,
                     ),
                     Expanded(child: PlatformGrid(userModel: userModel)),
-                    CustomBottomNavigationBar(),
+                    //CustomBottomNavigationBar(),
                   ],
                 ),
               );

@@ -23,6 +23,9 @@ abstract class RemoteDataSource {
   Future<void> createCuratedContest(CuratedContestModel curatedContestModel);
   Future<CFStandingsModel> getCFStandings(
       List<String> handles, String contestId);
+  Future<void> updateIsHandleVerified(String uid, String platformId);
+  Future<void> updateCuratedContest(CuratedContestModel curatedContestModel);
+  Future<void> updateUserModel(UserModel userModel);
 }
 
 class RemoteDataSourceImpl extends RemoteDataSource {
@@ -49,9 +52,23 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   Future<List<CFUserModel>> getCFUser(List<String> handles) async {
     final responseBody =
         await apiClient.get('user.info?', params: {'handles': handles});
+
     List<CFUserModel> userList = CFUserListModel.fromJson(responseBody).user;
-    print(userList);
+
     return userList;
+  }
+
+  Future<CFStandingsModel> getCFStandings(
+      List<String> handles, String contestId) async {
+    final responseBody =
+        await apiClient.get('contest.standings?contestId=$contestId&', params: {
+      'handles': handles,
+    });
+
+    CFStandingsModel standings =
+        CFStandingsListModel.fromJson(responseBody).result;
+
+    return standings;
   }
 
   @override
@@ -68,36 +85,65 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         'isHandelCCVerified': false,
         'isHandelCFVerified': false,
         'isHandelHEVerified': false,
+        'coins': 0,
+        'contest': 0,
+        'wins': 0,
       },
     );
   }
 
   @override
+  Future<void> updateCuratedContest(
+      CuratedContestModel curatedContestModel) async {
+    await FirebaseFirestore.instance
+        .collection('contests')
+        .doc(curatedContestModel.platformId)
+        .collection(curatedContestModel.parentContestId)
+        .doc(curatedContestModel.contestId)
+        .update(curatedContestModel.toMap());
+  }
+
+  @override
   Future<void> storeUserDetails(UserModel userModel) async {
-    await FirebaseFirestore.instance.collection('users').doc(userModel.uid).set(
-      {
-        'displayName': userModel.displayName,
-        'contactNumber': userModel.contactNumber,
-        'coins': userModel.coins,
-        'contest': userModel.contest,
-        'wins': userModel.wins,
-        'handleCF': userModel.handelCF,
-        'handleCC': userModel.handelCC,
-        'handelATC': userModel.handelATC,
-        'handelHE': userModel.handelHE,
-        'city': userModel.city,
-        'state': userModel.state,
-        'country': userModel.country,
-        'occupation': userModel.occupation,
-        'institution': userModel.institution,
-      },
-    );
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userModel.uid)
+        .set(userModel.toMap());
+    //   {
+    //     'displayName': userModel.displayName,
+    //     'contactNumber': userModel.contactNumber,
+    //     'coins': userModel.coins,
+    //     'contest': userModel.contest,
+    //     'wins': userModel.wins,
+    //     'handleCF': userModel.handelCF,
+    //     'handleCC': userModel.handelCC,
+    //     'handelATC': userModel.handelATC,
+    //     'handelHE': userModel.handelHE,
+    //     'city': userModel.city,
+    //     'state': userModel.state,
+    //     'country': userModel.country,
+    //     'occupation': userModel.occupation,
+    //     'institution': userModel.institution,
+    //   },
+    // );
   }
 
   @override
   Future<void> updateIsEmailVerified(String uid) async {
     await FirebaseFirestore.instance.collection('users').doc(uid).update(
       {'isEmailVerified': true},
+    );
+  }
+
+  @override
+  Future<void> updateIsHandleVerified(String uid, String platformId) async {
+    String value;
+    if (platformId == 'CF')
+      value = 'isHandelCFVerified';
+    else if (platformId == 'CC') value = 'isHandelCCVerified';
+
+    await FirebaseFirestore.instance.collection('users').doc(uid).update(
+      {value: true},
     );
   }
 
@@ -110,9 +156,8 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         .get()
         .then((value) {
       userModel = UserModel.fromMap(value.data());
-      print("value data: ${value.data()}");
     });
-    print(userModel);
+
     return userModel;
   }
 
@@ -120,8 +165,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   Future<List<CuratedContestModel>> fetchCuratedContest(
       String platformId, String contestId) async {
     List<CuratedContestModel> curatedContestModelList = [];
-    print(contestId);
-    print(platformId);
     await FirebaseFirestore.instance
         .collection('contests')
         .doc(platformId)
@@ -129,14 +172,12 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         .get()
         .then((value) {
       for (int i = 0; i < value.docs.length; i++) {
-        print(value.docs[i].data());
         CuratedContestModel model =
             CuratedContestModel.fromMap(value.docs[i].data());
         curatedContestModelList.add(model);
       }
     });
 
-    print("curated contest $curatedContestModelList");
     return curatedContestModelList;
   }
 
@@ -149,20 +190,13 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         .collection(curatedContestModel.parentContestId)
         .doc(curatedContestModel.contestId)
         .set(curatedContestModel.toMap());
-    // .add(curatedContestModel.toMap());
   }
 
-  Future<CFStandingsModel> getCFStandings(
-      List<String> handles, String contestId) async {
-    final responseBody =
-        await apiClient.get('contest.standings?contestId=$contestId&', params: {
-      'handles': handles,
-    });
-    print(responseBody);
-    CFStandingsModel standings =
-        CFStandingsListModel.fromJson(responseBody).result;
-    print(standings);
-
-    return standings;
+  @override
+  Future<void> updateUserModel(UserModel userModel) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userModel.uid)
+        .update(userModel.toMap());
   }
 }

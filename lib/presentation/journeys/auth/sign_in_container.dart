@@ -43,12 +43,11 @@ class _LogInContainerState extends State<LogInContainer> {
   // }
 
   void _submit(BuildContext context) {
-    print("Submit");
     if (!_formKey.currentState.validate()) {
       // Invalid!
       return;
     }
-    print("submit");
+
     _formKey.currentState.save();
     _onFormSubmitted(context);
     // _signIn();
@@ -67,7 +66,6 @@ class _LogInContainerState extends State<LogInContainer> {
   // }
 
   void _onFormSubmitted(BuildContext context) {
-    print("login event added");
     BlocProvider.of<SignInBloc>(context).add(
       SignInWithCredentialsPressedEvent(
         email: _authData['email'],

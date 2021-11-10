@@ -57,7 +57,8 @@ class PrizeBreakup extends StatelessWidget {
     Map<String, String> host = {
       'displayName': userModel.displayName,
       'uid': userModel.uid,
-      'email': userModel.email
+      'email': userModel.email,
+      'handelCF': userModel.handelCF,
     };
     participants.add(host);
 
@@ -89,7 +90,7 @@ class PrizeBreakup extends StatelessWidget {
                 backgroundColor: Colors.green,
               ),
             );
-
+          Navigator.pop(context);
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => CuratedContests(
@@ -270,9 +271,17 @@ class PrizeBreakup extends StatelessWidget {
                         participants: participants,
                       );
 
+                      UserModel newUserModel = userModel.copyWith(
+                        coins: userModel.coins - entryFees,
+                        contest: userModel.contest + 1,
+                      );
+
                       BlocProvider.of<CreateCuratedContestBloc>(context).add(
-                          CreateCuratedContestEventt(
-                              curatedContestModel: curatedContestModel));
+                        CreateCuratedContestEventt(
+                          curatedContestModel: curatedContestModel,
+                          userModel: newUserModel,
+                        ),
+                      );
                     },
                     color: Colors.green,
                     textColor: Colors.white,

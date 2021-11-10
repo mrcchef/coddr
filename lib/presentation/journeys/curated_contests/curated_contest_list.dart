@@ -1,6 +1,7 @@
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/domain/entities/curated_contest_model.dart';
+import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/journeys/curated_contests/curated_contest_card.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,8 @@ class CuratedContestList extends StatefulWidget {
   final DateTime startTime;
   final DateTime endtime;
   final String title;
+  final bool isPrivate;
+  final UserModel userModel;
 
   const CuratedContestList({
     Key key,
@@ -16,6 +19,8 @@ class CuratedContestList extends StatefulWidget {
     @required this.startTime,
     @required this.endtime,
     @required this.title,
+    @required this.isPrivate,
+    @required this.userModel,
   }) : super(key: key);
 
   @override
@@ -35,8 +40,10 @@ class _CuratedContestListState extends State<CuratedContestList> {
             child: CuratedContestCard(
               curatedContestModel: widget.curatedContest[index],
               startTime: widget.startTime,
-              endtime: widget.endtime,
+              endTime: widget.endtime,
               title: widget.title,
+              isPrivate: widget.isPrivate,
+              userModel: widget.userModel,
             ),
           );
         });
