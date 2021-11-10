@@ -170,7 +170,7 @@ class _CuratedContestsState extends State<CuratedContests> {
                     Spacer(),
                     RaisedButton(
                         onPressed: () {
-                          print(privateContest.length);
+                          //print(privateContest.length);
                           if (!widget.userModel.isHandelCFVerified)
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(

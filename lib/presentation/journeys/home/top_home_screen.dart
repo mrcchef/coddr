@@ -15,8 +15,8 @@ class TopHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('image URL' + imageUrl);
-    print(displayName);
+    //print('image URL' + imageUrl);
+    //print(displayName);
     return Container(
       height: Sizes.dimen_96.w,
       child: Row(

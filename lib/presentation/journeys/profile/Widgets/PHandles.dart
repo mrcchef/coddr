@@ -56,7 +56,7 @@ class PHandles extends StatelessWidget {
 
     Widget cfHandelTrailingWidget =
         (isHandelCFVerified) ? verifiedHandelButton : unVerifiedHandelButton;
-    print(isHandelCFVerified);
+    //print(isHandelCFVerified);
     return Padding(
         padding: const EdgeInsets.all(12.0),
         child: Container(

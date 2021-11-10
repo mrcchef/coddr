@@ -131,14 +131,14 @@ class ConfirmParticipation extends StatelessWidget {
                             List<Map<String, String>> participants =
                                 curatedContestModel.participants;
                             participants.add(hm);
-                            print("helloooo mister $participants");
+                            //print("helloooo mister $participants");
                             newUserModel = userModel.copyWith(
                               coins: userModel.coins -
                                   curatedContestModel.entryFees,
                               contest: userModel.contest + 1,
                             );
 
-                            print("newUserModel $newUserModel");
+                           // print("newUserModel $newUserModel");
 
                             newCuratedContestModel =
                                 curatedContestModel.copyWith(
