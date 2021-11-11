@@ -2,7 +2,6 @@ import 'package:coddr/presentation/blocs/handel_verification/handel_verification
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class PHandles extends StatelessWidget {
   final String handelCF, handelCC, handelHE, email, uid;
@@ -61,7 +60,7 @@ class PHandles extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Container(
           decoration: BoxDecoration(
-              color: HexColor('FDD9D9'),
+              color:Color(0xFFFDD9D9),
               borderRadius: BorderRadius.circular(30)),
           child: Column(
             children: [
@@ -87,7 +86,7 @@ class PHandles extends StatelessWidget {
                       "CodeForces",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: HexColor('0B2FB0')),
+                          color: Color(0xFF0B2FB0)),
                     ),
                     subtitle: Text(
                       handelCF,
@@ -102,7 +101,7 @@ class PHandles extends StatelessWidget {
                 title: Text(
                   "CodeChef",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: HexColor('0B2FB0')),
+                      fontWeight: FontWeight.bold, color: Color(0xFF0B2FB0)),
                 ),
                 subtitle: Text(
                   handelCC,
@@ -126,7 +125,7 @@ class PHandles extends StatelessWidget {
                 title: Text(
                   'HackerEarth',
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: HexColor('0B2FB0')),
+                      fontWeight: FontWeight.bold, color: Color(0xFF0B2FB)),
                 ),
                 subtitle: Text(
                   handelHE,

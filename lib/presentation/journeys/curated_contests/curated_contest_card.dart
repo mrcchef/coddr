@@ -5,7 +5,6 @@ import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/journeys/RankList/RankListPage.dart';
 import 'package:coddr/presentation/journeys/curated_contests/confirm_participation.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class CuratedContestCard extends StatefulWidget {
@@ -104,7 +103,7 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(Sizes.dimen_20.w),
-              color: HexColor('EED1D1')),
+              color: Color(0xFFEED1D1)),
           child: Column(
             children: [
               Padding(

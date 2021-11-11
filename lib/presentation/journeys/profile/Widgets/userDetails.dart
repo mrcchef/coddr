@@ -4,7 +4,6 @@ import 'package:coddr/presentation/blocs/send_verification_email/send_verificati
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 enum verificationState { initial, verified, verifying, notVerified }
 enum verificationEmailSentState { initial, sent, sending, failed }
@@ -77,7 +76,7 @@ class _UserDetailsState extends State<UserDetails> {
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
-                      color: HexColor('0B2FB0')),
+                      color: Color(0xFF0B2FB0)),
                 ),
                 subtitle: Text(
                   widget.displayName,
@@ -94,7 +93,7 @@ class _UserDetailsState extends State<UserDetails> {
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
-                      color: HexColor('0B2FB0')),
+                      color:Color(0xFF0B2FB0)),
                   textDirection: TextDirection.rtl,
                 ),
                 subtitle: Text(
@@ -113,7 +112,7 @@ class _UserDetailsState extends State<UserDetails> {
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
-                      color: HexColor('0B2FB0')),
+                      color: Color(0xFF0B2FB0)),
                 ),
                 subtitle: Text(
                   widget.email,

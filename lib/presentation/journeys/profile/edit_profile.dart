@@ -15,7 +15,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfile extends StatefulWidget {
@@ -224,7 +223,7 @@ class _EditProfileState extends State<EditProfile> {
                       Center(
                         child: RaisedButton(
                           onPressed: _saveForm,
-                          color: HexColor('#d91f2a'),
+                          color: Color(0xFFd91f2a),
                           child: Text(
                             'Save Changes',
                             style: TextStyle(color: Colors.white),
@@ -602,7 +601,7 @@ class _EditProfileState extends State<EditProfile> {
                 shape: BoxShape.circle,
                 border: Border.all(
                   width: 4.0,
-                  color: HexColor('#6f6434'),
+                  color: Color(0xFF6f6434),
                 ),
               ),
             ),
