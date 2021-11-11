@@ -88,6 +88,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         'coins': 100, // default coins
         'contest': 0,
         'wins': 0,
+        'isAdmin': false,
       },
     );
   }
