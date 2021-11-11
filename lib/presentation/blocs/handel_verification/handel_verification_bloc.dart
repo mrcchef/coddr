@@ -23,6 +23,7 @@ class HandelVerificationBloc
       HandelVerificationEvent event) async* {
     if (event is VerifyCFHandelEvent) {
       yield HandelVerificationLoading();
+      if (event.handel.isEmpty) yield HandelVerificationCFHandelEmpty();
       List<String> handels = [];
       UserEntity userEntity;
       handels.add(event.handel);
@@ -36,6 +37,8 @@ class HandelVerificationBloc
       if (isSuccessful == false)
         yield HandelVerificationFailed();
       else {
+        print(userEntity.email);
+        print(event.email);
         if (userEntity.email == null)
           yield HandelVerificationCFEmailPrivate();
         else if (userEntity.email == event.email) {
