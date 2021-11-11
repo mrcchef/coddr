@@ -4,6 +4,7 @@ import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
+import 'package:coddr/presentation/journeys/Rewards/rewards_page.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
 import 'package:coddr/presentation/journeys/profile/profile.dart';
 import 'package:coddr/presentation/widgets/drawer_list_tile.dart';
@@ -98,7 +99,9 @@ class _MainDrawerState extends State<MainDrawer> {
                   Navigator.of(context).popAndPushNamed(Profile.routeName);
                 }),
                 // DrawerListTile('Activity', Icons.timeline, () {}),
-                // DrawerListTile('Settings', Icons.settings, () {}),
+                 DrawerListTile('Rewards', Icons.settings, () {
+                   Navigator.push(context, MaterialPageRoute(builder: (context) => RewardsPage()));
+                 }),
                 DrawerListTile(
                     'About Us', Icons.sentiment_satisfied_alt_outlined, () {}),
                 DrawerListTile('Sign Out', Icons.logout, () {
