@@ -305,12 +305,12 @@ class _EditProfileState extends State<EditProfile> {
                       hintText: 'Enter Username',
                       hintStyle: TextStyle(fontSize: 14)),
                   style: TextStyle(color: Colors.black),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please Enter Name';
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (value.isEmpty) {
+                  //     return 'Please Enter Name';
+                  //   }
+                  //   return null;
+                  // },
                   controller: ccHandleController,
                   onSaved: (value) {
                     handelCC = value;

@@ -48,9 +48,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ScaffoldMessenger.of(context)
                   .showSnackBar(const SnackBar(content: Text('SignUp Falied')));
             } else if (state is SignUpStateVerifying) {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text(
-                      'Verify Email through the link sent to your email')));
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content:
+                    Text('Verify Email through the link sent to your email'),
+                backgroundColor: Theme.of(context).errorColor,
+              ));
             } else if (state is SignUpStateSuccess) {
               print("Entered signup consumer");
               Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
