@@ -2,7 +2,6 @@ import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/presentation/widgets/Loading.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class TopHomeScreen extends StatelessWidget {
   final String displayName;
@@ -84,7 +83,7 @@ class TopHomeScreen extends StatelessWidget {
                   shape: BoxShape.circle,
                   border: Border.all(
                     width: Sizes.dimen_1.w,
-                    color: HexColor('#6f6434'),
+                    color: Color(0xFF6f6434),
                   ),
                 ),
               ),

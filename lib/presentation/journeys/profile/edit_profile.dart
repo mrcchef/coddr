@@ -15,7 +15,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfile extends StatefulWidget {
@@ -74,6 +73,7 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController cityController = TextEditingController();
   TextEditingController stateController = TextEditingController();
   TextEditingController countryController = TextEditingController();
+  TextEditingController occupationController = TextEditingController();
   bool _isLoading = false;
   String prevImageUrl;
   String url;
@@ -85,7 +85,13 @@ class _EditProfileState extends State<EditProfile> {
       setState(() {
         _isLoading = false;
       });
-      print("INVALID");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Please fill the fields according to Rules"),
+          backgroundColor: Theme.of(context).errorColor,
+        ),
+      );
+      return;
     }
     try {
       _formkey.currentState.save();
@@ -195,6 +201,7 @@ class _EditProfileState extends State<EditProfile> {
           cityController.text = userModel.city;
           stateController.text = userModel.state;
           countryController.text = userModel.country;
+          occupationController.text = userModel.occupation;
           prevImageUrl = userModel.imageUrl;
           return (_isLoading == false)
               ? Form(
@@ -224,7 +231,7 @@ class _EditProfileState extends State<EditProfile> {
                       Center(
                         child: RaisedButton(
                           onPressed: _saveForm,
-                          color: HexColor('#d91f2a'),
+                          color: Color(0xFFd91f2a),
                           child: Text(
                             'Save Changes',
                             style: TextStyle(color: Colors.white),
@@ -270,12 +277,12 @@ class _EditProfileState extends State<EditProfile> {
                       hintStyle: TextStyle(fontSize: 14)),
                   style: TextStyle(color: Colors.black),
                   controller: cfHandleController,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please Enter Name';
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (value.isEmpty) {
+                  //     return 'Please Enter Name';
+                  //   }
+                  //   return null;
+                  // },
                   onSaved: (value) {
                     handelCF = value;
                   },
@@ -327,12 +334,12 @@ class _EditProfileState extends State<EditProfile> {
                       hintText: 'Enter Username',
                       hintStyle: TextStyle(fontSize: 14)),
                   style: TextStyle(color: Colors.black),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please Enter Name';
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (value.isEmpty) {
+                  //     return 'Please Enter Name';
+                  //   }
+                  //   return null;
+                  // },
                   controller: heHandleController,
                   onSaved: (value) {
                     handelHE = value;
@@ -374,12 +381,12 @@ class _EditProfileState extends State<EditProfile> {
                       hintStyle: TextStyle(fontSize: 14)),
                   style: TextStyle(color: Colors.black),
                   controller: cityController,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please Enter City';
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (value.isEmpty) {
+                  //     return 'Please Enter City';
+                  //   }
+                  //   return null;
+                  // },
                   onSaved: (value) {
                     city = value;
                   },
@@ -402,12 +409,12 @@ class _EditProfileState extends State<EditProfile> {
                       hintText: 'Enter State',
                       hintStyle: TextStyle(fontSize: 14)),
                   style: TextStyle(color: Colors.black),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please Enter State';
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (value.isEmpty) {
+                  //     return 'Please Enter State';
+                  //   }
+                  //   return null;
+                  // },
                   controller: stateController,
                   onSaved: (value) {
                     state = value;
@@ -431,12 +438,12 @@ class _EditProfileState extends State<EditProfile> {
                       hintText: 'Enter Country',
                       hintStyle: TextStyle(fontSize: 14)),
                   style: TextStyle(color: Colors.black),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please Enter Country';
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (value.isEmpty) {
+                  //     return 'Please Enter Country';
+                  //   }
+                  //   return null;
+                  // },
                   controller: countryController,
                   onSaved: (value) {
                     country = value;
@@ -505,7 +512,7 @@ class _EditProfileState extends State<EditProfile> {
               },
               onSaved: (value) {
                 contactNumber = value;
-               // print(contactNumber);
+                // print(contactNumber);
               },
             ),
           ),
@@ -522,12 +529,12 @@ class _EditProfileState extends State<EditProfile> {
             child: TextFormField(
               style: TextStyle(color: Colors.black),
               controller: institutecontroller,
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Please Enter Name';
-                }
-                return null;
-              },
+              // validator: (value) {
+              //   if (value.isEmpty) {
+              //     return 'Please Enter Name';
+              //   }
+              //   return null;
+              // },
               onSaved: (value) {
                 institution = value;
               },
@@ -536,42 +543,68 @@ class _EditProfileState extends State<EditProfile> {
           SizedBox(
             height: 33,
           ),
+          // Row(
+          //   children: [
+          //     Text('Student/Profession',
+          //         style: TextStyle(fontSize: 14, color: Colors.black)),
+          //     SizedBox(
+          //       width: 35,
+          //     ),
+          //     Container(
+          //       color: Colors.grey[300],
+          //       height: 30,
+          //       child: Padding(
+          //         padding: const EdgeInsets.all(4.0),
+          //         child: DropdownButtonHideUnderline(
+          //             child: DropdownButton(
+          //           focusColor: Colors.pink,
+          //           value: occupation,
+          //           dropdownColor: Colors.grey,
+          //           style: TextStyle(color: Colors.black, fontSize: 14),
+          //           icon: Icon(Icons.arrow_drop_down),
+          //           iconEnabledColor: Colors.black,
+          //           onChanged: (newvalue) {
+          //             setState(() {
+          //               //stpr = newvalue;
+          //               occupation = newvalue;
+          //             });
+          //           },
+          //           items: <String>['Student', 'Profession']
+          //               .map<DropdownMenuItem<String>>((String value) {
+          //             return DropdownMenuItem<String>(
+          //               value: value,
+          //               child: Text(value),
+          //             );
+          //           }).toList(),
+          //         )),
+          //       ),
+          //     )
+          //   ],
+          // ),
           Row(
             children: [
-              Text('Student/Profession',
-                  style: TextStyle(fontSize: 14, color: Colors.black)),
-              SizedBox(
-                width: 35,
-              ),
+              Text('Profession'),
+              Spacer(),
               Container(
-                color: Colors.grey[300],
-                height: 30,
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                    focusColor: Colors.pink,
-                    value: occupation,
-                    dropdownColor: Colors.grey,
-                    style: TextStyle(color: Colors.black, fontSize: 14),
-                    icon: Icon(Icons.arrow_drop_down),
-                    iconEnabledColor: Colors.black,
-                    onChanged: (newvalue) {
-                      setState(() {
-                        //stpr = newvalue;
-                        occupation = newvalue;
-                      });
-                    },
-                    items: <String>['Student', 'Profession']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  )),
+                height: 20,
+                width: 230,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                      hintText: 'Enter Profession',
+                      hintStyle: TextStyle(fontSize: 14)),
+                  style: TextStyle(color: Colors.black),
+                  // validator: (value) {
+                  //   if (value.isEmpty) {
+                  //     return 'Please Enter Name';
+                  //   }
+                  //   return null;
+                  // },
+                  controller: occupationController,
+                  onSaved: (value) {
+                    handelHE = value;
+                  },
                 ),
-              )
+              ),
             ],
           ),
           SizedBox(
@@ -602,7 +635,7 @@ class _EditProfileState extends State<EditProfile> {
                 shape: BoxShape.circle,
                 border: Border.all(
                   width: 4.0,
-                  color: HexColor('#6f6434'),
+                  color: Color(0xFF6f6434),
                 ),
               ),
             ),

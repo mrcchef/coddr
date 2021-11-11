@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class PUserAbout extends StatelessWidget {
   const PUserAbout({Key key}) : super(key: key);
@@ -11,7 +10,7 @@ class PUserAbout extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Container(
             decoration: BoxDecoration(
-                color: HexColor('FDE5D9'),
+                color: Color(0xFFFDE5D9),
                 borderRadius: BorderRadius.circular(30)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

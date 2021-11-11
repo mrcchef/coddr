@@ -1,7 +1,6 @@
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 
 class Plocation extends StatelessWidget {
@@ -21,7 +20,7 @@ class Plocation extends StatelessWidget {
         child: Container(
           height: Sizes.dimen_140.w,
           decoration: BoxDecoration(
-              color: HexColor('E1D9FE'),
+              color: Color(0xFFE1D9FE),
               borderRadius: BorderRadius.circular(30)),
           child: Row(
             children: [
@@ -43,7 +42,7 @@ class Plocation extends StatelessWidget {
                         'City',
                         style: TextStyle(
                             fontSize: 16,
-                            color: HexColor('861F3E'),
+                            color: Color(0xFF861F3E),
                             fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
@@ -58,7 +57,7 @@ class Plocation extends StatelessWidget {
                         'State',
                         style: TextStyle(
                             fontSize: 16,
-                            color: HexColor('861F3E'),
+                            color: Color(0xFF861F3E),
                             fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
@@ -73,7 +72,7 @@ class Plocation extends StatelessWidget {
                         'Country',
                         style: TextStyle(
                             fontSize: 16,
-                            color: HexColor('861F3E'),
+                            color: Color(0xFF861F3E),
                             fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
