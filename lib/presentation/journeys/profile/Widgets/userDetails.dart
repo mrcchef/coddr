@@ -48,16 +48,45 @@ class _UserDetailsState extends State<UserDetails> {
 
     if (widget.isEmailVerified) vstate = verificationState.verified;
 
-    return BlocBuilder<SendVerificationEmailBloc, SendVerificationEmailState>(
+    return BlocConsumer<SendVerificationEmailBloc, SendVerificationEmailState>(
+      listener: (context, state) {
+        if (state is SendVerificationEmailSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("Email successfully sent!"),
+            backgroundColor: Colors.green,
+          ));
+        } else if (state is SendVerificationEmailFailed) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("Email sending failed! Try again!"),
+            backgroundColor: Theme.of(context).errorColor,
+          ));
+        }
+      },
       builder: (context, state) {
         if (state is SendVerificationEmailLoading)
           vesstate = verificationEmailSentState.sending;
-        if (state is SendVerificationEmailSuccess)
+        if (state is SendVerificationEmailSuccess) {
           vesstate = verificationEmailSentState.sent;
+        }
         if (state is SendVerificationEmailFailed)
           vesstate = verificationEmailSentState.failed;
 
-        return BlocBuilder<EmailVerificationBloc, EmailVerificationState>(
+        return BlocConsumer<EmailVerificationBloc, EmailVerificationState>(
+          bloc: emailVerificationBloc,
+          listener: (context, state) {
+            if (state is EmailVerificationDone) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("Email Verification successful!"),
+                backgroundColor: Colors.green,
+              ));
+            }
+            if (state is EmailVerificationFailed) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("Email Verification Failed!"),
+                backgroundColor: Theme.of(context).errorColor,
+              ));
+            }
+          },
           builder: (context, state) {
             if (state is EmailVerificationLoading)
               vstate = verificationState.verifying;
@@ -67,9 +96,10 @@ class _UserDetailsState extends State<UserDetails> {
 
             if (state is EmailVerificationFailed)
               vstate = verificationState.notVerified;
+
             String verifyText = "verify";
             if (vstate == verificationState.verified) verifyText = "verified";
-
+            print(vstate);
             return Column(children: [
               ListTile(
                 title: Text(
@@ -170,7 +200,8 @@ class _UserDetailsState extends State<UserDetails> {
                         : Text("Send Verification"),
                   ),
                   TextButton(
-                    onPressed: vstate == verificationState.verifying
+                    onPressed: (vstate == verificationState.verifying ||
+                            vstate == verificationState.verified)
                         ? null
                         : () {
                             BlocProvider.of<EmailVerificationBloc>(context)
