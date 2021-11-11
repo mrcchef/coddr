@@ -60,7 +60,7 @@ class PHandles extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Container(
           decoration: BoxDecoration(
-              color:Color(0xFFFDD9D9),
+              color: Color(0xFFFDD9D9),
               borderRadius: BorderRadius.circular(30)),
           child: Column(
             children: [

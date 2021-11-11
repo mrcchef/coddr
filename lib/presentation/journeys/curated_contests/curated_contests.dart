@@ -158,7 +158,8 @@ class _CuratedContestsState extends State<CuratedContests> {
                               fontWeight: FontWeight.w600),
                         ),
                         Spacer(),
-                        RaisedButton(
+                        if (userModel.isAdmin)
+                          RaisedButton(
                             onPressed: () {
                               Navigator.of(context).pop();
                               Navigator.push(
@@ -185,7 +186,8 @@ class _CuratedContestsState extends State<CuratedContests> {
                             child: Text(
                               'Create Contest',
                               style: TextStyle(color: Colors.white),
-                            ))
+                            ),
+                          )
                       ],
                     ),
                   ),
