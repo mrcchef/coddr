@@ -85,7 +85,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         'isHandelCCVerified': false,
         'isHandelCFVerified': false,
         'isHandelHEVerified': false,
-        'coins': 0,
+        'coins': 100, // default coins
         'contest': 0,
         'wins': 0,
       },

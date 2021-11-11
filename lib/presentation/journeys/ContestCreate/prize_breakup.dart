@@ -96,7 +96,6 @@ class PrizeBreakup extends StatelessWidget {
               builder: (context) => CuratedContests(
                 constestId: parentContestId,
                 platformId: platformId,
-                userModel: userModel,
                 startTime: startTime,
                 endtime: endtime,
                 title: title,
@@ -257,6 +256,7 @@ class PrizeBreakup extends StatelessWidget {
                     onPressed: () {
                       CuratedContestModel curatedContestModel =
                           CuratedContestModel(
+                        contestName: contestName,
                         contestId: contestId,
                         entryFees: entryFees,
                         prize: prize,

@@ -121,12 +121,12 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
                     Column(
                       children: [
                         Text(
-                          'Contest Id',
+                          'Contest Name',
                           style: TextStyle(
                               color: Colors.indigo,
                               fontWeight: FontWeight.bold),
                         ),
-                        Text(widget.curatedContestModel.contestId),
+                        Text(widget.curatedContestModel.contestName),
                       ],
                     ),
                     Spacer(),
