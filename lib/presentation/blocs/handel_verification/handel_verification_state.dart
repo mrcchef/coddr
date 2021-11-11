@@ -15,5 +15,7 @@ class HandelVerificationCompleted extends HandelVerificationState {}
 
 class HandelVerificationCFEmailPrivate extends HandelVerificationState {}
 
+class HandelVerificationCFHandelEmpty extends HandelVerificationState {}
+
 class HandelVerificationFailed extends HandelVerificationState {}
 
