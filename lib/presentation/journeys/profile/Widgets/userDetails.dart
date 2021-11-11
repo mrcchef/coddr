@@ -1,6 +1,7 @@
 import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/presentation/blocs/email_verification/email_verification_bloc.dart';
 import 'package:coddr/presentation/blocs/send_verification_email/send_verification_email_bloc.dart';
+import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -74,9 +75,10 @@ class _UserDetailsState extends State<UserDetails> {
                 title: Text(
                   "Name",
                   style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF0B2FB0)),
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.deepBlue,
+                  ),
                 ),
                 subtitle: Text(
                   widget.displayName,
@@ -91,9 +93,10 @@ class _UserDetailsState extends State<UserDetails> {
                 title: Text(
                   "Contact",
                   style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color:Color(0xFF0B2FB0)),
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.deepBlue,
+                  ),
                   textDirection: TextDirection.rtl,
                 ),
                 subtitle: Text(
@@ -110,9 +113,10 @@ class _UserDetailsState extends State<UserDetails> {
                 title: Text(
                   "Email",
                   style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF0B2FB0)),
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.deepBlue,
+                  ),
                 ),
                 subtitle: Text(
                   widget.email,

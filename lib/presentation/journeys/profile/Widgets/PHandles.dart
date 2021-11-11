@@ -1,4 +1,5 @@
 import 'package:coddr/presentation/blocs/handel_verification/handel_verification_bloc.dart';
+import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -85,8 +86,9 @@ class PHandles extends StatelessWidget {
                     title: Text(
                       "CodeForces",
                       style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF0B2FB0)),
+                        fontWeight: FontWeight.bold,
+                        color: AppColor.deepBlue,
+                      ),
                     ),
                     subtitle: Text(
                       handelCF,
@@ -101,7 +103,9 @@ class PHandles extends StatelessWidget {
                 title: Text(
                   "CodeChef",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Color(0xFF0B2FB0)),
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.deepBlue,
+                  ),
                 ),
                 subtitle: Text(
                   handelCC,
@@ -125,7 +129,9 @@ class PHandles extends StatelessWidget {
                 title: Text(
                   'HackerEarth',
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Color(0xFF0B2FB)),
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.deepBlue,
+                  ),
                 ),
                 subtitle: Text(
                   handelHE,

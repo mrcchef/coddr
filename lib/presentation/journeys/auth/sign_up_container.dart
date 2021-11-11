@@ -154,21 +154,26 @@ class _SignUpContainerState extends State<SignUpContainer> {
               height: deviceSize.height * 0.07,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(Sizes.dimen_10),
-                child: ElevatedButton(
-                  onPressed: isLoading
-                      ? null
-                      : () {
-                          _submit(context);
-                        },
-                  child: isLoading
-                      ? Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : Text('Sign Up'),
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.orange.shade400),
-                  ),
+                child: BlocBuilder<SignUpBloc, SignUpState>(
+                  builder: (context, state) {
+                    if (state is SignUpStateLoding) isLoading = true;
+                    return ElevatedButton(
+                      onPressed: isLoading
+                          ? null
+                          : () {
+                              _submit(context);
+                            },
+                      child: isLoading
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : Text('Sign Up'),
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.orange.shade400),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
