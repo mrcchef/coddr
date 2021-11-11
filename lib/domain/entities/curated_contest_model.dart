@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class CuratedContestModel extends Equatable {
   final String contestId;
   final int entryFees;
+  final String contestName;
   final int prize;
   final int totalSpots;
   final int filledSpots;
@@ -30,6 +31,7 @@ class CuratedContestModel extends Equatable {
     @required this.positionToReward,
     @required this.positionToUsername,
     @required this.participants,
+    @required this.contestName,
   });
 
   CuratedContestModel copyWith({
@@ -45,6 +47,7 @@ class CuratedContestModel extends Equatable {
     Map<String, int> positionToReward,
     Map<String, String> positionToUsername,
     List<Map<String, String>> participants,
+    String contestName,
   }) {
     return CuratedContestModel(
       contestId: contestId ?? this.contestId,
@@ -59,6 +62,7 @@ class CuratedContestModel extends Equatable {
       positionToReward: positionToReward ?? this.positionToReward,
       positionToUsername: positionToUsername ?? this.positionToUsername,
       participants: participants ?? this.participants,
+      contestName: contestName ?? this.contestName,
     );
   }
 
@@ -76,6 +80,7 @@ class CuratedContestModel extends Equatable {
       'positionToReward': positionToReward,
       'positionToUsername': positionToUsername,
       'participants': participants,
+      'contestName': contestName,
     };
   }
 
@@ -101,6 +106,7 @@ class CuratedContestModel extends Equatable {
       positionToReward: Map<String, int>.from(map['positionToReward']),
       positionToUsername: Map<String, String>.from(map['positionToUsername']),
       participants: temp,
+      contestName: map['contestName'],
     );
   }
 
@@ -111,7 +117,7 @@ class CuratedContestModel extends Equatable {
 
   @override
   String toString() {
-    return 'CuratedContestModel(contestId: $contestId, entryFees: $entryFees, prize: $prize, totalSpots: $totalSpots, filledSpots: $filledSpots, isPrivate: $isPrivate, password: $password, parentContestId: $parentContestId, platformId: $platformId,participants:$participants)';
+    return 'CuratedContestModel(contestId: $contestId, entryFees: $entryFees, prize: $prize, totalSpots: $totalSpots, filledSpots: $filledSpots, isPrivate: $isPrivate, password: $password, parentContestId: $parentContestId, platformId: $platformId,participants:$participants,contestName:$contestName,)';
   }
 
   @override
@@ -130,7 +136,8 @@ class CuratedContestModel extends Equatable {
         other.platformId == platformId &&
         other.positionToReward == positionToReward &&
         other.positionToUsername == positionToUsername &&
-        other.participants == participants;
+        other.participants == participants &&
+        other.contestName == contestName;
   }
 
   @override
@@ -146,7 +153,8 @@ class CuratedContestModel extends Equatable {
         platformId.hashCode ^
         positionToReward.hashCode ^
         positionToUsername.hashCode ^
-        participants.hashCode;
+        participants.hashCode ^
+        contestName.hashCode;
   }
 
   @override

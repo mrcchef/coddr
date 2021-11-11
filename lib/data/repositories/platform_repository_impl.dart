@@ -176,4 +176,25 @@ class PlatformRepositoryImpl extends PlatformRepository {
       return Left(AppError(appErrorType: AppErrorType.firebase));
     }
   }
+
+  @override
+  Future<Either<AppError, void>> updateCuratedContest(
+      CuratedContestModel curatedContestModel) async {
+    try {
+      await remoteDataSourceImpl.updateCuratedContest(curatedContestModel);
+      return Right(null);
+    } on Exception {
+      return Left(AppError(appErrorType: AppErrorType.firebase));
+    }
+  }
+
+  @override
+  Future<Either<AppError, void>> updateUserModel(UserModel userModel) async {
+    try {
+      await remoteDataSourceImpl.updateUserModel(userModel);
+      return Right(null);
+    } on Exception {
+      return Left(AppError(appErrorType: AppErrorType.firebase));
+    }
+  }
 }

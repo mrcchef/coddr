@@ -9,6 +9,11 @@ abstract class CreateCuratedContestEvent extends Equatable {
 
 class CreateCuratedContestEventt extends CreateCuratedContestEvent {
   final CuratedContestModel curatedContestModel;
+  final UserModel userModel;
 
-  CreateCuratedContestEventt({@required this.curatedContestModel});
+  CreateCuratedContestEventt(
+      {@required this.curatedContestModel, @required this.userModel});
+
+  @override
+  List<Object> get props => [curatedContestModel, userModel];
 }

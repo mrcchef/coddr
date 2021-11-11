@@ -27,7 +27,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   Stream<SignUpState> mapEventToState(
     SignUpEvent event,
   ) async* {
-    print(event);
     if (event is SignUpWithCredentialsPressedEvent) {
       yield* _mapSignUpWithCredentialsPressedToState(
         email: event.email,
@@ -47,11 +46,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     VerifyEmail verifyEmail,
   }) async* {
     yield SignUpStateLoding();
-    print("sign up loading");
 
     final eitherResponse =
         await signUp(UserCredentials(email: email, password: password));
-    print(eitherResponse);
 
     final Map<String, String> authData = {
       'email': email,

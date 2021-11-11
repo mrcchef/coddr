@@ -3,14 +3,14 @@ import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/domain/entities/curated_contest_model.dart';
 import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/journeys/RankList/RankListPage.dart';
+import 'package:coddr/presentation/journeys/curated_contests/confirm_participation.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class CuratedContestCard extends StatefulWidget {
   final CuratedContestModel curatedContestModel;
   final DateTime startTime;
-  final DateTime endtime;
+  final DateTime endTime;
   final String title;
   final bool isPrivate;
   final UserModel userModel;
@@ -19,7 +19,7 @@ class CuratedContestCard extends StatefulWidget {
     Key key,
     @required this.curatedContestModel,
     @required this.startTime,
-    @required this.endtime,
+    @required this.endTime,
     @required this.title,
     @required this.isPrivate,
     @required this.userModel,
@@ -39,6 +39,7 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
     bool check = false;
     widget.curatedContestModel.participants.forEach((element) {
       if (element['email'] == widget.userModel.email) check = true;
+      //print(element['email']);
     });
     return check;
   }
@@ -56,13 +57,12 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
                     builder: (context) => RankListPage(
                       curatedContestModel: widget.curatedContestModel,
                       startTime: widget.startTime,
-                      endtime: widget.endtime,
+                      endTime: widget.endTime,
                       title: widget.title,
                     ),
                   ),
                 );
-
-              if (!widget.userModel.isHandelCFVerified)
+              else if (!widget.userModel.isHandelCFVerified)
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text("Codeforces Handle is not verfied!!"),
@@ -77,11 +77,25 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
                     backgroundColor: Colors.red,
                   ),
                 );
-              } else if (!widget.isPrivate) {
+              } else if (widget.curatedContestModel.totalSpots -
+                      widget.curatedContestModel.filledSpots ==
+                  0)
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Contest filled!!"),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              else {
                 // need a page for confirmation
-              } else {
-                // it's a private page
-                // need a page to enter password
+                Navigator.of(context).pop();
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ConfirmParticipation(
+                        userModel: widget.userModel,
+                        curatedContestModel: widget.curatedContestModel,
+                        startTime: widget.startTime,
+                        endTime: widget.endTime,
+                        title: widget.title)));
               }
             },
       child: Card(
@@ -89,7 +103,7 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(Sizes.dimen_20.w),
-              color: HexColor('EED1D1')),
+              color: Color(0xFFEED1D1)),
           child: Column(
             children: [
               Padding(
@@ -106,12 +120,12 @@ class _CuratedContestCardState extends State<CuratedContestCard> {
                     Column(
                       children: [
                         Text(
-                          'Contest Id',
+                          'Contest Name',
                           style: TextStyle(
                               color: Colors.indigo,
                               fontWeight: FontWeight.bold),
                         ),
-                        Text(widget.curatedContestModel.contestId),
+                        Text(widget.curatedContestModel.contestName),
                       ],
                     ),
                     Spacer(),

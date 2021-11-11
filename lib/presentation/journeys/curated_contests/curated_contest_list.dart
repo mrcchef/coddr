@@ -40,7 +40,7 @@ class _CuratedContestListState extends State<CuratedContestList> {
             child: CuratedContestCard(
               curatedContestModel: widget.curatedContest[index],
               startTime: widget.startTime,
-              endtime: widget.endtime,
+              endTime: widget.endtime,
               title: widget.title,
               isPrivate: widget.isPrivate,
               userModel: widget.userModel,

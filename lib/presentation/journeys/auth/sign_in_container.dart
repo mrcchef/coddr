@@ -11,6 +11,7 @@ class LogInContainer extends StatefulWidget {
 }
 
 class _LogInContainerState extends State<LogInContainer> {
+  bool isLoading = false;
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   Map<String, String> _authData = {
@@ -43,12 +44,12 @@ class _LogInContainerState extends State<LogInContainer> {
   // }
 
   void _submit(BuildContext context) {
-    print("Submit");
+
     if (!_formKey.currentState.validate()) {
       // Invalid!
       return;
     }
-    print("submit");
+
     _formKey.currentState.save();
     _onFormSubmitted(context);
     // _signIn();
@@ -67,7 +68,6 @@ class _LogInContainerState extends State<LogInContainer> {
   // }
 
   void _onFormSubmitted(BuildContext context) {
-    print("login event added");
     BlocProvider.of<SignInBloc>(context).add(
       SignInWithCredentialsPressedEvent(
         email: _authData['email'],
@@ -78,7 +78,6 @@ class _LogInContainerState extends State<LogInContainer> {
 
   @override
   Widget build(BuildContext context) {
-    bool isLoading = false;
     final deviceSize = MediaQuery.of(context).size;
     return Form(
       key: _formKey,
@@ -152,22 +151,30 @@ class _LogInContainerState extends State<LogInContainer> {
             ),
           ),
           Center(
-            child: Container(
-              width: deviceSize.width * 0.7,
-              height: deviceSize.height * 0.07,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(Sizes.dimen_10),
-                child: ElevatedButton(
-                  onPressed: isLoading ? null : () => _submit(context),
-                  child: isLoading
-                      ? Center(child: CircularProgressIndicator())
-                      : Text('Sign In'),
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.orange.shade400),
+            child: BlocBuilder<SignInBloc, SignInState>(
+              builder: (context, state) {
+                if (state is SignInStateLoding) {
+                  isLoading = true;
+                } else
+                  isLoading = false;
+                return Container(
+                  width: deviceSize.width * 0.7,
+                  height: deviceSize.height * 0.07,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(Sizes.dimen_10),
+                    child: ElevatedButton(
+                      onPressed: isLoading ? null : () => _submit(context),
+                      child: isLoading
+                          ? Center(child: CircularProgressIndicator())
+                          : Text('Sign In'),
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.orange.shade400),
+                      ),
+                    ),
                   ),
-                ),
-              ),
+                );
+              },
             ),
           ),
         ],

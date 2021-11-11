@@ -122,7 +122,6 @@ class _UpcomingContestsScreenState extends State<UpcomingContestsScreen> {
                       child: CircularProgressIndicator(
                         color: Colors.red,
                         backgroundColor: Colors.green,
-
                       ),
                     );
                   else if (state is ContestListFetchedState) {
@@ -151,7 +150,6 @@ class _UpcomingContestsScreenState extends State<UpcomingContestsScreen> {
                             contestId: upcomingContestList[index].id,
                             platformId:
                                 upcomingContestList[index].platformHandle,
-                            userModel: userModel,
                             startTime: startTime,
                             endtime: endTime,
                           );

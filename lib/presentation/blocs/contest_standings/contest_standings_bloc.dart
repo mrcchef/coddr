@@ -22,7 +22,6 @@ class ContestStandingsBloc
       final eitherList = await getCFStandings(event.getCFStandingsArguments);
       yield eitherList.fold((appError) => ContestStandingsFailed(),
           (contestStandings) {
-        print(contestStandings);
         return ContestStandingsFetched(
           cfStandings: contestStandings,
         );

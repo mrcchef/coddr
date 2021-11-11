@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class PHistory extends StatelessWidget {
   final int coins;
@@ -20,7 +19,7 @@ class PHistory extends StatelessWidget {
       child: Container(
         height: 200,
         decoration: BoxDecoration(
-            color: HexColor('D8FFCE'), borderRadius: BorderRadius.circular(30)),
+            color: Color(0xFFD8FFCE), borderRadius: BorderRadius.circular(30)),
         child: Column(
           children: [
             Padding(

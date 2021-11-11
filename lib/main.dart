@@ -9,6 +9,7 @@ import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
 import 'package:coddr/presentation/blocs/send_verification_email/send_verification_email_bloc.dart';
 import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
 import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
+import 'package:coddr/presentation/blocs/update_curated_contest/update_curated_contest_bloc.dart';
 import 'package:coddr/presentation/journeys/RankList/codeforces_website.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
 import 'package:coddr/presentation/journeys/auth/sign_up_screen.dart';
@@ -48,6 +49,7 @@ class _MyAppState extends State<MyApp> {
   ContestStandingsBloc _contestStandingsBloc;
   CuratedContestBloc _curatedContestBloc;
   CreateCuratedContestBloc _createCuratedContestBloc;
+  UpdateCuratedContestBloc _updateCuratedContestBloc;
 
   @override
   void initState() {
@@ -64,6 +66,8 @@ class _MyAppState extends State<MyApp> {
     _curatedContestBloc = get_it.getItInstance<CuratedContestBloc>();
     _createCuratedContestBloc =
         get_it.getItInstance<CreateCuratedContestBloc>();
+    _updateCuratedContestBloc =
+        get_it.getItInstance<UpdateCuratedContestBloc>();
     super.initState();
   }
 
@@ -81,6 +85,7 @@ class _MyAppState extends State<MyApp> {
     _contestStandingsBloc.close();
     _curatedContestBloc.close();
     _createCuratedContestBloc.close();
+    _updateCuratedContestBloc.close();
   }
 
   @override
@@ -111,6 +116,8 @@ class _MyAppState extends State<MyApp> {
             create: (context) => _curatedContestBloc),
         BlocProvider<CreateCuratedContestBloc>(
             create: (context) => _createCuratedContestBloc),
+        BlocProvider<UpdateCuratedContestBloc>(
+            create: (context) => _updateCuratedContestBloc),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -126,7 +133,7 @@ class _MyAppState extends State<MyApp> {
                 print("AppStarted");
                 return SplashScreen();
               } else if (state is Authenticated) {
-                print(state.email);
+               // print(state.email);
                 print("State is Authenticated");
                 return HomeScreen();
               } else {

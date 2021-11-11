@@ -1,6 +1,5 @@
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
-import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/journeys/curated_contests/curated_contests.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +10,6 @@ class ContestCard extends StatelessWidget {
   final String date;
   final int contestId;
   final String platformId;
-  final UserModel userModel;
   final DateTime startTime;
   final DateTime endtime;
 
@@ -22,7 +20,6 @@ class ContestCard extends StatelessWidget {
     @required this.date,
     @required this.contestId,
     @required this.platformId,
-    @required this.userModel,
     @required this.startTime,
     @required this.endtime,
   });
@@ -30,12 +27,12 @@ class ContestCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       //Navigator.push(context, MaterialPageRoute(builder: (context)=>CartPage()));
-      onTap: () => Navigator.push(context,
+      onTap: () => Navigator.push(
+        context,
         MaterialPageRoute(
           builder: (context) => CuratedContests(
             constestId: contestId,
             platformId: platformId,
-            userModel: userModel,
             startTime: startTime,
             endtime: endtime,
             title: title,

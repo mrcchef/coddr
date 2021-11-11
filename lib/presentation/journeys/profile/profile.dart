@@ -67,7 +67,6 @@ class _ProfileState extends State<Profile> {
         ),
         child: InkWell(
           onTap: () {
-            print("edit button pressed");
             Navigator.of(context).popAndPushNamed(EditProfile.routeName);
           },
           child: Row(
@@ -130,8 +129,6 @@ class _ProfileState extends State<Profile> {
 
           final curState = (state as ProfileLoaded);
           UserModel userModel = curState.userModel;
-          print(userModel.contactNumber);
-          print(userModel.handelCC);
           return ListView(
             padding: EdgeInsets.only(top: 0),
             children: [

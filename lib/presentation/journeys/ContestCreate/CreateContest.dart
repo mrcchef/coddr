@@ -85,7 +85,6 @@ class _CreateContestState extends State<CreateContest> {
                             Sizes.dimen_10.w,
                             Sizes.dimen_20.w,
                             Sizes.dimen_10.w),
-                        // fillColor: Colors.red
                       ),
                       validator: (value) {
                         if (value.isEmpty) {
@@ -175,6 +174,10 @@ class _CreateContestState extends State<CreateContest> {
                         if (value.isEmpty) {
                           return 'Please Enter Fees';
                         }
+
+                        if (int.parse(value) > widget.userModel.coins) {
+                          return 'Insufficent coins';
+                        }
                         if (maxPrizePool < getPoolPrize())
                           return 'Pool prize exceeds max pool prize';
                         return null;
@@ -226,6 +229,7 @@ class _CreateContestState extends State<CreateContest> {
                         style: TextStyle(fontSize: Sizes.dimen_24.w)),
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
+                        Navigator.pop(context);
                         Navigator.push(
                           context,
                           MaterialPageRoute(

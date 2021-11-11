@@ -10,16 +10,14 @@ class APIClient {
 
   Future<dynamic> get(String path, {Map<String, dynamic> params}) async {
     final String url = getPath(path, params: params);
-    print(url);
+    //print(url);
     final response = await _client.get(
       Uri.parse(url),
       headers: {'Content-Type': 'application/json'},
     );
-    print(response.statusCode);
-    print(response);
+
     if (response.statusCode == 200) {
       final responseBody = json.decode(response.body);
-      print(responseBody);
       return responseBody;
     } else
       return Exception(response.reasonPhrase);

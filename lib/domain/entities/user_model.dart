@@ -26,6 +26,7 @@ class UserModel extends Equatable {
   final bool isHandelCCVerified;
   final bool isHandelATCVerified;
   final bool isHandelHEVerified;
+  final bool isAdmin;
 
   UserModel({
     this.isEmailVerified = false,
@@ -50,11 +51,12 @@ class UserModel extends Equatable {
     this.country,
     this.occupation,
     this.institution,
+    this.isAdmin,
   });
 
   @override
   List<Object> get props {
-    return [displayName, email, isHandelCFVerified, handelCF];
+    return [displayName, email, isHandelCFVerified, handelCF, isAdmin];
   }
 
   UserModel copyWith({
@@ -80,6 +82,7 @@ class UserModel extends Equatable {
     bool isHandelCCVerified,
     bool isHandelATCVerified,
     bool isHandelHEVerified,
+    bool isAdmin,
   }) {
     return UserModel(
       imageUrl: imageUrl ?? this.imageUrl,
@@ -104,6 +107,7 @@ class UserModel extends Equatable {
       isHandelCCVerified: isHandelCCVerified ?? this.isHandelCCVerified,
       isHandelCFVerified: isHandelCFVerified ?? this.isHandelCFVerified,
       isHandelHEVerified: isHandelHEVerified ?? this.isHandelHEVerified,
+      isAdmin: isAdmin ?? this.isAdmin,
     );
   }
 
@@ -131,6 +135,7 @@ class UserModel extends Equatable {
       'isHandelCCVerified': isHandelCCVerified,
       'isHandelCFVerified': isHandelCFVerified,
       'isHandelHEVerified': isHandelHEVerified,
+      'isAdmin': isAdmin,
     };
   }
 
@@ -158,6 +163,7 @@ class UserModel extends Equatable {
       isHandelCCVerified: map['isHandelCCVerified'],
       isHandelCFVerified: map['isHandelCFVerified'],
       isHandelHEVerified: map['isHandelHEVerified'],
+      isAdmin: map['isAdmin'],
     );
   }
 
