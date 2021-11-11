@@ -12,7 +12,7 @@ class RewardsVouchers extends StatelessWidget {
         crossAxisCount: 2,
         crossAxisSpacing: Sizes.dimen_6.w,
         mainAxisSpacing: Sizes.dimen_6.w,
-        // mainAxisExtent: 199
+         mainAxisExtent: Sizes.dimen_200.w,
       ),
       shrinkWrap: true,
       children: [
