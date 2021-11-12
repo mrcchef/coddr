@@ -3,8 +3,11 @@ import 'package:coddr/data/core/api_client.dart';
 import 'package:coddr/data/data_sources/authentication_data_source.dart';
 import 'package:coddr/data/data_sources/remote_data_source.dart';
 import 'package:coddr/data/repositories/platform_repository_impl.dart';
+import 'package:coddr/domain/repositories/platform_repository.dart';
 import 'package:coddr/domain/usecases/create_curated_contest.dart';
 import 'package:coddr/domain/usecases/fetch_curated_contest.dart';
+import 'package:coddr/domain/usecases/fetch_curated_contest_list.dart';
+import 'package:coddr/domain/usecases/fetch_participated_contests.dart';
 import 'package:coddr/domain/usecases/fetch_user_detail.dart';
 import 'package:coddr/domain/usecases/get_cf_contest_list.dart';
 import 'package:coddr/domain/usecases/get_cf_standings.dart';
@@ -19,6 +22,7 @@ import 'package:coddr/domain/usecases/store_user_credentials.dart';
 import 'package:coddr/domain/usecases/update_curated_contest.dart';
 import 'package:coddr/domain/usecases/update_is_Handle_verified.dart';
 import 'package:coddr/domain/usecases/update_is_email_verified.dart';
+import 'package:coddr/domain/usecases/update_participated_contests.dart';
 import 'package:coddr/domain/usecases/update_user_model.dart';
 import 'package:coddr/domain/usecases/verify_email.dart';
 import 'package:coddr/presentation/blocs/authentication/authentication_bloc.dart';
@@ -28,6 +32,7 @@ import 'package:coddr/presentation/blocs/create_curated_contest/create_curated_c
 import 'package:coddr/presentation/blocs/curated_contest/curated_contest_bloc.dart';
 import 'package:coddr/presentation/blocs/email_verification/email_verification_bloc.dart';
 import 'package:coddr/presentation/blocs/handel_verification/handel_verification_bloc.dart';
+import 'package:coddr/presentation/blocs/participated_contest/participated_contest_bloc.dart';
 import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
 import 'package:coddr/presentation/blocs/send_verification_email/send_verification_email_bloc.dart';
 import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
@@ -50,19 +55,19 @@ Future init() async {
       .registerLazySingleton<APIClient>(() => APIClient(getItInstance()));
 
   getItInstance
-      .registerLazySingleton<RemoteDataSourceImpl>(() => RemoteDataSourceImpl(
+      .registerLazySingleton<RemoteDataSource>(() => RemoteDataSourceImpl(
             apiClient: getItInstance(),
             firebaseFirestore: firebaseFirestore,
-            authenticationDataSourceImpl: getItInstance(),
+            authenticationDataSource: getItInstance(),
           ));
 
-  getItInstance.registerLazySingleton(
+  getItInstance.registerLazySingleton<AuthenticationDataSource>(
       () => AuthenticationDataSourceImpl(firebaseAuth: firebaseAuth));
 
-  getItInstance.registerLazySingleton<PlatformRepositoryImpl>(() =>
+  getItInstance.registerLazySingleton<PlatformRepository>(() =>
       PlatformRepositoryImpl(
-          remoteDataSourceImpl: getItInstance(),
-          authenticationDataSourceImpl: getItInstance()));
+          remoteDataSource: getItInstance(),
+          authenticationDataSource: getItInstance()));
 
   getItInstance.registerLazySingleton<HomeScreen>(() => HomeScreen());
 
@@ -79,24 +84,27 @@ Future init() async {
       () => GetCFStandings(platformRepository: getItInstance()));
 
   getItInstance
-      .registerFactory<CreateCuratedContest>(() => CreateCuratedContest(
+      .registerLazySingleton<CreateCuratedContest>(() => CreateCuratedContest(
             platformRepository: getItInstance(),
           ));
 
-  getItInstance.registerLazySingleton<FetchCuratedContest>(
-      () => FetchCuratedContest(platformRepository: getItInstance()));
+  getItInstance.registerLazySingleton<FetchCuratedContestList>(
+      () => FetchCuratedContestList(platformRepository: getItInstance()));
 
   getItInstance.registerLazySingleton<GetEmailId>(
-      () => GetEmailId(platformRepositoryImpl: getItInstance()));
+      () => GetEmailId(platformRepository: getItInstance()));
 
   getItInstance.registerLazySingleton<IsSignedIn>(
-      () => IsSignedIn(platformRepositoryImpl: getItInstance()));
+      () => IsSignedIn(platformRepository: getItInstance()));
 
   getItInstance.registerLazySingleton<IsEmailVerified>(
-      () => IsEmailVerified(platformRepositoryImpl: getItInstance()));
+      () => IsEmailVerified(platformRepository: getItInstance()));
 
   getItInstance.registerLazySingleton<UpdateIsHandleVerified>(
-      () => UpdateIsHandleVerified(platformRepositoryImpl: getItInstance()));
+      () => UpdateIsHandleVerified(platformRepository: getItInstance()));
+
+  getItInstance.registerLazySingleton<UpdateParticipatedContests>(
+      () => UpdateParticipatedContests(platformRepository: getItInstance()));
 
   getItInstance.registerLazySingleton<UpdateUserModel>(
       () => UpdateUserModel(platformRepository: getItInstance()));
@@ -104,37 +112,44 @@ Future init() async {
   getItInstance.registerLazySingleton<UpdateCuratedContest>(
       () => UpdateCuratedContest(platformRepository: getItInstance()));
 
+  getItInstance.registerLazySingleton<FetchCuratedContest>(
+      () => FetchCuratedContest(platformRepository: getItInstance()));
+
+  getItInstance.registerLazySingleton<FetchParticipatedContests>(
+      () => FetchParticipatedContests(platformRepository: getItInstance()));
+
   getItInstance.registerLazySingleton<SignIn>(
-      () => SignIn(platformRepositoryImpl: getItInstance()));
+      () => SignIn(platformRepository: getItInstance()));
 
   getItInstance.registerLazySingleton<UpdateIsEmailVerified>(
-      () => UpdateIsEmailVerified(platformRepositoryImpl: getItInstance()));
+      () => UpdateIsEmailVerified(platformRepository: getItInstance()));
 
   getItInstance.registerLazySingleton<SignOut>(
-      () => SignOut(platformRepositoryImpl: getItInstance()));
+      () => SignOut(platformRepository: getItInstance()));
 
   getItInstance.registerLazySingleton<SignUp>(
-      () => SignUp(platformRepositoryImpl: getItInstance()));
+      () => SignUp(platformRepository: getItInstance()));
 
   getItInstance.registerLazySingleton<VerifyEmail>(
-      () => VerifyEmail(platformRepositoryImpl: getItInstance()));
+      () => VerifyEmail(platformRepository: getItInstance()));
 
   getItInstance.registerFactory<ContestListingBloc>(
       () => ContestListingBloc(getCFContestList: getItInstance()));
 
-  getItInstance.registerLazySingleton<EmailVerificationBloc>(() =>
+  getItInstance.registerFactory<EmailVerificationBloc>(() =>
       EmailVerificationBloc(
           isEmailVerified: getItInstance(),
           updateIsEmailVerified: getItInstance()));
 
-  getItInstance.registerLazySingleton<SendVerificationEmailBloc>(
+  getItInstance.registerFactory<SendVerificationEmailBloc>(
       () => SendVerificationEmailBloc(
             verifyEmail: getItInstance(),
           ));
-  getItInstance.registerLazySingleton<UpdateCuratedContestBloc>(
-      () => UpdateCuratedContestBloc(
+  getItInstance
+      .registerFactory<UpdateCuratedContestBloc>(() => UpdateCuratedContestBloc(
             updateCuratedContest: getItInstance(),
             updateUserModel: getItInstance(),
+            updateParticipatedContests: getItInstance(),
           ));
 
   getItInstance.registerFactory<ProfileBloc>(
@@ -144,8 +159,8 @@ Future init() async {
       HandelVerificationBloc(
           getCFUser: getItInstance(), updateIsHandleVerified: getItInstance()));
 
-  getItInstance.registerLazySingleton<StoreUserCredentials>(
-      () => StoreUserCredentials(platformRepositoryImpl: getItInstance()));
+  getItInstance.registerFactory<StoreUserCredentials>(
+      () => StoreUserCredentials(platformRepository: getItInstance()));
 
   // getItInstance.registerFactory(() => AuthenticationBloc(
   //       getEmailId: getItInstance(),
@@ -153,11 +168,18 @@ Future init() async {
   //       signOut: getItInstance(),
   //     ));
 
-  getItInstance.registerSingleton<AuthenticationBloc>(AuthenticationBloc(
-    getEmailId: getItInstance(),
-    isSignedIn: getItInstance(),
-    signOut: getItInstance(),
-  ));
+  // getItInstance.registerSingleton<AuthenticationBloc>(AuthenticationBloc(
+  //   getEmailId: getItInstance(),
+  //   isSignedIn: getItInstance(),
+  //   signOut: getItInstance(),
+  // ));
+
+  getItInstance
+      .registerLazySingleton<AuthenticationBloc>(() => AuthenticationBloc(
+            getEmailId: getItInstance(),
+            isSignedIn: getItInstance(),
+            signOut: getItInstance(),
+          ));
 
   // getItInstance.registerSingleton<SignInBloc>(SignInBloc(
   //   signIn: getItInstance(),
@@ -172,13 +194,20 @@ Future init() async {
             getCFStandings: getItInstance(),
           ));
   getItInstance.registerFactory<CuratedContestBloc>(() => CuratedContestBloc(
-        fetchCuratedContest: getItInstance(),
+        fetchCuratedContestList: getItInstance(),
       ));
 
   getItInstance
       .registerFactory<CreateCuratedContestBloc>(() => CreateCuratedContestBloc(
             createCuratedContest: getItInstance(),
             updateUserModel: getItInstance(),
+            updateParticipatedContests: getItInstance(),
+          ));
+
+  getItInstance
+      .registerFactory<ParticipatedContestBloc>(() => ParticipatedContestBloc(
+            fetchCuratedContest: getItInstance(),
+            fetchParticipatedContests: getItInstance(),
           ));
 
   // getItInstance.registerSingleton<SignUpBloc>(SignUpBloc(

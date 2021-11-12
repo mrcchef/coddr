@@ -8,6 +8,8 @@ abstract class AuthenticationDataSource {
   String getEmailId();
   String getUid();
   Future<void> signUpWithCredentials(String email, String password);
+  Future<void> verifyEmail();
+  Future<bool> isEmailVerified();
 }
 
 class AuthenticationDataSourceImpl extends AuthenticationDataSource {
@@ -54,10 +56,12 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
     return firebaseAuth.currentUser.email;
   }
 
+  @override
   Future<void> verifyEmail() async {
     await firebaseAuth.currentUser.sendEmailVerification();
   }
 
+  @override
   Future<bool> isEmailVerified() async {
     await firebaseAuth.currentUser.reload();
     return firebaseAuth.currentUser.emailVerified;

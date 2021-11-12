@@ -2,6 +2,7 @@ import 'package:coddr/domain/entities/app_error.dart';
 import 'package:coddr/domain/entities/cf_standings_entity.dart';
 import 'package:coddr/domain/entities/contest_entity.dart';
 import 'package:coddr/domain/entities/curated_contest_model.dart';
+import 'package:coddr/domain/entities/participated_contest.dart';
 import 'package:coddr/domain/entities/user_entity.dart';
 import 'package:coddr/domain/entities/user_model.dart';
 import 'package:dartz/dartz.dart';
@@ -32,7 +33,7 @@ abstract class PlatformRepository {
 
   Future<Either<AppError, void>> updateIsEmailVerified(String uid);
 
-  Future<Either<AppError, List<CuratedContestModel>>> fetchCuratedContest(
+  Future<Either<AppError, List<CuratedContestModel>>> fetchCuratedContestList(
       String platformId, String contestId);
 
   Future<Either<AppError, void>> createCuratedContest(
@@ -46,4 +47,13 @@ abstract class PlatformRepository {
       CuratedContestModel curatedContestModel);
 
   Future<Either<AppError, void>> updateUserModel(UserModel userModel);
+
+  Future<Either<AppError, List<ParticipatedContestModel>>>
+      fetchParticipatedContests(String uid);
+
+  Future<Either<AppError, CuratedContestModel>> fetchCuratedContest(
+      ParticipatedContestModel participatedContestModel);
+
+  Future<Either<AppError, bool>> updateParticipatedContests(
+      String uid, ParticipatedContestModel participatedContestModel);
 }

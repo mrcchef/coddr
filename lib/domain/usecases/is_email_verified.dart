@@ -1,12 +1,12 @@
-import 'package:coddr/data/repositories/platform_repository_impl.dart';
+import 'package:coddr/domain/repositories/platform_repository.dart';
 import 'package:flutter/cupertino.dart';
 
 class IsEmailVerified {
-  PlatformRepositoryImpl platformRepositoryImpl;
+  PlatformRepository platformRepository;
 
-  IsEmailVerified({@required this.platformRepositoryImpl});
+  IsEmailVerified({@required this.platformRepository});
 
   Future<bool> call() {
-    return platformRepositoryImpl.isEmailVerified();
+    return platformRepository.isEmailVerified();
   }
 }

@@ -1,12 +1,12 @@
-import 'package:coddr/data/repositories/platform_repository_impl.dart';
+import 'package:coddr/domain/repositories/platform_repository.dart';
 import 'package:flutter/cupertino.dart';
 
 class IsSignedIn {
-  PlatformRepositoryImpl platformRepositoryImpl;
+  PlatformRepository platformRepository;
 
-  IsSignedIn({@required this.platformRepositoryImpl});
+  IsSignedIn({@required this.platformRepository});
 
   bool call() {
-    return platformRepositoryImpl.isSignedIn();
+    return platformRepository.isSignedIn();
   }
 }

@@ -5,6 +5,7 @@ import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
+import 'package:coddr/presentation/journeys/participated_contest/participated_contest_screen.dart';
 import 'package:coddr/presentation/journeys/profile/profile.dart';
 import 'package:coddr/presentation/widgets/drawer_list_tile.dart';
 import 'package:flutter/material.dart';
@@ -97,7 +98,13 @@ class _MainDrawerState extends State<MainDrawer> {
                 DrawerListTile('Profile', Icons.person_outline_outlined, () {
                   Navigator.of(context).popAndPushNamed(Profile.routeName);
                 }),
-                // DrawerListTile('Activity', Icons.timeline, () {}),
+
+                DrawerListTile('Participated Contests', Icons.timeline, () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          ParticipatedContestScreen(uid: userModel.uid)));
+                }),
                 // DrawerListTile('Settings', Icons.settings, () {}),
                 DrawerListTile(
                     'About Us', Icons.sentiment_satisfied_alt_outlined, () {}),

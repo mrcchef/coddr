@@ -1,12 +1,12 @@
-import 'package:coddr/data/repositories/platform_repository_impl.dart';
+import 'package:coddr/domain/repositories/platform_repository.dart';
 import 'package:flutter/cupertino.dart';
 
 class GetEmailId {
-  PlatformRepositoryImpl platformRepositoryImpl;
+  PlatformRepository platformRepository;
 
-  GetEmailId({@required this.platformRepositoryImpl});
+  GetEmailId({@required this.platformRepository});
 
   String call() {
-    return platformRepositoryImpl.getEmailId();
+    return platformRepository.getEmailId();
   }
 }

@@ -8,6 +8,7 @@ import 'package:coddr/data/model/cf_standings_model.dart';
 import 'package:coddr/data/model/cf_user_list_model.dart';
 import 'package:coddr/data/model/cf_user_model.dart';
 import 'package:coddr/domain/entities/curated_contest_model.dart';
+import 'package:coddr/domain/entities/participated_contest.dart';
 import 'package:coddr/domain/entities/user_model.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -18,7 +19,7 @@ abstract class RemoteDataSource {
   Future<UserModel> fetchUserDetails(String uid);
   Future<void> storeUserDetails(UserModel userModel);
   Future<void> updateIsEmailVerified(String uid);
-  Future<List<CuratedContestModel>> fetchCuratedContest(
+  Future<List<CuratedContestModel>> fetchCuratedContestList(
       String platformId, String contestId);
   Future<void> createCuratedContest(CuratedContestModel curatedContestModel);
   Future<CFStandingsModel> getCFStandings(
@@ -26,17 +27,22 @@ abstract class RemoteDataSource {
   Future<void> updateIsHandleVerified(String uid, String platformId);
   Future<void> updateCuratedContest(CuratedContestModel curatedContestModel);
   Future<void> updateUserModel(UserModel userModel);
+  Future<List<ParticipatedContestModel>> fetchParticipatedContests(String uid);
+  Future<CuratedContestModel> fetchCuratedContest(
+      ParticipatedContestModel participatedContest);
+  Future<void> updateParticipatedContests(
+      String uid, ParticipatedContestModel participatedContest);
 }
 
 class RemoteDataSourceImpl extends RemoteDataSource {
   final APIClient apiClient;
   final FirebaseFirestore firebaseFirestore;
-  final AuthenticationDataSourceImpl authenticationDataSourceImpl;
+  final AuthenticationDataSource authenticationDataSource;
 
   RemoteDataSourceImpl({
     @required this.apiClient,
     @required this.firebaseFirestore,
-    @required this.authenticationDataSourceImpl,
+    @required this.authenticationDataSource,
   });
 
   @override
@@ -73,7 +79,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
 
   @override
   Future<void> storeUserCredentials(Map<String, String> authData) async {
-    final String uid = authenticationDataSourceImpl.getUid();
+    final String uid = authenticationDataSource.getUid();
     await FirebaseFirestore.instance.collection('users').doc(uid).set(
       {
         'displayName': authData['displayName'],
@@ -94,39 +100,11 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   }
 
   @override
-  Future<void> updateCuratedContest(
-      CuratedContestModel curatedContestModel) async {
-    await FirebaseFirestore.instance
-        .collection('contests')
-        .doc(curatedContestModel.platformId)
-        .collection(curatedContestModel.parentContestId)
-        .doc(curatedContestModel.contestId)
-        .update(curatedContestModel.toMap());
-  }
-
-  @override
   Future<void> storeUserDetails(UserModel userModel) async {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(userModel.uid)
         .set(userModel.toMap());
-    //   {
-    //     'displayName': userModel.displayName,
-    //     'contactNumber': userModel.contactNumber,
-    //     'coins': userModel.coins,
-    //     'contest': userModel.contest,
-    //     'wins': userModel.wins,
-    //     'handleCF': userModel.handelCF,
-    //     'handleCC': userModel.handelCC,
-    //     'handelATC': userModel.handelATC,
-    //     'handelHE': userModel.handelHE,
-    //     'city': userModel.city,
-    //     'state': userModel.state,
-    //     'country': userModel.country,
-    //     'occupation': userModel.occupation,
-    //     'institution': userModel.institution,
-    //   },
-    // );
   }
 
   @override
@@ -163,7 +141,38 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   }
 
   @override
-  Future<List<CuratedContestModel>> fetchCuratedContest(
+  Future<List<ParticipatedContestModel>> fetchParticipatedContests(
+      String uid) async {
+    List<ParticipatedContestModel> participatedContestList = [];
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('participatedContests')
+        .get()
+        .then((value) {
+      for (int i = 0; i < value.docs.length; i++) {
+        ParticipatedContestModel model =
+            ParticipatedContestModel.fromMap(value.docs[i].data());
+        participatedContestList.add(model);
+      }
+    });
+
+    return participatedContestList;
+  }
+
+  @override
+  Future<void> updateParticipatedContests(
+      String uid, ParticipatedContestModel participatedContestModel) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('participatedContests')
+        .doc(participatedContestModel.contestId)
+        .set(participatedContestModel.toMap());
+  }
+
+  @override
+  Future<List<CuratedContestModel>> fetchCuratedContestList(
       String platformId, String contestId) async {
     List<CuratedContestModel> curatedContestModelList = [];
     await FirebaseFirestore.instance
@@ -183,6 +192,23 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   }
 
   @override
+  Future<CuratedContestModel> fetchCuratedContest(
+      ParticipatedContestModel participatedContestModel) async {
+    CuratedContestModel curatedContestModel;
+    await FirebaseFirestore.instance
+        .collection('contests')
+        .doc(participatedContestModel.platformId)
+        .collection(participatedContestModel.parentContestId)
+        .doc(participatedContestModel.contestId)
+        .get()
+        .then((value) {
+      curatedContestModel = CuratedContestModel.fromMap(value.data());
+    });
+
+    return curatedContestModel;
+  }
+
+  @override
   Future<void> createCuratedContest(
       CuratedContestModel curatedContestModel) async {
     await FirebaseFirestore.instance
@@ -191,6 +217,17 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         .collection(curatedContestModel.parentContestId)
         .doc(curatedContestModel.contestId)
         .set(curatedContestModel.toMap());
+  }
+
+  @override
+  Future<void> updateCuratedContest(
+      CuratedContestModel curatedContestModel) async {
+    await FirebaseFirestore.instance
+        .collection('contests')
+        .doc(curatedContestModel.platformId)
+        .collection(curatedContestModel.parentContestId)
+        .doc(curatedContestModel.contestId)
+        .update(curatedContestModel.toMap());
   }
 
   @override
