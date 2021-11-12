@@ -1,3 +1,5 @@
+import 'package:coddr/common/constants/size_constants.dart';
+import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:flutter/material.dart';
 
 class TeamCard extends StatelessWidget {
@@ -19,33 +21,22 @@ class TeamCard extends StatelessWidget {
         elevation: 8,
         margin: EdgeInsets.all(1),
         child: Column(children: [
-          //   SizedBox(height: 10),
           Container(
             margin: EdgeInsets.all(5),
-            height: 175,
-            width: 150,
+            height: Sizes.dimen_200.w,
+            width: Sizes.dimen_150.w,
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: Image.asset(image, fit: BoxFit.cover)),
           ),
-          // SizedBox(height: 10),
           Text(
             fName,
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontSize: 18,
-              fontWeight: FontWeight.w300,
-            ),
+            style: Theme.of(context).textTheme.bodyText2,
           ),
           Text(
             lName,
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontSize: 18,
-              fontWeight: FontWeight.w300,
-            ),
+            style: Theme.of(context).textTheme.bodyText2,
           ),
-          
         ]),
       ),
     );

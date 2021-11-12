@@ -10,4 +10,5 @@ class Images {
   static const defaultUserImage = 'assets/images/default_user.png';
   static const kshittizImage = 'assets/images/kshittiz2.jpg';
   static const SignInImage = 'assets/images/sign_in_image.png';
+  static const abhijeetImage = 'assets/images/AbhijeetTamrakar.png';
 }

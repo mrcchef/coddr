@@ -77,7 +77,7 @@ class _EditProfileState extends State<EditProfile> {
   bool _isLoading = false;
   String prevImageUrl;
   String url;
-  void _saveForm() async {
+  void _saveForm(UserModel userModel) async {
     setState(() {
       _isLoading = true;
     });
@@ -106,6 +106,8 @@ class _EditProfileState extends State<EditProfile> {
       } else {
         url = prevImageUrl;
       }
+
+      if (userModel.isHandelCFVerified) handelCF = userModel.handelCF;
 
       await FirebaseFirestore.instance
           .collection('users')
@@ -155,6 +157,7 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    UserModel userModel;
     Widget leftAppBarWidget = InkWell(
       onTap: () {
         Navigator.of(context).popAndPushNamed(Profile.routeName);
@@ -191,7 +194,7 @@ class _EditProfileState extends State<EditProfile> {
           }
 
           final curState = (state as ProfileLoaded);
-          UserModel userModel = curState.userModel;
+          userModel = curState.userModel;
           namecontroller.text = userModel.displayName;
           phonecontroller.text = userModel.contactNumber;
           institutecontroller.text = userModel.institution;
@@ -230,7 +233,7 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                       Center(
                         child: RaisedButton(
-                          onPressed: _saveForm,
+                          onPressed: () => _saveForm(userModel),
                           color: Color(0xFFd91f2a),
                           child: Text(
                             'Save Changes',
