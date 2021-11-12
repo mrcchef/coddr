@@ -1,10 +1,13 @@
-import 'package:coddr/presentation/journeys/Rewards/rewards_vouchers.dart';
-import 'package:flutter/material.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
-
+import 'package:coddr/presentation/journeys/Rewards/rewards_vouchers.dart';
+import 'package:flutter/material.dart';
 
 class RewardsPage extends StatelessWidget {
+  final int coins;
+
+  const RewardsPage({Key key, @required this.coins}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +21,7 @@ class RewardsPage extends StatelessWidget {
       body: ListView(
         children: [
           Padding(
-            padding:  EdgeInsets.all(Sizes.dimen_18.w),
+            padding: EdgeInsets.all(Sizes.dimen_18.w),
             child: Card(
               elevation: Sizes.dimen_8.w,
               shape: RoundedRectangleBorder(
@@ -42,7 +45,7 @@ class RewardsPage extends StatelessWidget {
                         width: Sizes.dimen_20.w,
                       ),
                       Text(
-                        '854',
+                        '$coins',
                         style: TextStyle(
                             color: Colors.red[600],
                             fontSize: Sizes.dimen_26.w,
@@ -66,7 +69,8 @@ class RewardsPage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding:  EdgeInsets.fromLTRB(Sizes.dimen_12.w,0,0,Sizes.dimen_8.w),
+            padding:
+                EdgeInsets.fromLTRB(Sizes.dimen_12.w, 0, 0, Sizes.dimen_8.w),
             child: Text(
               'Redeem Vouchers',
               style: TextStyle(fontSize: Sizes.dimen_20.w),

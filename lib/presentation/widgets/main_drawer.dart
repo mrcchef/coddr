@@ -107,11 +107,15 @@ class _MainDrawerState extends State<MainDrawer> {
                       builder: (context) =>
                           ParticipatedContestScreen(uid: userModel.uid)));
                 }),
-                // DrawerListTile('Settings', Icons.settings, () {}),
                 // DrawerListTile('Activity', Icons.timeline, () {}),
-                DrawerListTile('Rewards', Icons.settings, () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => RewardsPage()));
+                DrawerListTile('Rewards', Icons.redeem, () {
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RewardsPage(
+                                coins: userModel.coins,
+                              )));
                 }),
                 DrawerListTile(
                     'About Us', Icons.sentiment_satisfied_alt_outlined, () {
