@@ -48,8 +48,10 @@ class _SignInScreenState extends State<SignInScreen> {
           listener: (context, state) {
             if (state is SignInStateFaliure) {
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(const SnackBar(content: Text('Login Failed')));
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text('Login Failed'),
+                backgroundColor: Theme.of(context).errorColor,
+              ));
             } else if (state is SignInStateSuccess) {
               Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
               // BlocProvider.of<AuthenticationBloc>(context)

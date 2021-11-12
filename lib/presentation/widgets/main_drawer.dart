@@ -4,6 +4,8 @@ import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
+import 'package:coddr/presentation/journeys/Rewards/rewards_page.dart';
+import 'package:coddr/presentation/journeys/about_us/about_us.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
 import 'package:coddr/presentation/journeys/participated_contest/participated_contest_screen.dart';
 import 'package:coddr/presentation/journeys/profile/profile.dart';
@@ -106,8 +108,15 @@ class _MainDrawerState extends State<MainDrawer> {
                           ParticipatedContestScreen(uid: userModel.uid)));
                 }),
                 // DrawerListTile('Settings', Icons.settings, () {}),
+                // DrawerListTile('Activity', Icons.timeline, () {}),
+                DrawerListTile('Rewards', Icons.settings, () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RewardsPage()));
+                }),
                 DrawerListTile(
-                    'About Us', Icons.sentiment_satisfied_alt_outlined, () {}),
+                    'About Us', Icons.sentiment_satisfied_alt_outlined, () {
+                  Navigator.of(context).popAndPushNamed(AboutUs.routeName);
+                }),
                 DrawerListTile('Sign Out', Icons.logout, () {
                   Navigator.of(context).popAndPushNamed(SignInScreen.routeName);
                   // BlocProvider.of<AuthenticationBloc>(context)

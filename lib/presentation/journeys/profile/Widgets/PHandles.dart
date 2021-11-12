@@ -1,4 +1,5 @@
 import 'package:coddr/presentation/blocs/handel_verification/handel_verification_bloc.dart';
+import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -71,11 +72,47 @@ class PHandles extends StatelessWidget {
                   style: TextStyle(fontSize: 20, color: Colors.black),
                 ),
               ),
-              BlocBuilder<HandelVerificationBloc, HandelVerificationState>(
+              BlocConsumer<HandelVerificationBloc, HandelVerificationState>(
+                listener: (context, state) {
+                  if (state is HandelVerificationCFEmailPrivate) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content:
+                            Text("Email is Private! Please make it Public"),
+                        duration: Duration(seconds: 5),
+                        backgroundColor: Theme.of(context).errorColor,
+                      ),
+                    );
+                  } else if (state is HandelVerificationCFHandelEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                            "Handel is Empty! Please add Email in edit Profile"),
+                        backgroundColor: Theme.of(context).errorColor,
+                      ),
+                    );
+                  } else if (state is HandelVerificationCompleted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Handel Verification Suuccessful"),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                  } else if (state is HandelVerificationFailed) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Handel Verification FAILED!"),
+                        backgroundColor: Theme.of(context).errorColor,
+                      ),
+                    );
+                  }
+                },
                 builder: (context, state) {
                   if (state is HandelVerificationLoading)
                     cfHandelTrailingWidget = CircularProgressIndicator();
-                  else if (state is HandelVerificationCFEmailPrivate) {
+                  else if (state is HandelVerificationCFEmailPrivate ||
+                      state is HandelVerificationCFHandelEmpty ||
+                      state is HandelVerificationFailed) {
                     cfHandelTrailingWidget = unVerifiedHandelButton;
                   } else if (state is HandelVerificationCompleted) {
                     cfHandelTrailingWidget = verifiedHandelButton;
@@ -85,8 +122,9 @@ class PHandles extends StatelessWidget {
                     title: Text(
                       "CodeForces",
                       style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF0B2FB0)),
+                        fontWeight: FontWeight.bold,
+                        color: AppColor.deepBlue,
+                      ),
                     ),
                     subtitle: Text(
                       handelCF,
@@ -101,7 +139,9 @@ class PHandles extends StatelessWidget {
                 title: Text(
                   "CodeChef",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Color(0xFF0B2FB0)),
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.deepBlue,
+                  ),
                 ),
                 subtitle: Text(
                   handelCC,
@@ -125,7 +165,9 @@ class PHandles extends StatelessWidget {
                 title: Text(
                   'HackerEarth',
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Color(0xFF0B2FB)),
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.deepBlue,
+                  ),
                 ),
                 subtitle: Text(
                   handelHE,

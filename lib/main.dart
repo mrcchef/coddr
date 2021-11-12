@@ -26,6 +26,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pedantic/pedantic.dart';
 
+import 'presentation/journeys/about_us/about_us.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -156,6 +158,7 @@ class _MyAppState extends State<MyApp> {
             SignUpScreen.routeName: (ctx) => SignUpScreen(),
             UpcomingContestsScreen.routeName: (ctx) => UpcomingContestsScreen(),
             CodeForcesWebsite.routeName: (ctx) => CodeForcesWebsite(),
+            AboutUs.routeName: (ctx) => AboutUs(),
           }),
     );
   }

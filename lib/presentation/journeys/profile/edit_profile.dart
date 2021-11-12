@@ -219,7 +219,7 @@ class _EditProfileState extends State<EditProfile> {
                       //PEditDetails(),
                       editDetails(),
                       //Pedithandles(),
-                      editHandles(),
+                      editHandles(userModel),
                       SizedBox(
                         height: 25,
                       ),
@@ -249,7 +249,7 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  Widget editHandles() {
+  Widget editHandles(UserModel userModel) {
     return Padding(
       padding: const EdgeInsets.all(18.0),
       child: Column(
@@ -271,22 +271,30 @@ class _EditProfileState extends State<EditProfile> {
               Container(
                 height: 20,
                 width: 230,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      hintText: 'Enter Username',
-                      hintStyle: TextStyle(fontSize: 14)),
-                  style: TextStyle(color: Colors.black),
-                  controller: cfHandleController,
-                  // validator: (value) {
-                  //   if (value.isEmpty) {
-                  //     return 'Please Enter Name';
-                  //   }
-                  //   return null;
-                  // },
-                  onSaved: (value) {
-                    handelCF = value;
-                  },
-                ),
+                child: (userModel.isHandelCFVerified)
+                    ? Text(
+                        userModel.handelCF,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    : TextFormField(
+                        decoration: InputDecoration(
+                            hintText: 'Enter Username',
+                            hintStyle: TextStyle(fontSize: 14)),
+                        style: TextStyle(color: Colors.black),
+                        controller: cfHandleController,
+                        // validator: (value) {
+                        //   if (value.isEmpty) {
+                        //     return 'Please Enter Name';
+                        //   }
+                        //   return null;
+                        // },
+                        onSaved: (value) {
+                          handelCF = value;
+                        },
+                      ),
               ),
             ],
           ),
@@ -305,12 +313,12 @@ class _EditProfileState extends State<EditProfile> {
                       hintText: 'Enter Username',
                       hintStyle: TextStyle(fontSize: 14)),
                   style: TextStyle(color: Colors.black),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please Enter Name';
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (value.isEmpty) {
+                  //     return 'Please Enter Name';
+                  //   }
+                  //   return null;
+                  // },
                   controller: ccHandleController,
                   onSaved: (value) {
                     handelCC = value;
