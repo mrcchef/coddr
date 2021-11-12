@@ -29,10 +29,12 @@ class UserDetails extends StatefulWidget {
 
 class _UserDetailsState extends State<UserDetails> {
   EmailVerificationBloc emailVerificationBloc;
+  SendVerificationEmailBloc sendVerificationEmailBloc;
 
   @override
   initState() {
     emailVerificationBloc = getItInstance<EmailVerificationBloc>();
+    sendVerificationEmailBloc = getItInstance<SendVerificationEmailBloc>();
     super.initState();
   }
 
@@ -40,6 +42,7 @@ class _UserDetailsState extends State<UserDetails> {
   void dispose() {
     super.dispose();
     emailVerificationBloc.close();
+    sendVerificationEmailBloc.close();
   }
 
   Widget build(BuildContext context) {
@@ -49,6 +52,7 @@ class _UserDetailsState extends State<UserDetails> {
     if (widget.isEmailVerified) vstate = verificationState.verified;
 
     return BlocConsumer<SendVerificationEmailBloc, SendVerificationEmailState>(
+      bloc: sendVerificationEmailBloc,
       listener: (context, state) {
         if (state is SendVerificationEmailSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -159,7 +163,7 @@ class _UserDetailsState extends State<UserDetails> {
                 trailing: TextButton.icon(
                   onPressed: () {
                     if (vstate == verificationState.notVerified) {
-                      BlocProvider.of<EmailVerificationBloc>(context)
+                      emailVerificationBloc
                           .add(VerifyEmailEvent(uid: widget.uid));
                     }
                   },

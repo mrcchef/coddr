@@ -136,7 +136,7 @@ Future init() async {
   getItInstance.registerFactory<ContestListingBloc>(
       () => ContestListingBloc(getCFContestList: getItInstance()));
 
-  getItInstance.registerFactory<EmailVerificationBloc>(() =>
+  getItInstance.registerLazySingleton<EmailVerificationBloc>(() =>
       EmailVerificationBloc(
           isEmailVerified: getItInstance(),
           updateIsEmailVerified: getItInstance()));
@@ -155,7 +155,7 @@ Future init() async {
   getItInstance.registerFactory<ProfileBloc>(
       () => ProfileBloc(fetchUserDetail: getItInstance()));
 
-  getItInstance.registerFactory<HandelVerificationBloc>(() =>
+  getItInstance.registerLazySingleton<HandelVerificationBloc>(() =>
       HandelVerificationBloc(
           getCFUser: getItInstance(), updateIsHandleVerified: getItInstance()));
 

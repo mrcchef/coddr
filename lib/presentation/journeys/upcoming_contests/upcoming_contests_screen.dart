@@ -55,7 +55,6 @@ class _UpcomingContestsScreenState extends State<UpcomingContestsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    UserModel userModel = ModalRoute.of(context).settings.arguments;
     Widget leftAppBarWidget = InkWell(
       onTap: () {
         Navigator.of(context).pop();
