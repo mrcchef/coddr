@@ -7,11 +7,11 @@ import 'package:intl/intl.dart';
 
 class ContestCardinfo extends StatelessWidget {
   final DateTime startTime;
-  final DateTime endtime;
+  final DateTime endTime;
   final String title;
   ContestCardinfo({
     @required this.startTime,
-    @required this.endtime,
+    @required this.endTime,
     @required this.title,
   });
 
@@ -42,7 +42,7 @@ class ContestCardinfo extends StatelessWidget {
               TextButton(
                 onPressed: () {},
                 child: Text(
-                  'Contest Timing:\n${DateFormat('HH:mm').format(startTime)} - ${DateFormat('HH:mm').format(endtime)}',
+                  'Contest Timing:\n${DateFormat('HH:mm').format(startTime)} - ${DateFormat('HH:mm').format(endTime)}',
                   textAlign: TextAlign.center,
                 ),
               )

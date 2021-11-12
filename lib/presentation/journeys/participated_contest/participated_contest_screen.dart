@@ -3,6 +3,7 @@ import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/domain/entities/curated_contest_model.dart';
 import 'package:coddr/presentation/blocs/participated_contest/participated_contest_bloc.dart';
+import 'package:coddr/presentation/journeys/participated_contest/participated_curated_contest_card.dart';
 import 'package:coddr/presentation/widgets/CoddrAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,9 +39,9 @@ class _ParticipatedContestScreenState extends State<ParticipatedContestScreen> {
   Widget build(BuildContext context) {
     Widget leftAppBarWidget = InkWell(
       onTap: () {
-        Scaffold.of(context).openDrawer();
+        Navigator.of(context).pop();
       },
-      child: Icon(Icons.menu, color: Colors.black),
+      child: Icon(Icons.arrow_back_ios, color: Colors.black),
     );
 
     Widget middleAppBarWidget = Padding(
@@ -80,7 +81,6 @@ class _ParticipatedContestScreenState extends State<ParticipatedContestScreen> {
                 child: Text("Something went wrong!! Please Refresh"),
               );
             }
-
             curatedContestModelList = (state as ParticipatedContestSuccessState)
                 .curatedContestModelList;
             print(curatedContestModelList);
@@ -88,13 +88,11 @@ class _ParticipatedContestScreenState extends State<ParticipatedContestScreen> {
             return ListView.builder(
                 itemCount: curatedContestModelList.length,
                 itemBuilder: (context, index) {
-                  return Text("Text");
-                  //  ParticipatedCuratedContestCard(
-                  //   curatedContestModel: curatedContestModel,
-                  //   startTime: startTime,
-                  //   endTime: endTime,
-                  //   title: title,
-                  // );
+                  return
+                      // Text("Text");
+                      ParticipatedCuratedContestCard(
+                    curatedContestModel: curatedContestModelList[index],
+                  );
                 });
           },
         ));

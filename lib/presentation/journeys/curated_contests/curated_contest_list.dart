@@ -7,18 +7,13 @@ import 'package:flutter/material.dart';
 
 class CuratedContestList extends StatefulWidget {
   final List<CuratedContestModel> curatedContest;
-  final DateTime startTime;
-  final DateTime endtime;
-  final String title;
+
   final bool isPrivate;
   final UserModel userModel;
 
   const CuratedContestList({
     Key key,
     @required this.curatedContest,
-    @required this.startTime,
-    @required this.endtime,
-    @required this.title,
     @required this.isPrivate,
     @required this.userModel,
   }) : super(key: key);
@@ -39,9 +34,6 @@ class _CuratedContestListState extends State<CuratedContestList> {
             padding: EdgeInsets.all(Sizes.dimen_8.w),
             child: CuratedContestCard(
               curatedContestModel: widget.curatedContest[index],
-              startTime: widget.startTime,
-              endTime: widget.endtime,
-              title: widget.title,
               isPrivate: widget.isPrivate,
               userModel: widget.userModel,
             ),

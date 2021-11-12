@@ -269,6 +269,9 @@ class PrizeBreakup extends StatelessWidget {
                         positionToReward: positionToReward,
                         positionToUsername: positionToUsername,
                         participants: participants,
+                        endTime: endtime,
+                        startTime: startTime,
+                        parentContestName: title,
                       );
 
                       UserModel newUserModel = userModel.copyWith(

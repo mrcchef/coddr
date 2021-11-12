@@ -193,9 +193,6 @@ class _CuratedContestsState extends State<CuratedContests> {
                   ),
                   CuratedContestList(
                     curatedContest: publicContest,
-                    startTime: widget.startTime,
-                    endtime: widget.endtime,
-                    title: widget.title,
                     isPrivate: false,
                     userModel: userModel,
                   ),
@@ -254,9 +251,6 @@ class _CuratedContestsState extends State<CuratedContests> {
                   ),
                   CuratedContestList(
                     curatedContest: privateContest,
-                    startTime: widget.startTime,
-                    endtime: widget.endtime,
-                    title: widget.title,
                     isPrivate: true,
                     userModel: userModel,
                   ),

@@ -13,16 +13,10 @@ class ConfirmParticipation extends StatelessWidget {
   static const routeName = '/confirm_participation';
   final UserModel userModel;
   final CuratedContestModel curatedContestModel;
-  final DateTime startTime;
-  final DateTime endTime;
-  final String title;
 
   ConfirmParticipation({
     @required this.userModel,
     @required this.curatedContestModel,
-    @required this.startTime,
-    @required this.endTime,
-    @required this.title,
   });
 
   @override
@@ -58,10 +52,8 @@ class ConfirmParticipation extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => RankListPage(
-                    curatedContestModel: newCuratedContestModel,
-                    startTime: startTime,
-                    endTime: endTime,
-                    title: title),
+                  curatedContestModel: newCuratedContestModel,
+                ),
               ),
             );
           }
@@ -138,7 +130,7 @@ class ConfirmParticipation extends StatelessWidget {
                               contest: userModel.contest + 1,
                             );
 
-                           // print("newUserModel $newUserModel");
+                            // print("newUserModel $newUserModel");
 
                             newCuratedContestModel =
                                 curatedContestModel.copyWith(

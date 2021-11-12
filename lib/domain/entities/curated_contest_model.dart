@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,9 @@ class CuratedContestModel extends Equatable {
   final String password;
   final String parentContestId;
   final String platformId;
+  final DateTime startTime;
+  final DateTime endTime;
+  final String parentContestName;
   final Map<String, int> positionToReward;
   final Map<String, String> positionToUsername;
   final List<Map<String, String>>
@@ -32,6 +36,9 @@ class CuratedContestModel extends Equatable {
     @required this.positionToUsername,
     @required this.participants,
     @required this.contestName,
+    @required this.endTime,
+    @required this.startTime,
+    @required this.parentContestName,
   });
 
   CuratedContestModel copyWith({
@@ -63,6 +70,9 @@ class CuratedContestModel extends Equatable {
       positionToUsername: positionToUsername ?? this.positionToUsername,
       participants: participants ?? this.participants,
       contestName: contestName ?? this.contestName,
+      startTime: startTime ?? this.startTime,
+      endTime: endTime ?? this.endTime,
+      parentContestName: parentContestName ?? this.parentContestId,
     );
   }
 
@@ -81,6 +91,9 @@ class CuratedContestModel extends Equatable {
       'positionToUsername': positionToUsername,
       'participants': participants,
       'contestName': contestName,
+      'startTime': startTime,
+      'endTime': endTime,
+      'parentContestName': parentContestName,
     };
   }
 
@@ -107,6 +120,9 @@ class CuratedContestModel extends Equatable {
       positionToUsername: Map<String, String>.from(map['positionToUsername']),
       participants: temp,
       contestName: map['contestName'],
+      startTime: (map['startTime'] as Timestamp).toDate(),
+      endTime: (map['endTime'] as Timestamp).toDate(),
+      parentContestName: map['parentContestName'],
     );
   }
 
@@ -117,7 +133,7 @@ class CuratedContestModel extends Equatable {
 
   @override
   String toString() {
-    return 'CuratedContestModel(contestId: $contestId, entryFees: $entryFees, prize: $prize, totalSpots: $totalSpots, filledSpots: $filledSpots, isPrivate: $isPrivate, password: $password, parentContestId: $parentContestId, platformId: $platformId,participants:$participants,contestName:$contestName,)';
+    return 'CuratedContestModel(contestId: $contestId, entryFees: $entryFees, prize: $prize, totalSpots: $totalSpots, filledSpots: $filledSpots, isPrivate: $isPrivate, password: $password, parentContestId: $parentContestId, platformId: $platformId,participants:$participants,contestName:$contestName,startTime:$startTime,endTime:$endTime,parentContestName:$parentContestName)';
   }
 
   @override
@@ -137,7 +153,10 @@ class CuratedContestModel extends Equatable {
         other.positionToReward == positionToReward &&
         other.positionToUsername == positionToUsername &&
         other.participants == participants &&
-        other.contestName == contestName;
+        other.contestName == contestName &&
+        other.startTime == startTime &&
+        other.endTime == endTime &&
+        other.parentContestName == parentContestName;
   }
 
   @override
@@ -154,7 +173,10 @@ class CuratedContestModel extends Equatable {
         positionToReward.hashCode ^
         positionToUsername.hashCode ^
         participants.hashCode ^
-        contestName.hashCode;
+        contestName.hashCode ^
+        startTime.hashCode ^
+        endTime.hashCode ^
+        parentContestName.hashCode;
   }
 
   @override
