@@ -7,7 +7,6 @@ import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.da
 import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
 import 'package:coddr/presentation/journeys/home/platform_grid.dart';
 import 'package:coddr/presentation/widgets/CoddrAppBar.dart';
-import 'package:coddr/presentation/widgets/custom_bottom_navigation_bar.dart';
 import 'package:coddr/presentation/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,9 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _getData() async {
-    setState(() {
-      _profileBloc.add(FetchProfileData());
-    });
+    _profileBloc.add(FetchProfileData());
   }
 
   @override
@@ -78,18 +75,18 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
 
-    return BlocProvider<ContestListingBloc>.value(
-      value: _contestListingBloc,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: CoddrAppBar(
-          leftWidget: leftAppBarWidget,
-          middleWidget: middleAppBarWidget,
-          rightWidget: rightAppBarWidget,
-        ),
-        body: RefreshIndicator(
-          onRefresh: _getData,
-          child: BlocBuilder<ProfileBloc, ProfileState>(
+    return RefreshIndicator(
+      onRefresh: _getData,
+      child: BlocProvider<ContestListingBloc>.value(
+        value: _contestListingBloc,
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: CoddrAppBar(
+            leftWidget: leftAppBarWidget,
+            middleWidget: middleAppBarWidget,
+            rightWidget: rightAppBarWidget,
+          ),
+          body: BlocBuilder<ProfileBloc, ProfileState>(
             bloc: _profileBloc,
             builder: (context, state) {
               if (state is ProfileLoding) {
@@ -128,8 +125,8 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
           ),
+          drawer: MainDrawer(),
         ),
-        drawer: MainDrawer(),
       ),
     );
   }

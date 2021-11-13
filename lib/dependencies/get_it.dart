@@ -141,7 +141,7 @@ Future init() async {
           isEmailVerified: getItInstance(),
           updateIsEmailVerified: getItInstance()));
 
-  getItInstance.registerFactory<SendVerificationEmailBloc>(
+  getItInstance.registerLazySingleton<SendVerificationEmailBloc>(
       () => SendVerificationEmailBloc(
             verifyEmail: getItInstance(),
           ));

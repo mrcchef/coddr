@@ -65,6 +65,18 @@ class _CuratedContestsState extends State<CuratedContests> {
     super.dispose();
   }
 
+  Future<void> _getData() async {
+    _curatedContestBloc.add(
+      FetchCuratedContestEvent(
+        fetchCuratedContestArgument: FetchCuratedContestArgument(
+          contestId: widget.constestId,
+          platfromId: widget.platformId,
+        ),
+      ),
+    );
+    _profileBloc.add(FetchProfileData());
+  }
+
   @override
   Widget build(BuildContext context) {
     UserModel userModel;
@@ -76,190 +88,195 @@ class _CuratedContestsState extends State<CuratedContests> {
       return id;
     }
 
-    return BlocBuilder<CuratedContestBloc, CuratedContestState>(
-      bloc: _curatedContestBloc,
-      builder: (context, state) {
-        if (state is CuratedContestFetchingState)
-          return Container(
-            color: Colors.white,
-            child: Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.white,
+    return RefreshIndicator(
+      onRefresh: _getData,
+      child: BlocBuilder<CuratedContestBloc, CuratedContestState>(
+        bloc: _curatedContestBloc,
+        builder: (context, state) {
+          if (state is CuratedContestFetchingState)
+            return Container(
+              color: Colors.white,
+              child: Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.white,
+                ),
               ),
-            ),
-          );
+            );
 
-        if (state is CuratedContestErrorState)
-          return Center(
-            child: Text(
-              state.message,
-              style: Theme.of(context).textTheme.headline2,
-            ),
-          );
+          if (state is CuratedContestErrorState)
+            return Center(
+              child: Text(
+                state.message,
+                style: Theme.of(context).textTheme.headline2,
+              ),
+            );
 
-        if (state is CuratedContestFetchedState) {
-          curatedContestList = state.curatedContestList;
-          curatedContestList.forEach((element) {
-            if (element.isPrivate)
-              privateContest.add(element);
-            else
-              publicContest.add(element);
-          });
-        }
+          if (state is CuratedContestFetchedState) {
+            curatedContestList = state.curatedContestList;
+            privateContest.clear();
+            publicContest.clear();
+            curatedContestList.forEach((element) {
+              if (element.isPrivate)
+                privateContest.add(element);
+              else
+                publicContest.add(element);
+            });
+          }
 
-        return BlocConsumer<ProfileBloc, ProfileState>(
-          listener: (context, state) {
-            if (state is ProfileError) {
-              ScaffoldMessenger.of(context).clearSnackBars();
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Falied to load!!, Please refresh'),
-                  backgroundColor: Colors.red,
-                ),
-              );
-            }
-          },
-          bloc: _profileBloc,
-          builder: (context, state) {
-            if (state is ProfileLoding)
-              return Container(
-                color: Colors.white,
-                child: Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Colors.white,
+          return BlocConsumer<ProfileBloc, ProfileState>(
+            listener: (context, state) {
+              if (state is ProfileError) {
+                ScaffoldMessenger.of(context).clearSnackBars();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Falied to load!!, Please refresh'),
+                    backgroundColor: Colors.red,
                   ),
-                ),
-              );
-
-            if (state is ProfileError) {
-              return Center(
-                child: Text(
-                  "Falied to load!!, Please refresh",
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-              );
-            }
-
-            final curState = (state as ProfileLoaded);
-            userModel = curState.userModel;
-
-            return Scaffold(
-              body: ListView(
-                children: [
-                  PlatformLabel(),
-                  Padding(
-                    padding: EdgeInsets.all(Sizes.dimen_8.w),
-                    child: Row(
-                      children: [
-                        Text(
-                          'Public Contest',
-                          style: TextStyle(
-                              fontSize: Sizes.dimen_22.w,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        Spacer(),
-                        if (userModel.isAdmin)
-                          RaisedButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => CreateContest(
-                                    isPrivate: false,
-                                    parentContestId: widget.constestId,
-                                    platformId: widget.platformId,
-                                    userModel: userModel,
-                                    contestId: getNextContestId(
-                                        "PBL", publicContest.length + 1),
-                                    startTime: widget.startTime,
-                                    endtime: widget.endtime,
-                                    title: widget.title,
-                                  ),
-                                ),
-                              );
-                            },
-                            color: Colors.red[900],
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(Sizes.dimen_20.w)),
-                            child: Text(
-                              'Create Contest',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          )
-                      ],
+                );
+              }
+            },
+            bloc: _profileBloc,
+            builder: (context, state) {
+              if (state is ProfileLoding)
+                return Container(
+                  color: Colors.white,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.white,
                     ),
                   ),
-                  CuratedContestList(
-                    curatedContest: publicContest,
-                    isPrivate: false,
-                    userModel: userModel,
+                );
+
+              if (state is ProfileError) {
+                return Center(
+                  child: Text(
+                    "Falied to load!!, Please refresh",
+                    style: Theme.of(context).textTheme.headline4,
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(Sizes.dimen_8.w),
-                    child: Row(
-                      children: [
-                        Text(
-                          'Private Contest',
-                          style: TextStyle(
-                              fontSize: Sizes.dimen_22.w,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        Spacer(),
-                        RaisedButton(
-                            onPressed: () {
-                              //print(privateContest.length);
-                              if (!userModel.isHandelCFVerified)
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                        "Codeforces Handle is not verfied!!"),
-                                    backgroundColor: Colors.red,
-                                  ),
-                                );
-                              else {
+                );
+              }
+
+              final curState = (state as ProfileLoaded);
+              userModel = curState.userModel;
+
+              return Scaffold(
+                body: ListView(
+                  children: [
+                    PlatformLabel(),
+                    Padding(
+                      padding: EdgeInsets.all(Sizes.dimen_8.w),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Public Contest',
+                            style: TextStyle(
+                                fontSize: Sizes.dimen_22.w,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          Spacer(),
+                          if (userModel.isAdmin)
+                            RaisedButton(
+                              onPressed: () {
                                 Navigator.of(context).pop();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => CreateContest(
-                                      isPrivate: true,
+                                      isPrivate: false,
                                       parentContestId: widget.constestId,
                                       platformId: widget.platformId,
                                       userModel: userModel,
                                       contestId: getNextContestId(
-                                          "PVT", privateContest.length + 1),
+                                          "PBL", publicContest.length + 1),
                                       startTime: widget.startTime,
                                       endtime: widget.endtime,
                                       title: widget.title,
                                     ),
                                   ),
                                 );
-                              }
-                            },
-                            color: Colors.red[900],
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(Sizes.dimen_20.w)),
-                            child: Text(
-                              'Create Contest',
-                              style: TextStyle(color: Colors.white),
-                            ))
-                      ],
+                              },
+                              color: Colors.red[900],
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(Sizes.dimen_20.w)),
+                              child: Text(
+                                'Create Contest',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            )
+                        ],
+                      ),
                     ),
-                  ),
-                  CuratedContestList(
-                    curatedContest: privateContest,
-                    isPrivate: true,
-                    userModel: userModel,
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
+                    CuratedContestList(
+                      curatedContest: publicContest,
+                      isPrivate: false,
+                      userModel: userModel,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(Sizes.dimen_8.w),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Private Contest',
+                            style: TextStyle(
+                                fontSize: Sizes.dimen_22.w,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          Spacer(),
+                          RaisedButton(
+                              onPressed: () {
+                                //print(privateContest.length);
+                                if (!userModel.isHandelCFVerified)
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                          "Codeforces Handle is not verfied!!"),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
+                                else {
+                                  Navigator.of(context).pop();
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CreateContest(
+                                        isPrivate: true,
+                                        parentContestId: widget.constestId,
+                                        platformId: widget.platformId,
+                                        userModel: userModel,
+                                        contestId: getNextContestId(
+                                            "PVT", privateContest.length + 1),
+                                        startTime: widget.startTime,
+                                        endtime: widget.endtime,
+                                        title: widget.title,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                              color: Colors.red[900],
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(Sizes.dimen_20.w)),
+                              child: Text(
+                                'Create Contest',
+                                style: TextStyle(color: Colors.white),
+                              ))
+                        ],
+                      ),
+                    ),
+                    CuratedContestList(
+                      curatedContest: privateContest,
+                      isPrivate: true,
+                      userModel: userModel,
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
