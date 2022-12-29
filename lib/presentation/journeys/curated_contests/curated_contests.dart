@@ -175,7 +175,13 @@ class _CuratedContestsState extends State<CuratedContests> {
                           ),
                           Spacer(),
                           if (userModel.isAdmin)
-                            RaisedButton(
+                            ElevatedButton(
+                              style: TextButton.styleFrom(
+                                  backgroundColor: Colors.red[900],
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          Sizes.dimen_20.w)),
+                                  foregroundColor: Colors.white),
                               onPressed: () {
                                 Navigator.of(context).pop();
                                 Navigator.push(
@@ -195,10 +201,6 @@ class _CuratedContestsState extends State<CuratedContests> {
                                   ),
                                 );
                               },
-                              color: Colors.red[900],
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(Sizes.dimen_20.w)),
                               child: Text(
                                 'Create Contest',
                                 style: TextStyle(color: Colors.white),
@@ -223,7 +225,13 @@ class _CuratedContestsState extends State<CuratedContests> {
                                 fontWeight: FontWeight.w600),
                           ),
                           Spacer(),
-                          RaisedButton(
+                          ElevatedButton(
+                              style: TextButton.styleFrom(
+                                  backgroundColor: Colors.red[900],
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          Sizes.dimen_20.w)),
+                                  foregroundColor: Colors.white),
                               onPressed: () {
                                 //print(privateContest.length);
                                 if (!userModel.isHandelCFVerified)
@@ -254,10 +262,6 @@ class _CuratedContestsState extends State<CuratedContests> {
                                   );
                                 }
                               },
-                              color: Colors.red[900],
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(Sizes.dimen_20.w)),
                               child: Text(
                                 'Create Contest',
                                 style: TextStyle(color: Colors.white),

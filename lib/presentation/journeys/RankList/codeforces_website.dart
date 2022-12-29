@@ -13,6 +13,28 @@ class CodeForcesWebsite extends StatefulWidget {
 
 class _CodeForcesWebsiteState extends State<CodeForcesWebsite> {
   final _controller = Completer<WebViewController>();
+
+  final webViewController = WebViewController()
+    ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    ..setBackgroundColor(const Color(0x00000000))
+    ..setNavigationDelegate(
+      NavigationDelegate(
+          // onProgress: (int progress) {
+          //   // Update loading bar.
+          // },
+          // onPageStarted: (String url) {},
+          // onPageFinished: (String url) {},
+          // onWebResourceError: (WebResourceError error) {},
+          // onNavigationRequest: (NavigationRequest request) {
+          // if (request.url.startsWith('https://codeforces.com/contests/')) {
+          // return NavigationDecision.prevent;
+          // }
+          // return NavigationDecision.navigate;
+          // },
+          ),
+    )
+    ..loadRequest(Uri.parse('https://codeforces.com/contests/'));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,12 +43,13 @@ class _CodeForcesWebsiteState extends State<CodeForcesWebsite> {
         foregroundColor: Colors.black,
         title: Center(child: Text("CodeForces")),
       ),
-      body: WebView(
-        initialUrl: "https://codeforces.com/contests",
-        javascriptMode: JavascriptMode.unrestricted,
-        onWebViewCreated: (controller) => _controller.complete(controller),
-        //gestureRecognizers: Set()..add(Factory<>() => ),
-      ),
+      body: WebViewWidget(controller: webViewController),
+      //  WebView(
+      //   initialUrl: "https://codeforces.com/contests",
+      //   javascriptMode: JavascriptMode.unrestricted,
+      //   onWebViewCreated: (controller) => _controller.complete(controller),
+      //   //gestureRecognizers: Set()..add(Factory<>() => ),
+      // ),
       bottomNavigationBar: Container(
           color: Colors.lightBlue[100],
           child: Row(

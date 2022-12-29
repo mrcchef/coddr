@@ -12,20 +12,16 @@ class ContestStandingsBloc
     extends Bloc<ContestStandingsEvent, ContestStandingsState> {
   GetCFStandings getCFStandings;
   ContestStandingsBloc({@required this.getCFStandings})
-      : super(ContestStandingsInitial());
-
-  @override
-  Stream<ContestStandingsState> mapEventToState(
-      ContestStandingsEvent event) async* {
-    if (event is CFStandingsListing) {
-      yield ContestStandingsFetching();
+      : super(ContestStandingsInitial()) {
+    on<CFStandingsListing>((event, emit) async {
+      emit(ContestStandingsFetching());
       final eitherList = await getCFStandings(event.getCFStandingsArguments);
-      yield eitherList.fold((appError) => ContestStandingsFailed(),
+      emit(eitherList.fold((appError) => ContestStandingsFailed(),
           (contestStandings) {
         return ContestStandingsFetched(
           cfStandings: contestStandings,
         );
-      });
-    }
+      }));
+    });
   }
 }

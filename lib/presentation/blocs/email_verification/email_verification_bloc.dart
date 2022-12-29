@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:coddr/domain/usecases/is_email_verified.dart';
 import 'package:coddr/domain/usecases/update_is_email_verified.dart';
@@ -17,21 +15,16 @@ class EmailVerificationBloc
     @required this.isEmailVerified,
     @required this.updateIsEmailVerified,
     Object verifyEmail,
-  }) : super(EmailVerificationInitial());
-
-  @override
-  Stream<EmailVerificationState> mapEventToState(
-    EmailVerificationEvent event,
-  ) async* {
-    if (event is VerifyEmailEvent) {
-      yield EmailVerificationLoading();
+  }) : super(EmailVerificationInitial()) {
+    on<VerifyEmailEvent>((event, emit) async {
+      emit(EmailVerificationLoading());
       bool isVerified = await isEmailVerified();
       String uid = event.uid;
       if (isVerified) {
         await updateIsEmailVerified(uid);
-        yield EmailVerificationDone();
+        emit(EmailVerificationDone());
       } else
-        yield EmailVerificationFailed();
-    }
+        emit(EmailVerificationFailed());
+    });
   }
 }

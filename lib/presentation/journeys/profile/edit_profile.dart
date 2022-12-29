@@ -232,9 +232,14 @@ class _EditProfileState extends State<EditProfile> {
                         height: 25,
                       ),
                       Center(
-                        child: RaisedButton(
+                        child: ElevatedButton(
+                          style: TextButton.styleFrom(
+                              backgroundColor: Colors.red[900],
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(Sizes.dimen_20.w)),
+                              foregroundColor: Colors.white),
                           onPressed: () => _saveForm(userModel),
-                          color: Color(0xFFd91f2a),
                           child: Text(
                             'Save Changes',
                             style: TextStyle(color: Colors.white),

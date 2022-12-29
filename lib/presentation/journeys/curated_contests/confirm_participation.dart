@@ -153,11 +153,12 @@ class ConfirmParticipation extends StatelessWidget {
                           onPressed = null;
                         }
 
-                        return FlatButton(
+                        return TextButton(
+                          style: TextButton.styleFrom(
+                              backgroundColor: Colors.green,
+                              foregroundColor: Colors.white),
                           child: childWidget,
                           onPressed: onPressed,
-                          color: Colors.green,
-                          textColor: Colors.white,
                         );
                       },
                     ),

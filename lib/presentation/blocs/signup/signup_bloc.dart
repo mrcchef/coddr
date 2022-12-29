@@ -21,53 +21,32 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     @required this.signUp,
     @required this.storeUserCredentials,
     @required this.verifyEmail,
-  }) : super(SignUpStateEmpty());
+  }) : super(SignUpStateEmpty()) {
+    on<SignUpWithCredentialsPressedEvent>((event, emit) async {
+      emit(SignUpStateLoding());
 
-  @override
-  Stream<SignUpState> mapEventToState(
-    SignUpEvent event,
-  ) async* {
-    if (event is SignUpWithCredentialsPressedEvent) {
-      yield* _mapSignUpWithCredentialsPressedToState(
-        email: event.email,
-        password: event.password,
-        displayName: event.displayName,
-        signUp: signUp,
-        verifyEmail: verifyEmail,
-      );
-    }
-  }
+      final eitherResponse = await signUp(
+          UserCredentials(email: event.email, password: event.password));
 
-  Stream<SignUpState> _mapSignUpWithCredentialsPressedToState({
-    String email,
-    String password,
-    String displayName,
-    SignUp signUp,
-    VerifyEmail verifyEmail,
-  }) async* {
-    yield SignUpStateLoding();
+      final Map<String, String> authData = {
+        'email': event.email,
+        'displayName': event.displayName,
+        'password': event.password,
+      };
 
-    final eitherResponse =
-        await signUp(UserCredentials(email: email, password: password));
+      bool isSignUpSuccesss = false;
 
-    final Map<String, String> authData = {
-      'email': email,
-      'displayName': displayName,
-      'password': password,
-    };
+      eitherResponse.fold((appError) {
+        isSignUpSuccesss = false;
+      }, (r) {
+        isSignUpSuccesss = true;
+      });
 
-    bool isSignUpSuccesss = false;
-
-    eitherResponse.fold((appError) {
-      isSignUpSuccesss = false;
-    }, (r) {
-      isSignUpSuccesss = true;
+      if (isSignUpSuccesss) {
+        await storeUserCredentials(authData);
+        emit(SignUpStateSuccess());
+      } else
+        emit(SignUpStateFailure(message: "Sign Up Failed"));
     });
-
-    if (isSignUpSuccesss) {
-      await storeUserCredentials(authData);
-      yield SignUpStateSuccess();
-    } else
-      yield SignUpStateFailure(message: "Sign Up Failed");
   }
 }

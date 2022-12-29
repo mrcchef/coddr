@@ -16,14 +16,10 @@ class HandelVerificationBloc
 
   HandelVerificationBloc(
       {@required this.getCFUser, @required this.updateIsHandleVerified})
-      : super(HandelVerificationInitial());
-
-  @override
-  Stream<HandelVerificationState> mapEventToState(
-      HandelVerificationEvent event) async* {
-    if (event is VerifyCFHandelEvent) {
-      yield HandelVerificationLoading();
-      if (event.handel.isEmpty) yield HandelVerificationCFHandelEmpty();
+      : super(HandelVerificationInitial()) {
+    on<VerifyCFHandelEvent>((event, emit) async {
+      emit(HandelVerificationLoading());
+      if (event.handel.isEmpty) emit(HandelVerificationCFHandelEmpty());
       List<String> handels = [];
       UserEntity userEntity;
       handels.add(event.handel);
@@ -35,20 +31,20 @@ class HandelVerificationBloc
         return true;
       });
       if (isSuccessful == false)
-        yield HandelVerificationFailed();
+        emit(HandelVerificationFailed());
       else {
         print(userEntity.email);
         print(event.email);
         if (userEntity.email == null)
-          yield HandelVerificationCFEmailPrivate();
+          emit(HandelVerificationCFEmailPrivate());
         else if (userEntity.email == event.email) {
           // can check the response and add one more checking of updating verification in firebase
           await updateIsHandleVerified(UpdateIsHandleCFVerifiedArgument(
               uid: event.uid, platformId: event.platformId));
-          yield HandelVerificationCompleted();
+          emit(HandelVerificationCompleted());
         } else
-          yield HandelVerificationFailed();
+          emit(HandelVerificationFailed());
       }
-    }
+    });
   }
 }

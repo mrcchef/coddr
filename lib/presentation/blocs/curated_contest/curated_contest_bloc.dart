@@ -13,21 +13,17 @@ class CuratedContestBloc
   FetchCuratedContestList fetchCuratedContestList;
 
   CuratedContestBloc({@required this.fetchCuratedContestList})
-      : super(CuratedContestInitial());
-
-  @override
-  Stream<CuratedContestState> mapEventToState(
-      CuratedContestEvent event) async* {
-    if (event is FetchCuratedContestEvent) {
-      yield CuratedContestFetchingState();
+      : super(CuratedContestInitial()) {
+    on<FetchCuratedContestEvent>((event, emit) async {
+      emit(CuratedContestFetchingState());
 
       final eitherResponse =
           await fetchCuratedContestList(event.fetchCuratedContestArgument);
 
-      yield eitherResponse.fold(
+      emit(eitherResponse.fold(
           (appError) => CuratedContestErrorState("API failed"),
           (curatedContestList) => CuratedContestFetchedState(
-              curatedContestList: curatedContestList));
-    }
+              curatedContestList: curatedContestList)));
+    });
   }
 }
