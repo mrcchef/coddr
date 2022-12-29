@@ -1,4 +1,4 @@
-package com.example.coddr
+package com.twoflutterdevelopers.coddr
 
 import io.flutter.embedding.android.FlutterActivity
 

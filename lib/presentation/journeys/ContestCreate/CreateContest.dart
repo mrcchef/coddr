@@ -224,7 +224,10 @@ class _CreateContestState extends State<CreateContest> {
                     EdgeInsets.fromLTRB(Sizes.dimen_8.w, 0, Sizes.dimen_8.w, 0),
                 child: Container(
                   width: double.infinity,
-                  child: FlatButton(
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        foregroundColor: Colors.white),
                     child: Text('Prize Breakup',
                         style: TextStyle(fontSize: Sizes.dimen_24.w)),
                     onPressed: () {
@@ -252,8 +255,6 @@ class _CreateContestState extends State<CreateContest> {
                         );
                       }
                     },
-                    color: Colors.green,
-                    textColor: Colors.white,
                   ),
                 ),
               ),

@@ -22,13 +22,9 @@ class CreateCuratedContestBloc
     @required this.createCuratedContest,
     @required this.updateParticipatedContests,
     @required this.updateUserModel,
-  }) : super(CreateCuratedContestInitial());
-
-  @override
-  Stream<CreateCuratedContestState> mapEventToState(
-      CreateCuratedContestEvent event) async* {
-    if (event is CreateCuratedContestEventt) {
-      yield CreateCuratedContestLoadingState();
+  }) : super(CreateCuratedContestInitial()) {
+    on<CreateCuratedContestEventt>((event, emit) async {
+      emit(CreateCuratedContestLoadingState());
 
       final eitherResponse =
           await createCuratedContest(event.curatedContestModel);
@@ -41,7 +37,7 @@ class CreateCuratedContestBloc
       );
 
       if (!isCuratedContestCreated)
-        yield CreateCuratedContestFailedState();
+        emit(CreateCuratedContestFailedState());
       else {
         final eitherResponse2 = await updateUserModel(event.userModel);
         isCuratedContestCreated &= eitherResponse2.fold(
@@ -67,9 +63,9 @@ class CreateCuratedContestBloc
           if (!isCuratedContestCreated)
             CreateCuratedContestFailedState();
           else
-            yield CreateCuratedContestSuccessState();
+            emit(CreateCuratedContestSuccessState());
         }
       }
-    }
+    });
   }
 }

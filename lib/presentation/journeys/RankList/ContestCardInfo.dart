@@ -26,12 +26,15 @@ class ContestCardinfo extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.all(Sizes.dimen_8.w),
-                child: RaisedButton(
+                child: ElevatedButton(
+                  style: TextButton.styleFrom(
+                      backgroundColor: Colors.red[900],
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(Sizes.dimen_20.w)),
+                      foregroundColor: Colors.white),
                   onPressed: () => Navigator.of(context)
                       .pushNamed(CodeForcesWebsite.routeName),
-                  color: Colors.red,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(Sizes.dimen_20.w)),
                   child: Text(
                     'Redirect to website',
                     style: TextStyle(color: Colors.white),

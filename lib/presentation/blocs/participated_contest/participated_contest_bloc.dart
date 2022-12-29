@@ -17,13 +17,9 @@ class ParticipatedContestBloc
   ParticipatedContestBloc({
     @required this.fetchCuratedContest,
     @required this.fetchParticipatedContests,
-  }) : super(ParticipatedContestInitial());
-
-  @override
-  Stream<ParticipatedContestState> mapEventToState(
-      ParticipatedContestEvent event) async* {
-    if (event is FetchParticipatedContestEvent) {
-      yield ParticipatedContestLoadingState();
+  }) : super(ParticipatedContestInitial()) {
+    on<FetchParticipatedContestEvent>((event, emit) async {
+      emit(ParticipatedContestLoadingState());
 
       List<ParticipatedContestModel> participatedContestList;
       final eitherResponse = await fetchParticipatedContests(event.uid);
@@ -33,8 +29,8 @@ class ParticipatedContestBloc
       });
 
       if (!isSuccess) {
-        yield ParticipatedContestFailedState(
-            "Participated Contest list failed to fetch");
+        emit(ParticipatedContestFailedState(
+            "Participated Contest list failed to fetch"));
       } else {
         List<CuratedContestModel> curatedContestModelList = [];
 
@@ -54,12 +50,12 @@ class ParticipatedContestBloc
         }
 
         if (!check)
-          yield ParticipatedContestFailedState(
-              "Curated Contest model list failed to fetch");
+          emit(ParticipatedContestFailedState(
+              "Curated Contest model list failed to fetch"));
         else
-          yield ParticipatedContestSuccessState(
-              curatedContestModelList: curatedContestModelList);
+          emit(ParticipatedContestSuccessState(
+              curatedContestModelList: curatedContestModelList));
       }
-    }
+    });
   }
 }

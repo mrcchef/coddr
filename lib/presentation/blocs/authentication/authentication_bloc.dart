@@ -1,12 +1,11 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
-import 'package:coddr/domain/entities/no_params.dart';
 import 'package:coddr/domain/usecases/get_emailId.dart';
 import 'package:coddr/domain/usecases/is_signed_in.dart';
 import 'package:coddr/domain/usecases/sign_out.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../../../domain/entities/no_params.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
@@ -21,27 +20,26 @@ class AuthenticationBloc
     @required this.isSignedIn,
     @required this.getEmailId,
     @required this.signOut,
-  }) : super(AuthenticationInitial());
-
-  @override
-  Stream<AuthenticationState> mapEventToState(
-    AuthenticationEvent event,
-  ) async* {
-    if (event is AppStartedEvent) {
+  }) : super(AuthenticationInitial()) {
+    on<AppStartedEvent>((event, emit) {
       final bool check = isSignedIn();
       if (check) {
         final String email = getEmailId();
-        yield Authenticated(email: email);
+        emit(Authenticated(email: email));
       } else {
-        yield UnAuthenticated();
+        emit(UnAuthenticated());
       }
-    } else if (event is SiggnedInEvent) {
+    });
+
+    on<SiggnedInEvent>(((event, emit) {
       final String email = getEmailId();
 
-      yield Authenticated(email: email);
-    } else if (event is SiggnedOutEvent) {
-      yield UnAuthenticated();
+      emit(Authenticated(email: email));
+    }));
+
+    on<SiggnedOutEvent>((event, emit) {
+      emit(UnAuthenticated());
       signOut(NoParams());
-    }
+    });
   }
 }

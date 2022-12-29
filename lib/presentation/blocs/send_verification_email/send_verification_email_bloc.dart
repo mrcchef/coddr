@@ -13,20 +13,16 @@ class SendVerificationEmailBloc
   VerifyEmail verifyEmail;
   SendVerificationEmailBloc({
     @required this.verifyEmail,
-  }) : super(SendVerificationEmailInitial());
-
-  @override
-  Stream<SendVerificationEmailState> mapEventToState(
-      SendVerificationEmailEvent event) async* {
-    if (event is SendVerificationEmail) {
-      yield SendVerificationEmailLoading();
+  }) : super(SendVerificationEmailInitial()) {
+    on<SendVerificationEmail>((event, emit) async {
+      emit(SendVerificationEmailLoading());
 
       final eitherResponse = await verifyEmail(NoParams());
 
-      yield eitherResponse.fold(
+      emit(eitherResponse.fold(
           (error) =>
               SendVerificationEmailFailed(appErrorType: error.appErrorType),
-          (r) => SendVerificationEmailSuccess());
-    }
+          (r) => SendVerificationEmailSuccess()));
+    });
   }
 }

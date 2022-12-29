@@ -250,7 +250,10 @@ class PrizeBreakup extends StatelessWidget {
                     EdgeInsets.fromLTRB(Sizes.dimen_8.w, 0, Sizes.dimen_8.w, 0),
                 child: Container(
                   width: double.infinity,
-                  child: FlatButton(
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        foregroundColor: Colors.white),
                     child: Text('Create Contest',
                         style: TextStyle(fontSize: Sizes.dimen_24.w)),
                     onPressed: () {
@@ -286,8 +289,6 @@ class PrizeBreakup extends StatelessWidget {
                         ),
                       );
                     },
-                    color: Colors.green,
-                    textColor: Colors.white,
                   ),
                 ),
               ),

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/domain/entities/app_error.dart';
@@ -17,24 +15,19 @@ class ContestListingBloc
   GetCFContestList getCFContestList;
 
   ContestListingBloc({@required this.getCFContestList})
-      : super(ContestListingInitial());
-
-  @override
-  Stream<ContestListingState> mapEventToState(
-    ContestListingEvent event,
-  ) async* {
-    if (event is PlatformSelectedEvent) {
-      yield ContestListFetchingState();
+      : super(ContestListingInitial()) {
+    on<PlatformSelectedEvent>((event, emit) async {
+      emit(ContestListFetchingState());
 
       GetCFContestList getCFContestList = getItInstance<GetCFContestList>();
       final eitherList = await getCFContestList(NoParams());
-      yield eitherList.fold(
+      emit(eitherList.fold(
         (appError) =>
             ContestListErrorState(appErrorType: appError.appErrorType),
         (contestList) {
           return ContestListFetchedState(contestList: contestList);
         },
-      );
-    }
+      ));
+    });
   }
 }
