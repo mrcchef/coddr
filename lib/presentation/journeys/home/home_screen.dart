@@ -52,12 +52,14 @@ class _HomeScreenState extends State<HomeScreen> {
     print(screenHeight);
     ScreenUtil.init(height: screenHeight, width: screenWidth);
 
-    Widget leftAppBarWidget = InkWell(
-      onTap: () {
-        Scaffold.of(context).openDrawer();
-      },
-      child: Icon(Icons.menu, color: Colors.black),
-    );
+    Widget leftAppBarWidget(context) {
+      return InkWell(
+        onTap: () {
+          Scaffold.of(context).openDrawer();
+        },
+        child: Icon(Icons.menu, color: Colors.black),
+      );
+    }
 
     Widget middleAppBarWidget = Padding(
       padding: EdgeInsets.only(top: Sizes.dimen_6.h),
@@ -82,7 +84,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Scaffold(
           backgroundColor: Colors.white,
           appBar: CoddrAppBar(
-            leftWidget: leftAppBarWidget,
+            leftWidget: Builder(
+              builder: ((context) => leftAppBarWidget(context)),
+            ),
             middleWidget: middleAppBarWidget,
             rightWidget: rightAppBarWidget,
           ),
