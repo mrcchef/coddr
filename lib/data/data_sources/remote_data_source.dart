@@ -73,12 +73,12 @@ class RemoteDataSourceImpl extends RemoteDataSource {
 
     CFStandingsModel standings =
         CFStandingsListModel.fromJson(responseBody).result;
-
     return standings;
   }
 
   @override
   Future<void> storeUserCredentials(Map<String, String> authData) async {
+    const int defaultCoins = 100;
     final String uid = authenticationDataSource.getUid();
     await FirebaseFirestore.instance.collection('users').doc(uid).set(
       {
@@ -91,7 +91,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         'isHandelCCVerified': false,
         'isHandelCFVerified': false,
         'isHandelHEVerified': false,
-        'coins': 100, // default coins
+        'coins': defaultCoins, // default coins
         'contest': 0,
         'wins': 0,
         'isAdmin': false,
