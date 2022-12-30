@@ -3,18 +3,19 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class CodeForcesWebsite extends StatefulWidget {
+class WebViewPage extends StatefulWidget {
   static const routeName = '/codeforces_website';
-  const CodeForcesWebsite({Key key}) : super(key: key);
+  final String url;
+  const WebViewPage({Key key, this.url}) : super(key: key);
 
   @override
-  _CodeForcesWebsiteState createState() => _CodeForcesWebsiteState();
+  _WebViewPageState createState() => _WebViewPageState();
 }
 
-class _CodeForcesWebsiteState extends State<CodeForcesWebsite> {
+class _WebViewPageState extends State<WebViewPage> {
   final _controller = Completer<WebViewController>();
 
-  final webViewController = WebViewController()
+  WebViewController webViewController(String url) => WebViewController()
     ..setJavaScriptMode(JavaScriptMode.unrestricted)
     ..setBackgroundColor(const Color(0x00000000))
     ..setNavigationDelegate(
@@ -33,7 +34,7 @@ class _CodeForcesWebsiteState extends State<CodeForcesWebsite> {
           // },
           ),
     )
-    ..loadRequest(Uri.parse('https://codeforces.com/contests/'));
+    ..loadRequest(Uri.parse(url));
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class _CodeForcesWebsiteState extends State<CodeForcesWebsite> {
         foregroundColor: Colors.black,
         title: Center(child: Text("CodeForces")),
       ),
-      body: WebViewWidget(controller: webViewController),
+      body: WebViewWidget(controller: webViewController(widget.url)),
       //  WebView(
       //   initialUrl: "https://codeforces.com/contests",
       //   javascriptMode: JavascriptMode.unrestricted,

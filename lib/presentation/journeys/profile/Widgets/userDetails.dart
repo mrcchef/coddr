@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 enum verificationState { initial, verified, verifying, notVerified }
+
 enum verificationEmailSentState { initial, sent, sending, failed }
 
 class UserDetails extends StatefulWidget {
@@ -33,9 +34,9 @@ class _UserDetailsState extends State<UserDetails> {
 
   @override
   initState() {
+    super.initState();
     emailVerificationBloc = getItInstance<EmailVerificationBloc>();
     sendVerificationEmailBloc = getItInstance<SendVerificationEmailBloc>();
-    super.initState();
   }
 
   @override

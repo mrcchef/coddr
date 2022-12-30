@@ -1,6 +1,6 @@
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
-import 'package:coddr/presentation/journeys/RankList/codeforces_website.dart';
+import 'package:coddr/presentation/journeys/RankList/WebViewPage.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -17,6 +17,11 @@ class ContestCardinfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String getUrl() {
+      String url = "https://codeforces.com/contest/";
+      return url;
+    }
+
     return Container(
       color: AppColor.lightGreen,
       child: Column(
@@ -33,8 +38,9 @@ class ContestCardinfo extends StatelessWidget {
                           borderRadius:
                               BorderRadius.circular(Sizes.dimen_20.w)),
                       foregroundColor: Colors.white),
-                  onPressed: () => Navigator.of(context)
-                      .pushNamed(CodeForcesWebsite.routeName),
+                  onPressed: () => Navigator.pushNamed(
+                      context, WebViewPage.routeName,
+                      arguments: WebViewPage(url: "https://codeforces.com/contest/")),
                   child: Text(
                     'Redirect to website',
                     style: TextStyle(color: Colors.white),

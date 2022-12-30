@@ -25,4 +25,9 @@ class SendVerificationEmailBloc
           (r) => SendVerificationEmailSuccess()));
     });
   }
+
+  @override
+  Future<void> close() {
+    return super.close();
+  }
 }

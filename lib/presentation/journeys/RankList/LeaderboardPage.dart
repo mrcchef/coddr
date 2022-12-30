@@ -9,6 +9,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+enum contestState { notStarted, started, finished }
+
 class LeaderBoard extends StatefulWidget {
   final CuratedContestModel curatedContestModel;
 
@@ -21,21 +23,36 @@ class LeaderBoard extends StatefulWidget {
 class _LeaderBoardState extends State<LeaderBoard> {
   List<String> users = [];
   ContestStandingsBloc _contestStandingsBloc;
+  contestState _contestState;
+
   @override
   void initState() {
     super.initState();
-    widget.curatedContestModel.participants.forEach((element) {
-      users.add(element['handelCF']);
-    });
-    print(widget.curatedContestModel.contestId);
 
-    print("Users ---> " + users.toString());
-    _contestStandingsBloc = getItInstance<ContestStandingsBloc>();
-    _contestStandingsBloc.add(CFStandingsListing(
-        getCFStandingsArguments: GetCFStandingsArguments(
-      handles: users,
-      contestId: widget.curatedContestModel.parentContestId,
-    )));
+    DateTime curTime = DateTime.now();
+
+    if (curTime.isBefore(widget.curatedContestModel.startTime)) {
+      _contestState = contestState.notStarted;
+    } else if (curTime.isBefore(widget.curatedContestModel.endTime)) {
+      _contestState = contestState.started;
+    } else {
+      _contestState = contestState.finished;
+    }
+
+    if (_contestState != contestState.notStarted) {
+      widget.curatedContestModel.participants.forEach((element) {
+        users.add(element['handelCF']);
+      });
+      print(widget.curatedContestModel.contestId);
+
+      print("Users ---> " + users.toString());
+      _contestStandingsBloc = getItInstance<ContestStandingsBloc>();
+      _contestStandingsBloc.add(CFStandingsListing(
+          getCFStandingsArguments: GetCFStandingsArguments(
+        handles: users,
+        contestId: widget.curatedContestModel.parentContestId,
+      )));
+    }
   }
 
   List<CFHandelStandingsEntity> sortUsers(List<CFHandelStandingsEntity> users) {
@@ -45,7 +62,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
 
   @override
   void dispose() {
-    _contestStandingsBloc.close();
+    _contestStandingsBloc?.close();
     super.dispose();
   }
 
@@ -53,190 +70,210 @@ class _LeaderBoardState extends State<LeaderBoard> {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        BlocBuilder<ContestStandingsBloc, ContestStandingsState>(
-          bloc: _contestStandingsBloc,
-          builder: (context, state) {
-            if (state is ContestStandingsFetching)
-              return Center(
-                child: CircularProgressIndicator(
-                  color: Colors.red,
-                  backgroundColor: Colors.green,
-                ),
-              );
-            else if (state is ContestStandingsFetched) {
-              List<CFHandelStandingsEntity> participatedUsers = [];
-              List<CFHandelStandingsEntity> nonParticipatedUsers = [];
+        if (_contestState == contestState.notStarted)
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: Sizes.dimen_12.w,
+              horizontal: Sizes.dimen_14.w,
+            ),
+            child: Center(
+              child: Text(
+                "Contest Not Started",
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6
+                    .copyWith(fontSize: Sizes.dimen_16.w),
+              ),
+            ),
+          ),
+        if (_contestState != contestState.notStarted)
+          BlocBuilder<ContestStandingsBloc, ContestStandingsState>(
+            bloc: _contestStandingsBloc,
+            builder: (context, state) {
+              if (state is ContestStandingsFetching)
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.red,
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              else if (state is ContestStandingsFetched) {
+                List<CFHandelStandingsEntity> participatedUsers = [];
+                List<CFHandelStandingsEntity> nonParticipatedUsers = [];
 
-              state.cfStandings.cfHandelStandingsEntity.forEach((element) {
-                if (element.rank == -1)
-                  nonParticipatedUsers.add(element);
-                else
-                  participatedUsers.add(element);
-              });
+                state.cfStandings.cfHandelStandingsEntity.forEach((element) {
+                  if (element.rank == -1)
+                    nonParticipatedUsers.add(element);
+                  else
+                    participatedUsers.add(element);
+                });
 
-              List<CFHandelStandingsEntity> sortedParticipatedUsers =
-                  sortUsers(participatedUsers);
-              return Table(
-                border: TableBorder.all(),
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                columnWidths: <int, TableColumnWidth>{
-                  0: FixedColumnWidth(Sizes.dimen_40.w),
-                  1: FlexColumnWidth(),
-                  2: FixedColumnWidth(Sizes.dimen_50.w),
-                  3: FixedColumnWidth(Sizes.dimen_70.w),
-                  4: FixedColumnWidth(Sizes.dimen_80.w)
-                },
-                children: [
-                  TableRow(children: [
-                    Center(
-                      child: Text(
-                        'Rank',
+                List<CFHandelStandingsEntity> sortedParticipatedUsers =
+                    sortUsers(participatedUsers);
+                return Table(
+                  border: TableBorder.all(),
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  columnWidths: <int, TableColumnWidth>{
+                    0: FixedColumnWidth(Sizes.dimen_40.w),
+                    1: FlexColumnWidth(),
+                    2: FixedColumnWidth(Sizes.dimen_50.w),
+                    3: FixedColumnWidth(Sizes.dimen_70.w),
+                    4: FixedColumnWidth(Sizes.dimen_80.w)
+                  },
+                  children: [
+                    TableRow(children: [
+                      Center(
+                        child: Text(
+                          'Rank',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.red),
+                        ),
+                      ),
+                      Center(
+                          child: Text(
+                        'Userhandle',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, color: Colors.red),
-                      ),
+                      )),
+                      Center(
+                          child: Text(
+                        'Points',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.red),
+                      )),
+                      Center(
+                          child: Padding(
+                        padding: EdgeInsets.fromLTRB(
+                            Sizes.dimen_7.w, 0, Sizes.dimen_7.w, 0),
+                        child: Text('Contest rank',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red)),
+                      )),
+                      Center(
+                          child: Padding(
+                        padding: EdgeInsets.fromLTRB(
+                            Sizes.dimen_7.w, 0, Sizes.dimen_7.w, 0),
+                        child: Text('Penalty',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red)),
+                      )),
+                    ]),
+                    TableRow(
+                      children: [
+                        ListView.builder(
+                            itemCount: sortedParticipatedUsers.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (_, index) {
+                              return Center(
+                                  child: Text((index + 1).toString()));
+                            }),
+                        ListView.builder(
+                            itemCount: sortedParticipatedUsers.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (_, index) {
+                              return Center(
+                                  child: Text(
+                                      sortedParticipatedUsers[index].handle));
+                            }),
+                        ListView.builder(
+                            itemCount: sortedParticipatedUsers.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (_, index) {
+                              return Center(
+                                  child: Text(sortedParticipatedUsers[index]
+                                      .points
+                                      .toString()));
+                            }),
+                        ListView.builder(
+                            itemCount: sortedParticipatedUsers.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (_, index) {
+                              return Center(
+                                  child: Text(sortedParticipatedUsers[index]
+                                      .rank
+                                      .toString()));
+                            }),
+                        ListView.builder(
+                            itemCount: sortedParticipatedUsers.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (_, index) {
+                              return Center(
+                                  child: Text(sortedParticipatedUsers[index]
+                                      .penalty
+                                      .toString()));
+                            }),
+                      ],
                     ),
-                    Center(
-                        child: Text(
-                      'Userhandle',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.red),
-                    )),
-                    Center(
-                        child: Text(
-                      'Points',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.red),
-                    )),
-                    Center(
-                        child: Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          Sizes.dimen_7.w, 0, Sizes.dimen_7.w, 0),
-                      child: Text('Contest rank',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.red)),
-                    )),
-                    Center(
-                        child: Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          Sizes.dimen_7.w, 0, Sizes.dimen_7.w, 0),
-                      child: Text('Penalty',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.red)),
-                    )),
-                  ]),
-                  TableRow(
-                    children: [
-                      ListView.builder(
-                          itemCount: sortedParticipatedUsers.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (_, index) {
-                            return Center(child: Text((index + 1).toString()));
-                          }),
-                      ListView.builder(
-                          itemCount: sortedParticipatedUsers.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (_, index) {
-                            return Center(
-                                child: Text(
-                                    sortedParticipatedUsers[index].handle));
-                          }),
-                      ListView.builder(
-                          itemCount: sortedParticipatedUsers.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (_, index) {
-                            return Center(
-                                child: Text(sortedParticipatedUsers[index]
-                                    .points
-                                    .toString()));
-                          }),
-                      ListView.builder(
-                          itemCount: sortedParticipatedUsers.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (_, index) {
-                            return Center(
-                                child: Text(sortedParticipatedUsers[index]
-                                    .rank
-                                    .toString()));
-                          }),
-                      ListView.builder(
-                          itemCount: sortedParticipatedUsers.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (_, index) {
-                            return Center(
-                                child: Text(sortedParticipatedUsers[index]
-                                    .penalty
-                                    .toString()));
-                          }),
-                    ],
-                  ),
-                  TableRow(
-                    children: [
-                      ListView.builder(
-                          itemCount: nonParticipatedUsers.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (_, index) {
-                            return Center(
-                                child: Text(
-                                    (participatedUsers.length + index + 1)
-                                        .toString()));
-                          }),
-                      ListView.builder(
-                          itemCount: nonParticipatedUsers.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (_, index) {
-                            return Center(
-                                child:
-                                    Text(nonParticipatedUsers[index].handle));
-                          }),
-                      ListView.builder(
-                          itemCount: nonParticipatedUsers.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (_, index) {
-                            return Center(
-                                child: Text(nonParticipatedUsers[index]
-                                    .points
-                                    .toString()));
-                          }),
-                      ListView.builder(
-                          itemCount: nonParticipatedUsers.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (_, index) {
-                            return Center(
-                                child: Text(nonParticipatedUsers[index]
-                                    .rank
-                                    .toString()));
-                          }),
-                      ListView.builder(
-                          itemCount: nonParticipatedUsers.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (_, index) {
-                            return Center(
-                                child: Text(nonParticipatedUsers[index]
-                                    .penalty
-                                    .toString()));
-                          }),
-                    ],
-                  ),
-                ],
-              );
-            } else if (state is ContestStandingsFailed) {
-              return Center(
-                child: Text("Fetching Failed"),
-              );
-            }
-            return SizedBox.shrink();
-          },
-        )
+                    TableRow(
+                      children: [
+                        ListView.builder(
+                            itemCount: nonParticipatedUsers.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (_, index) {
+                              return Center(
+                                  child: Text(
+                                      (participatedUsers.length + index + 1)
+                                          .toString()));
+                            }),
+                        ListView.builder(
+                            itemCount: nonParticipatedUsers.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (_, index) {
+                              return Center(
+                                  child:
+                                      Text(nonParticipatedUsers[index].handle));
+                            }),
+                        ListView.builder(
+                            itemCount: nonParticipatedUsers.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (_, index) {
+                              return Center(
+                                  child: Text(nonParticipatedUsers[index]
+                                      .points
+                                      .toString()));
+                            }),
+                        ListView.builder(
+                            itemCount: nonParticipatedUsers.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (_, index) {
+                              return Center(
+                                  child: Text(nonParticipatedUsers[index]
+                                      .rank
+                                      .toString()));
+                            }),
+                        ListView.builder(
+                            itemCount: nonParticipatedUsers.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (_, index) {
+                              return Center(
+                                  child: Text(nonParticipatedUsers[index]
+                                      .penalty
+                                      .toString()));
+                            }),
+                      ],
+                    ),
+                  ],
+                );
+              } else if (state is ContestStandingsFailed) {
+                return Center(
+                  child: Text("Fetching Failed"),
+                );
+              }
+              return SizedBox.shrink();
+            },
+          )
       ],
     );
   }

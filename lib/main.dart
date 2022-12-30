@@ -11,7 +11,7 @@ import 'package:coddr/presentation/blocs/send_verification_email/send_verificati
 import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
 import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
 import 'package:coddr/presentation/blocs/update_curated_contest/update_curated_contest_bloc.dart';
-import 'package:coddr/presentation/journeys/RankList/codeforces_website.dart';
+import 'package:coddr/presentation/journeys/RankList/WebViewPage.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
 import 'package:coddr/presentation/journeys/auth/sign_up_screen.dart';
 import 'package:coddr/presentation/journeys/auth/splash_screen.dart';
@@ -157,7 +157,7 @@ class _MyAppState extends State<MyApp> {
             SignInScreen.routeName: (ctx) => SignInScreen(),
             SignUpScreen.routeName: (ctx) => SignUpScreen(),
             UpcomingContestsScreen.routeName: (ctx) => UpcomingContestsScreen(),
-            CodeForcesWebsite.routeName: (ctx) => CodeForcesWebsite(),
+            WebViewPage.routeName: (ctx) => WebViewPage(),
             AboutUs.routeName: (ctx) => AboutUs(),
           }),
     );

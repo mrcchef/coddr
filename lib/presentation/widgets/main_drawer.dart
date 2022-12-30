@@ -8,10 +8,10 @@ import 'package:coddr/presentation/journeys/Rewards/rewards_page.dart';
 import 'package:coddr/presentation/journeys/about_us/about_us.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
 import 'package:coddr/presentation/journeys/participated_contest/participated_contest_screen.dart';
-import 'package:coddr/presentation/journeys/profile/profile.dart';
-import 'package:coddr/presentation/widgets/drawer_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../journeys/profile/profile.dart';
 
 class MainDrawer extends StatefulWidget {
   @override
@@ -35,6 +35,33 @@ class _MainDrawerState extends State<MainDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    Widget getDrawerTile(String title, String imagePath, Function onTap) {
+      return InkWell(
+        onTap: () {
+          onTap();
+        },
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: Sizes.dimen_10.w),
+          child: Row(
+            children: [
+              SizedBox(
+                child: Image.asset(imagePath),
+                height: Sizes.dimen_24.h,
+                width: Sizes.dimen_24.h,
+              ),
+              SizedBox(
+                width: Sizes.dimen_14.w,
+              ),
+              Text(
+                title,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return Drawer(
       child: SingleChildScrollView(
         child: BlocBuilder<ProfileBloc, ProfileState>(
@@ -62,32 +89,19 @@ class _MainDrawerState extends State<MainDrawer> {
                     left: Sizes.dimen_20.w,
                   ),
                   alignment: Alignment.centerLeft,
-                  //  child:Positioned(
-                  // top: 125,
-                  // right: 135,
                   child: CircleAvatar(
                     radius: 60,
                     backgroundImage:
                         (userModel.imageUrl != "" && userModel.imageUrl != null)
                             ? NetworkImage(userModel.imageUrl)
                             : AssetImage(Images.defaultUserImage),
-                    //backgroundImage: AssetImage('assets/images/kshittiz2.jpg'),
-                    // ),
                   ),
-                  // child: CircleAvatar(
-                  //   radius: 60,
-                  //   child: (userModel.imageUrl == null)
-                  //       ? Image.asset(
-                  //           Images.defaultUserImage,
-                  //           fit: BoxFit.cover,
-                  //         )
-                  //       : Image.network(userModel.imageUrl),
-                  // ),
                 ),
                 SizedBox(height: Sizes.dimen_10.w),
                 Padding(
-                  padding: EdgeInsets.only(
-                    left: Sizes.dimen_30.w,
+                  padding: EdgeInsets.symmetric(
+                    vertical: Sizes.dimen_2.h,
+                    horizontal: Sizes.dimen_20.w,
                   ),
                   child: Text(
                     (userModel.displayName == null)
@@ -97,18 +111,25 @@ class _MainDrawerState extends State<MainDrawer> {
                     textAlign: TextAlign.start,
                   ),
                 ),
-                DrawerListTile('Profile', Icons.person_outline_outlined, () {
-                  Navigator.of(context).popAndPushNamed(Profile.routeName);
-                }),
+                getDrawerTile(
+                  'Profile',
+                  Images.userIcon,
+                  () {
+                    Navigator.of(context).popAndPushNamed(Profile.routeName);
+                  },
+                ),
+                getDrawerTile(
+                  'Participated Contests',
+                  Images.pastContest,
+                  () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            ParticipatedContestScreen(uid: userModel.uid)));
+                  },
+                ),
 
-                DrawerListTile('Participated Contests', Icons.timeline, () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          ParticipatedContestScreen(uid: userModel.uid)));
-                }),
-                // DrawerListTile('Activity', Icons.timeline, () {}),
-                DrawerListTile('Rewards', Icons.redeem, () {
+                getDrawerTile('Rewards', Images.rewardIcon, () {
                   Navigator.of(context).pop();
                   Navigator.push(
                       context,
@@ -117,15 +138,48 @@ class _MainDrawerState extends State<MainDrawer> {
                                 coins: userModel.coins,
                               )));
                 }),
-                DrawerListTile(
-                    'About Us', Icons.sentiment_satisfied_alt_outlined, () {
+                getDrawerTile('About Us', Images.infoIcon, () {
                   Navigator.of(context).popAndPushNamed(AboutUs.routeName);
                 }),
-                DrawerListTile('Sign Out', Icons.logout, () {
-                  Navigator.of(context).popAndPushNamed(SignInScreen.routeName);
-                  // BlocProvider.of<AuthenticationBloc>(context)
-                  //     .add(SiggnedOutEvent());
-                }),
+                getDrawerTile(
+                  'Sign Out',
+                  Images.logoutIcon,
+                  () {
+                    Navigator.of(context)
+                        .popAndPushNamed(SignInScreen.routeName);
+                    // BlocProvider.of<AuthenticationBloc>(context)
+                    //     .add(SiggnedOutEvent());
+                  },
+                ),
+                // DrawerListTile('Profile', Icons.abc, () {
+                //   Navigator.of(context).popAndPushNamed(Profile.routeName);
+                // }),
+
+                // DrawerListTile('Participated Contests', Icons.timeline, () {
+                //   Navigator.of(context).pop();
+                //   Navigator.of(context).push(MaterialPageRoute(
+                //       builder: (context) =>
+                //           ParticipatedContestScreen(uid: userModel.uid)));
+                // }),
+                // // DrawerListTile('Activity', Icons.timeline, () {}),
+                // DrawerListTile('Rewards', Icons.redeem, () {
+                //   Navigator.of(context).pop();
+                //   Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (context) => RewardsPage(
+                //                 coins: userModel.coins,
+                //               )));
+                // }),
+                // DrawerListTile(
+                //     'About Us', Icons.sentiment_satisfied_alt_outlined, () {
+                //   Navigator.of(context).popAndPushNamed(AboutUs.routeName);
+                // }),
+                // DrawerListTile('Sign Out', Icons.logout, () {
+                //   Navigator.of(context).popAndPushNamed(SignInScreen.routeName);
+                //   // BlocProvider.of<AuthenticationBloc>(context)
+                //   //     .add(SiggnedOutEvent());
+                // }),
               ],
             );
           },
