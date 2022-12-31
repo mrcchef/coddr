@@ -18,7 +18,7 @@ class ContestCardinfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String getUrl() {
-      String url = "https://codeforces.com/contest/";
+      String url = "https://codeforces.com/contests/";
       return url;
     }
 
@@ -40,7 +40,7 @@ class ContestCardinfo extends StatelessWidget {
                       foregroundColor: Colors.white),
                   onPressed: () => Navigator.pushNamed(
                       context, WebViewPage.routeName,
-                      arguments: WebViewPage(url: "https://codeforces.com/contest/")),
+                      arguments: {'url': getUrl()}),
                   child: Text(
                     'Redirect to website',
                     style: TextStyle(color: Colors.white),

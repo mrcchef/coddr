@@ -35,6 +35,11 @@ class _ParticipatedContestScreenState extends State<ParticipatedContestScreen> {
     super.dispose();
   }
 
+  List<CuratedContestModel> sortContest(List<CuratedContestModel> users) {
+    users.sort((a, b) => (a.startTime.isBefore(b.startTime)) == true ? 1 : 0);
+    return users;
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget leftAppBarWidget = InkWell(
@@ -83,7 +88,8 @@ class _ParticipatedContestScreenState extends State<ParticipatedContestScreen> {
             }
             curatedContestModelList = (state as ParticipatedContestSuccessState)
                 .curatedContestModelList;
-            print(curatedContestModelList);
+
+            curatedContestModelList = sortContest(curatedContestModelList);
 
             return ListView.builder(
                 itemCount: curatedContestModelList.length,

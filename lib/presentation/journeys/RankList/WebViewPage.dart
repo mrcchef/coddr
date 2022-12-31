@@ -5,8 +5,8 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewPage extends StatefulWidget {
   static const routeName = '/codeforces_website';
-  final String url;
-  const WebViewPage({Key key, this.url}) : super(key: key);
+
+  const WebViewPage({Key key}) : super(key: key);
 
   @override
   _WebViewPageState createState() => _WebViewPageState();
@@ -19,38 +19,22 @@ class _WebViewPageState extends State<WebViewPage> {
     ..setJavaScriptMode(JavaScriptMode.unrestricted)
     ..setBackgroundColor(const Color(0x00000000))
     ..setNavigationDelegate(
-      NavigationDelegate(
-          // onProgress: (int progress) {
-          //   // Update loading bar.
-          // },
-          // onPageStarted: (String url) {},
-          // onPageFinished: (String url) {},
-          // onWebResourceError: (WebResourceError error) {},
-          // onNavigationRequest: (NavigationRequest request) {
-          // if (request.url.startsWith('https://codeforces.com/contests/')) {
-          // return NavigationDecision.prevent;
-          // }
-          // return NavigationDecision.navigate;
-          // },
-          ),
+      NavigationDelegate(),
     )
     ..loadRequest(Uri.parse(url));
 
   @override
   Widget build(BuildContext context) {
+    final arg = ModalRoute.of(context).settings.arguments as Map;
+    String url = arg['url'];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightBlue[100],
         foregroundColor: Colors.black,
         title: Center(child: Text("CodeForces")),
       ),
-      body: WebViewWidget(controller: webViewController(widget.url)),
-      //  WebView(
-      //   initialUrl: "https://codeforces.com/contests",
-      //   javascriptMode: JavascriptMode.unrestricted,
-      //   onWebViewCreated: (controller) => _controller.complete(controller),
-      //   //gestureRecognizers: Set()..add(Factory<>() => ),
-      // ),
+      body: WebViewWidget(controller: webViewController(url)),
       bottomNavigationBar: Container(
           color: Colors.lightBlue[100],
           child: Row(
