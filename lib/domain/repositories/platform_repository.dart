@@ -18,6 +18,8 @@ abstract class PlatformRepository {
 
   bool isSignedIn();
 
+  String getUid();
+
   String getEmailId();
 
   Future<Either<AppError, void>> storeUserCredentials(

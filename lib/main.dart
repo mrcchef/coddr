@@ -12,9 +12,11 @@ import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
 import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
 import 'package:coddr/presentation/blocs/update_curated_contest/update_curated_contest_bloc.dart';
 import 'package:coddr/presentation/journeys/RankList/WebViewPage.dart';
+import 'package:coddr/presentation/journeys/auth/complete_profile.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
 import 'package:coddr/presentation/journeys/auth/sign_up_screen.dart';
 import 'package:coddr/presentation/journeys/auth/splash_screen.dart';
+import 'package:coddr/presentation/journeys/auth/verify_email_sceen.dart';
 //Files
 import 'package:coddr/presentation/journeys/home/home_screen.dart';
 import 'package:coddr/presentation/journeys/profile/edit_profile.dart';
@@ -159,6 +161,8 @@ class _MyAppState extends State<MyApp> {
             UpcomingContestsScreen.routeName: (ctx) => UpcomingContestsScreen(),
             WebViewPage.routeName: (ctx) => WebViewPage(),
             AboutUs.routeName: (ctx) => AboutUs(),
+            VerifyEmailScreen.routeName: (ctx) => VerifyEmailScreen(),
+            CompleteProfile.routeName: (ctx) => CompleteProfile(),
           }),
     );
   }

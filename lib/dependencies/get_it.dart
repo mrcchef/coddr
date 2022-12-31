@@ -13,6 +13,7 @@ import 'package:coddr/domain/usecases/get_cf_contest_list.dart';
 import 'package:coddr/domain/usecases/get_cf_standings.dart';
 import 'package:coddr/domain/usecases/get_cf_user.dart';
 import 'package:coddr/domain/usecases/get_emailId.dart';
+import 'package:coddr/domain/usecases/get_uid.dart';
 import 'package:coddr/domain/usecases/is_email_verified.dart';
 import 'package:coddr/domain/usecases/is_signed_in.dart';
 import 'package:coddr/domain/usecases/sign_in.dart';
@@ -93,6 +94,9 @@ Future init() async {
 
   getItInstance.registerLazySingleton<GetEmailId>(
       () => GetEmailId(platformRepository: getItInstance()));
+
+  getItInstance.registerLazySingleton<GetUid>(
+      () => GetUid(platformRepository: getItInstance()));
 
   getItInstance.registerLazySingleton<IsSignedIn>(
       () => IsSignedIn(platformRepository: getItInstance()));

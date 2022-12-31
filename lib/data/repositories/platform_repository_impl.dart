@@ -20,6 +20,11 @@ class PlatformRepositoryImpl extends PlatformRepository {
       @required this.authenticationDataSource});
 
   @override
+  String getUid() {
+    return authenticationDataSource.getUid();
+  }
+
+  @override
   Future<Either<AppError, List<ContestEntity>>> getCFContestList() async {
     try {
       List<ContestEntity> contestList = await remoteDataSource.getCFContest();

@@ -16,4 +16,5 @@ class Images {
   static const logoutIcon = 'assets/logos/logout.png';
   static const rewardIcon = 'assets/logos/reward.png';
   static const userIcon = 'assets/logos/user.png';
+  static const emailIcon = 'assets/logos/email.png';
 }

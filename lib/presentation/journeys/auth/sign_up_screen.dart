@@ -6,7 +6,7 @@ import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
 import 'package:coddr/presentation/journeys/auth/sign_up_container.dart';
-import 'package:coddr/presentation/journeys/home/home_screen.dart';
+import 'package:coddr/presentation/journeys/auth/verify_email_sceen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -55,7 +55,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ));
             } else if (state is SignUpStateSuccess) {
               print("Entered signup consumer");
-              Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+              Navigator.of(context)
+                  .pushReplacementNamed(VerifyEmailScreen.routeName);
+              // Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
               // BlocProvider.of<AuthenticationBloc>(context)
               //     .add(SiggnedInEvent());
             }

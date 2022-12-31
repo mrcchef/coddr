@@ -30,7 +30,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
       final Map<String, String> authData = {
         'email': event.email,
-        'displayName': event.displayName,
         'password': event.password,
       };
 
@@ -44,6 +43,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
       if (isSignUpSuccesss) {
         await storeUserCredentials(authData);
+        
         emit(SignUpStateSuccess());
       } else
         emit(SignUpStateFailure(message: "Sign Up Failed"));

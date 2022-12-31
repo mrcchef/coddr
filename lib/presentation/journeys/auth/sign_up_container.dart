@@ -16,9 +16,9 @@ class _SignUpContainerState extends State<SignUpContainer> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   Map<String, String> _authData = {
-    'displayName': '',
     'email': '',
     'password': '',
+    'confirmPassword': '',
   };
 
   AuthenticationBloc authenticationBloc;
@@ -34,6 +34,16 @@ class _SignUpContainerState extends State<SignUpContainer> {
       return;
     }
     _formKey.currentState.save();
+    if (_authData['password'] != _authData['confirmPassword']) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Password does not match!!"),
+          backgroundColor: Theme.of(context).errorColor,
+        ),
+      );
+
+      return;
+    }
     _onFormSubmitted(context);
   }
 
@@ -42,7 +52,6 @@ class _SignUpContainerState extends State<SignUpContainer> {
       SignUpWithCredentialsPressedEvent(
         email: _authData['email'],
         password: _authData['password'],
-        displayName: _authData['displayName'],
       ),
     );
   }
@@ -56,30 +65,30 @@ class _SignUpContainerState extends State<SignUpContainer> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Sizes.dimen_10),
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(Sizes.dimen_10),
-              ),
-              elevation: Sizes.dimen_8,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Sizes.dimen_10),
-                child: TextFormField(
-                  decoration: InputDecoration(labelText: 'Display Name'),
-                  validator: (value) {
-                    if (value.length < 3) {
-                      return 'Name should be at least of 3 characters';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _authData['displayName'] = value;
-                  },
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: Sizes.dimen_10),
+          //   child: Card(
+          //     shape: RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.circular(Sizes.dimen_10),
+          //     ),
+          //     elevation: Sizes.dimen_8,
+          //     child: Padding(
+          //       padding: const EdgeInsets.symmetric(horizontal: Sizes.dimen_10),
+          //       child: TextFormField(
+          //         decoration: InputDecoration(labelText: 'Display Name'),
+          //         validator: (value) {
+          //           if (value.length < 3) {
+          //             return 'Name should be at least of 3 characters';
+          //           }
+          //           return null;
+          //         },
+          //         onSaved: (value) {
+          //           _authData['displayName'] = value;
+          //         },
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Padding(
             padding: const EdgeInsets.only(
               left: Sizes.dimen_10,
@@ -140,6 +149,36 @@ class _SignUpContainerState extends State<SignUpContainer> {
             ),
           ),
           Padding(
+            padding: const EdgeInsets.only(
+              left: Sizes.dimen_10,
+              top: Sizes.dimen_10,
+              right: Sizes.dimen_10,
+            ),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(Sizes.dimen_10),
+              ),
+              elevation: Sizes.dimen_8,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: Sizes.dimen_10),
+                child: TextFormField(
+                  decoration: InputDecoration(labelText: 'Confirm Password'),
+                  obscureText: true,
+                  validator: (value) {
+                    if (value.isEmpty || value.length <= 5) {
+                      return 'Password is too short';
+                    }
+
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _authData['confirmPassword'] = value;
+                  },
+                ),
+              ),
+            ),
+          ),
+          Padding(
             padding: const EdgeInsets.only(left: Sizes.dimen_8),
             child: TextButton(
               onPressed: () {
@@ -148,6 +187,7 @@ class _SignUpContainerState extends State<SignUpContainer> {
               child: Text('Forgot Your Password?'),
             ),
           ),
+
           Center(
             child: Container(
               width: deviceSize.width * 0.7,
