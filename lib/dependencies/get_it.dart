@@ -44,6 +44,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
+import '../domain/usecases/store_user_model.dart';
+
 final getItInstance = GetIt.I;
 
 Future init() async {
@@ -113,6 +115,9 @@ Future init() async {
   getItInstance.registerLazySingleton<UpdateUserModel>(
       () => UpdateUserModel(platformRepository: getItInstance()));
 
+  getItInstance.registerLazySingleton<StoreUserModel>(
+      () => StoreUserModel(platformRepository: getItInstance()));
+
   getItInstance.registerLazySingleton<UpdateCuratedContest>(
       () => UpdateCuratedContest(platformRepository: getItInstance()));
 
@@ -156,8 +161,10 @@ Future init() async {
             updateParticipatedContests: getItInstance(),
           ));
 
-  getItInstance.registerFactory<ProfileBloc>(
-      () => ProfileBloc(fetchUserDetail: getItInstance()));
+  getItInstance.registerFactory<ProfileBloc>(() => ProfileBloc(
+      fetchUserDetail: getItInstance(),
+      updateUserModel: getItInstance(),
+      storeUserModel: getItInstance()));
 
   getItInstance.registerLazySingleton<HandelVerificationBloc>(() =>
       HandelVerificationBloc(
@@ -222,7 +229,6 @@ Future init() async {
 
   getItInstance.registerFactory<SignUpBloc>(() => SignUpBloc(
         signUp: getItInstance(),
-        storeUserCredentials: getItInstance(),
         verifyEmail: getItInstance(),
       ));
 }

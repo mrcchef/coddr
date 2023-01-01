@@ -145,6 +145,7 @@ class _MyAppState extends State<MyApp> {
               } else if (state is Authenticated) {
                 // print(state.email);
                 print("State is Authenticated");
+                // return CompleteProfile();
                 return HomeScreen();
               } else {
                 print("State is Unauthenticated");

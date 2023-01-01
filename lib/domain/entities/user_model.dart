@@ -27,6 +27,7 @@ class UserModel extends Equatable {
   final bool isHandelATCVerified;
   final bool isHandelHEVerified;
   final bool isAdmin;
+  static int defaultCoins = 100;
 
   UserModel({
     this.isEmailVerified = false,

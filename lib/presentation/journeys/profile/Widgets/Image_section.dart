@@ -1,3 +1,6 @@
+import 'package:coddr/common/constants/image_constants.dart';
+import 'package:coddr/common/constants/size_constants.dart';
+import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:flutter/material.dart';
 
 class ImageSection extends StatelessWidget {
@@ -14,12 +17,8 @@ class ImageSection extends StatelessWidget {
               width: double.infinity,
               child: Image.asset(
                 'assets/images/coding.jpeg',
-                //imageUrl
                 fit: BoxFit.cover,
               ),
-              // child: Image.network(
-              //   imageUrl,
-              // ),
             ),
             SizedBox(
               height: 56,
@@ -34,9 +33,16 @@ class ImageSection extends StatelessWidget {
             backgroundImage: (imageUrl != "")
                 ? NetworkImage(imageUrl)
                 : NetworkImage('https://stratosphere.co.in/img/user.jpg'),
-            //backgroundImage: AssetImage('assets/images/kshittiz2.jpg'),
           ),
-        )
+        ),
+        Positioned(
+          top: 125,
+          right: 135,
+          child: Image.asset(
+            Images.verifiedBadgeIcon,
+            height: Sizes.dimen_40.w,
+          ),
+        ),
       ],
     );
   }

@@ -58,4 +58,6 @@ abstract class PlatformRepository {
 
   Future<Either<AppError, bool>> updateParticipatedContests(
       String uid, ParticipatedContestModel participatedContestModel);
+
+  Future<Either<AppError, void>> storeUserModel(UserModel userModel);
 }

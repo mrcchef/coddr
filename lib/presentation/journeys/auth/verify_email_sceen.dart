@@ -38,6 +38,8 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
   @override
   Widget build(BuildContext context) {
     verificationState vstate = verificationState.initial;
+    final arg = ModalRoute.of(context).settings.arguments as Map;
+    String email = arg['email'];
     return Scaffold(
       body: SingleChildScrollView(
         child: BlocConsumer<EmailVerificationBloc, EmailVerificationState>(
@@ -48,7 +50,10 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                 content: Text("Email Verification successful!"),
                 backgroundColor: Colors.green,
               ));
-              Navigator.of(context).popAndPushNamed(CompleteProfile.routeName);
+              Navigator.of(context)
+                  .popAndPushNamed(CompleteProfile.routeName, arguments: {
+                'email': email,
+              });
             }
             if (state is EmailVerificationFailed) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(

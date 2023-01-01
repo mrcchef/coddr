@@ -20,6 +20,16 @@ class PlatformRepositoryImpl extends PlatformRepository {
       @required this.authenticationDataSource});
 
   @override
+  Future<Either<AppError, void>> storeUserModel(UserModel userModel) async {
+    try {
+      await remoteDataSource.storeUserModel(userModel);
+      return Right(null);
+    } on Exception {
+      return Left(AppError(appErrorType: AppErrorType.firebase));
+    }
+  }
+
+  @override
   String getUid() {
     return authenticationDataSource.getUid();
   }

@@ -10,3 +10,15 @@ abstract class ProfileEvent extends Equatable {
 class FetchProfileData extends ProfileEvent {}
 
 class VerifyEmailButtonPressedEvent extends ProfileEvent {}
+
+class UpdateProfileData extends ProfileEvent {
+  final UserModel userModel;
+
+  UpdateProfileData({@required this.userModel});
+}
+
+class StoreProfileData extends ProfileEvent {
+  final UserModel userModel;
+
+  StoreProfileData({@required this.userModel});
+}

@@ -55,8 +55,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ));
             } else if (state is SignUpStateSuccess) {
               print("Entered signup consumer");
-              Navigator.of(context)
-                  .pushReplacementNamed(VerifyEmailScreen.routeName);
+              Navigator.of(context).pushReplacementNamed(
+                  VerifyEmailScreen.routeName,
+                  arguments: {'email': state.email});
               // Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
               // BlocProvider.of<AuthenticationBloc>(context)
               //     .add(SiggnedInEvent());

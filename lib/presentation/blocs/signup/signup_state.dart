@@ -23,7 +23,12 @@ class SignUpStateFailure extends SignUpState {
 }
 
 class SignUpStateSuccess extends SignUpState {
-  SignUpStateSuccess();
+  final String email;
+
+  SignUpStateSuccess({@required this.email});
+
+  @override
+  List<Object> get props => [email];
 }
 
 class SignUpStateVerifying extends SignUpState {

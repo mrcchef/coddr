@@ -17,7 +17,7 @@ abstract class RemoteDataSource {
   Future<void> storeUserCredentials(Map<String, String> authData);
   Future<List<CFUserModel>> getCFUser(List<String> handles);
   Future<UserModel> fetchUserDetails(String uid);
-  Future<void> storeUserDetails(UserModel userModel);
+  Future<void> updateUserModel(UserModel userModel);
   Future<void> updateIsEmailVerified(String uid);
   Future<List<CuratedContestModel>> fetchCuratedContestList(
       String platformId, String contestId);
@@ -26,12 +26,13 @@ abstract class RemoteDataSource {
       List<String> handles, String contestId);
   Future<void> updateIsHandleVerified(String uid, String platformId);
   Future<void> updateCuratedContest(CuratedContestModel curatedContestModel);
-  Future<void> updateUserModel(UserModel userModel);
   Future<List<ParticipatedContestModel>> fetchParticipatedContests(String uid);
   Future<CuratedContestModel> fetchCuratedContest(
       ParticipatedContestModel participatedContest);
   Future<void> updateParticipatedContests(
       String uid, ParticipatedContestModel participatedContest);
+
+  Future<void> storeUserModel(UserModel userModel);
 }
 
 class RemoteDataSourceImpl extends RemoteDataSource {
@@ -100,7 +101,15 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   }
 
   @override
-  Future<void> storeUserDetails(UserModel userModel) async {
+  Future<void> updateUserModel(UserModel userModel) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userModel.uid)
+        .update(userModel.toMap());
+  }
+
+  @override
+  Future<void> storeUserModel(UserModel userModel) async {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(userModel.uid)
@@ -228,13 +237,5 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         .collection(curatedContestModel.parentContestId)
         .doc(curatedContestModel.contestId)
         .update(curatedContestModel.toMap());
-  }
-
-  @override
-  Future<void> updateUserModel(UserModel userModel) async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userModel.uid)
-        .update(userModel.toMap());
   }
 }

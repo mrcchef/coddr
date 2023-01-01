@@ -17,4 +17,7 @@ class Images {
   static const rewardIcon = 'assets/logos/reward.png';
   static const userIcon = 'assets/logos/user.png';
   static const emailIcon = 'assets/logos/email.png';
+  static const editUserIcon = 'assets/logos/editUser.png';
+  static const verifiedBadgeIcon = 'assets/logos/verifiedBadge.png';
+  static const phoneIcon = 'assets/logos/phone.png';
 }

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
@@ -49,9 +48,7 @@ class _EditProfileState extends State<EditProfile> {
   var city, country, state;
   String occupation = 'Student';
 
-  //EDIT IMAGE
   File _pickedImage;
-  //UserModel userModel;
   void _pickImage() async {
     final pickedImageFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
@@ -78,13 +75,7 @@ class _EditProfileState extends State<EditProfile> {
   String prevImageUrl;
   String url;
   void _saveForm(UserModel userModel) async {
-    setState(() {
-      _isLoading = true;
-    });
     if (!_formkey.currentState.validate()) {
-      setState(() {
-        _isLoading = false;
-      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Please fill the fields according to Rules"),
@@ -93,66 +84,50 @@ class _EditProfileState extends State<EditProfile> {
       );
       return;
     }
-    try {
-      _formkey.currentState.save();
-      if (_pickedImage != null) {
-        final ref = FirebaseStorage.instance
-            .ref()
-            .child('user_image')
-            .child(FirebaseAuth.instance.currentUser.uid)
-            .child(FirebaseAuth.instance.currentUser.uid + '.jpg');
-        await ref.putFile(_pickedImage).whenComplete(() => null);
-        url = await ref.getDownloadURL();
-      } else {
-        url = prevImageUrl;
-      }
 
-      if (userModel.isHandelCFVerified) handelCF = userModel.handelCF;
-
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser.uid)
-          .update({
-        'imageUrl': url,
-        'displayName': displayName,
-        'contactNumber': contactNumber,
-        'institution': institution,
-        'occupation': occupation,
-        'handelCF': handelCF,
-        'handelCC': handelCC,
-        'handelHE': handelHE,
-        'city': city,
-        'state': state,
-        'country': country,
-      });
-      // print(url);
-      Navigator.popAndPushNamed(context, Profile.routeName);
-      setState(() {
-        _isLoading = false;
-      });
-    } on PlatformException catch (err) {
-      var message = 'An error occured, please check your credentials!';
-
-      if (err.message != null) {
-        message = err.message;
-      }
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(message),
-          backgroundColor: Theme.of(context).errorColor,
-        ),
-      );
-      setState(() {
-        _isLoading = false;
-      });
-    } catch (err) {
-      print("Error2");
-      print(err);
-      setState(() {
-        _isLoading = false;
-      });
+    _formkey.currentState.save();
+    if (_pickedImage != null) {
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('user_image')
+          .child(FirebaseAuth.instance.currentUser.uid)
+          .child(FirebaseAuth.instance.currentUser.uid + '.jpg');
+      await ref.putFile(_pickedImage).whenComplete(() => null);
+      url = await ref.getDownloadURL();
+    } else {
+      url = prevImageUrl;
     }
+
+    if (userModel.isHandelCFVerified) handelCF = userModel.handelCF;
+
+    UserModel updatedUserModel = UserModel(
+      email: userModel.email,
+      uid: userModel.uid,
+      city: city,
+      state: state,
+      country: country,
+      imageUrl: url,
+      displayName: displayName,
+      contactNumber: contactNumber,
+      institution: institution,
+      occupation: occupation,
+      handelCF: handelCF,
+      handelCC: handelCC,
+      handelHE: handelHE,
+      coins: userModel.coins,
+      contest: userModel.contest,
+      handelATC: userModel.handelATC,
+      isAdmin: userModel.isAdmin,
+      isEmailVerified: userModel.isEmailVerified,
+      isHandelATCVerified: userModel.isHandelATCVerified,
+      isHandelCCVerified: userModel.isHandelCCVerified,
+      isHandelCFVerified: userModel.isHandelCFVerified,
+      isHandelHEVerified: userModel.isHandelHEVerified,
+      wins: userModel.wins,
+    );
+
+    BlocProvider.of<ProfileBloc>(context)
+        .add(UpdateProfileData(userModel: updatedUserModel));
   }
 
   @override
@@ -162,10 +137,7 @@ class _EditProfileState extends State<EditProfile> {
       onTap: () {
         Navigator.of(context).popAndPushNamed(Profile.routeName);
       },
-      // child: Padding(
-      //   padding: EdgeInsets.only(bottom: Sizes.dimen_10.w),
       child: Icon(Icons.arrow_back_ios, color: Colors.black),
-      //),
     );
 
     Widget middleAppBarWidget = Padding(
@@ -182,8 +154,28 @@ class _EditProfileState extends State<EditProfile> {
         middleWidget: middleAppBarWidget,
         rightWidget: Spacer(),
       ),
-      body: BlocBuilder<ProfileBloc, ProfileState>(
+      body: BlocConsumer<ProfileBloc, ProfileState>(
         bloc: _profileBloc,
+        listener: ((context, state) {
+          if (state is ProfileError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Theme.of(context).errorColor,
+              ),
+            );
+          }
+
+          if (state is ProfileUpdated) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Profile Updated!"),
+                backgroundColor: Colors.green,
+              ),
+            );
+            Navigator.pushReplacementNamed(context, Profile.routeName);
+          }
+        }),
         builder: (context, state) {
           if (state is ProfileLoding) {
             return Center(child: CircularProgressIndicator());
@@ -214,19 +206,15 @@ class _EditProfileState extends State<EditProfile> {
                       SizedBox(
                         height: 25,
                       ),
-                      //PEditImage(),
                       editImage(),
                       SizedBox(
                         height: 25,
                       ),
-                      //PEditDetails(),
                       editDetails(),
-                      //Pedithandles(),
                       editHandles(userModel),
                       SizedBox(
                         height: 25,
                       ),
-                      //PEditDetails(),
                       editLocation(),
                       SizedBox(
                         height: 25,
