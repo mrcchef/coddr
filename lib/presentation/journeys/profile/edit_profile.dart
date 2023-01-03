@@ -126,8 +126,7 @@ class _EditProfileState extends State<EditProfile> {
       wins: userModel.wins,
     );
 
-    BlocProvider.of<ProfileBloc>(context)
-        .add(UpdateProfileData(userModel: updatedUserModel));
+    _profileBloc.add(UpdateProfileData(userModel: updatedUserModel));
   }
 
   @override
@@ -183,6 +182,10 @@ class _EditProfileState extends State<EditProfile> {
 
           if (state is ProfileError) {
             return Center(child: Text(state.message));
+          }
+
+          if (state is ProfileUpdated) {
+            return Center(child: CircularProgressIndicator());
           }
 
           final curState = (state as ProfileLoaded);

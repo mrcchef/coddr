@@ -36,7 +36,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         emit(ProfileLoding());
 
         final eitherResponse = await updateUserModel(event.userModel);
-
+        // emit(ProfileUpdated());
         emit(
           eitherResponse.fold(
             (error) => ProfileError(message: "Profile update failed"),

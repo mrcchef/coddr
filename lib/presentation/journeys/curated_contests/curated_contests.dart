@@ -205,7 +205,7 @@ class _CuratedContestsState extends State<CuratedContests> {
                                 'Create Contest',
                                 style: TextStyle(color: Colors.white),
                               ),
-                            )
+                            ),
                         ],
                       ),
                     ),

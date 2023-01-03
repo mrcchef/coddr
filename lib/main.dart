@@ -85,7 +85,6 @@ class _MyAppState extends State<MyApp> {
     _signInBloc.close();
     _signUpBloc.close();
     _profileBloc.close();
-    _profileBloc.close();
     _emailVerificationBloc.close();
     _sendVerificationEmailBloc.close();
     _handelVerificationBloc.close();
