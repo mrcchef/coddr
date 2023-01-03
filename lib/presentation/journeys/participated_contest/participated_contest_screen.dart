@@ -4,14 +4,23 @@ import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/domain/entities/curated_contest_model.dart';
 import 'package:coddr/presentation/blocs/participated_contest/participated_contest_bloc.dart';
 import 'package:coddr/presentation/journeys/participated_contest/participated_curated_contest_card.dart';
+import 'package:coddr/presentation/journeys/participated_contest/PHistory.dart';
 import 'package:coddr/presentation/widgets/CoddrAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ParticipatedContestScreen extends StatefulWidget {
   final String uid;
-  const ParticipatedContestScreen({Key key, @required this.uid})
-      : super(key: key);
+  final int coins;
+  final int contest;
+  final int wins;
+  const ParticipatedContestScreen({
+    Key key,
+    @required this.uid,
+    @required this.coins,
+    @required this.contest,
+    @required this.wins,
+  }) : super(key: key);
 
   @override
   _ParticipatedContestScreenState createState() =>
@@ -24,8 +33,10 @@ class _ParticipatedContestScreenState extends State<ParticipatedContestScreen> {
   @override
   void initState() {
     _participatedContestBloc = getItInstance<ParticipatedContestBloc>();
+
     _participatedContestBloc
         .add(FetchParticipatedContestEvent(uid: widget.uid));
+
     super.initState();
   }
 
@@ -42,6 +53,9 @@ class _ParticipatedContestScreenState extends State<ParticipatedContestScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
     Widget leftAppBarWidget = InkWell(
       onTap: () {
         Navigator.of(context).pop();
@@ -74,7 +88,6 @@ class _ParticipatedContestScreenState extends State<ParticipatedContestScreen> {
         body: BlocBuilder<ParticipatedContestBloc, ParticipatedContestState>(
           bloc: _participatedContestBloc,
           builder: (context, state) {
-            print("State $state");
             List<CuratedContestModel> curatedContestModelList = [];
             if (state is ParticipatedContestLoadingState ||
                 state is ParticipatedContestInitial) {
@@ -91,15 +104,26 @@ class _ParticipatedContestScreenState extends State<ParticipatedContestScreen> {
 
             curatedContestModelList = sortContest(curatedContestModelList);
 
-            return ListView.builder(
-                itemCount: curatedContestModelList.length,
-                itemBuilder: (context, index) {
-                  return
-                      // Text("Text");
-                      ParticipatedCuratedContestCard(
-                    curatedContestModel: curatedContestModelList[index],
-                  );
-                });
+            return Container(
+              height: screenHeight,
+              width: screenWidth,
+              child: Column(children: [
+                PHistory(
+                    coins: widget.coins,
+                    contest: widget.contest,
+                    wins: widget.wins),
+                Expanded(
+                  flex: 1,
+                  child: ListView.builder(
+                      itemCount: curatedContestModelList.length,
+                      itemBuilder: (context, index) {
+                        return ParticipatedCuratedContestCard(
+                          curatedContestModel: curatedContestModelList[index],
+                        );
+                      }),
+                ),
+              ]),
+            );
           },
         ));
   }

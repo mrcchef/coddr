@@ -1,3 +1,6 @@
+import 'package:coddr/common/constants/image_constants.dart';
+import 'package:coddr/common/constants/size_constants.dart';
+import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:flutter/material.dart';
 
 class PHistory extends StatelessWidget {
@@ -15,18 +18,20 @@ class PHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: EdgeInsets.all(Sizes.dimen_12.w),
       child: Container(
-        height: 200,
+        height: Sizes.dimen_200.w,
         decoration: BoxDecoration(
-            color: Color(0xFFD8FFCE), borderRadius: BorderRadius.circular(30)),
+            color: Color(0xFFD8FFCE),
+            borderRadius: BorderRadius.circular(Sizes.dimen_30.w)),
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(Sizes.dimen_8.w),
               child: Text(
                 'History',
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                style:
+                    TextStyle(fontSize: Sizes.dimen_20.w, color: Colors.black),
               ),
             ),
             Row(
@@ -35,21 +40,22 @@ class PHistory extends StatelessWidget {
                 Column(
                   children: [
                     Image.asset(
-                      'assets/images/coins.png',
-                      height: 50,
-                      width: 50,
+                      Images.coinsIcon,
+                      height: Sizes.dimen_50.w,
+                      width: Sizes.dimen_50.w,
                     ),
                     SizedBox(
-                      height: 15,
+                      height: Sizes.dimen_14.w,
                     ),
                     Text(
                       coins.toString(),
-                      style: TextStyle(fontSize: 14, color: Colors.black),
+                      style: TextStyle(
+                          fontSize: Sizes.dimen_14.w, color: Colors.black),
                     ),
                     Text(
                       'Coins',
                       style: TextStyle(
-                          fontSize: 18,
+                          fontSize: Sizes.dimen_18.w,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
@@ -59,20 +65,21 @@ class PHistory extends StatelessWidget {
                 Column(
                   children: [
                     Container(
-                      height: 70,
-                      width: 100,
+                      height: Sizes.dimen_70.w,
+                      width: Sizes.dimen_100.w,
                       child: Image.asset(
                         'assets/images/contest.png',
                       ),
                     ),
                     Text(
                       contest.toString(),
-                      style: TextStyle(fontSize: 14, color: Colors.black),
+                      style: TextStyle(
+                          fontSize: Sizes.dimen_14.w, color: Colors.black),
                     ),
                     Text(
                       'Contest',
                       style: TextStyle(
-                          fontSize: 18,
+                          fontSize: Sizes.dimen_18.w,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
@@ -82,21 +89,22 @@ class PHistory extends StatelessWidget {
                 Column(
                   children: [
                     Image.asset(
-                      'assets/images/trophy.png',
-                      height: 50,
-                      width: 50,
+                      Images.trophyIcon,
+                      height: Sizes.dimen_50.w,
+                      width: Sizes.dimen_50.w,
                     ),
                     SizedBox(
-                      height: 15,
+                      height: Sizes.dimen_14.w,
                     ),
                     Text(
                       wins.toString(),
-                      style: TextStyle(fontSize: 14, color: Colors.black),
+                      style: TextStyle(
+                          fontSize: Sizes.dimen_14.w, color: Colors.black),
                     ),
                     Text(
                       'Wins',
                       style: TextStyle(
-                          fontSize: 18,
+                          fontSize: Sizes.dimen_18.w,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),

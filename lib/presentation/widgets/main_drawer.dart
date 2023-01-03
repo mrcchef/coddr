@@ -8,10 +8,9 @@ import 'package:coddr/presentation/journeys/Rewards/rewards_page.dart';
 import 'package:coddr/presentation/journeys/about_us/about_us.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
 import 'package:coddr/presentation/journeys/participated_contest/participated_contest_screen.dart';
+import 'package:coddr/presentation/journeys/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../journeys/profile/profile.dart';
 
 class MainDrawer extends StatefulWidget {
   @override
@@ -115,7 +114,8 @@ class _MainDrawerState extends State<MainDrawer> {
                   'Profile',
                   Images.userIcon,
                   () {
-                    Navigator.of(context).popAndPushNamed(Profile.routeName);
+                    Navigator.of(context)
+                        .popAndPushNamed(ProfileScreen.routeName);
                   },
                 ),
                 getDrawerTile(
@@ -124,8 +124,12 @@ class _MainDrawerState extends State<MainDrawer> {
                   () {
                     Navigator.of(context).pop();
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            ParticipatedContestScreen(uid: userModel.uid)));
+                        builder: (context) => ParticipatedContestScreen(
+                              uid: userModel.uid,
+                              coins: userModel.coins,
+                              contest: userModel.contest,
+                              wins: userModel.wins,
+                            )));
                   },
                 ),
 

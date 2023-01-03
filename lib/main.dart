@@ -20,7 +20,7 @@ import 'package:coddr/presentation/journeys/auth/verify_email_sceen.dart';
 //Files
 import 'package:coddr/presentation/journeys/home/home_screen.dart';
 import 'package:coddr/presentation/journeys/profile/edit_profile.dart';
-import 'package:coddr/presentation/journeys/profile/profile.dart';
+import 'package:coddr/presentation/journeys/profile/profile_screen.dart';
 import 'package:coddr/presentation/journeys/upcoming_contests/upcoming_contests_screen.dart';
 import 'package:coddr/presentation/themes/themes.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -154,7 +154,7 @@ class _MyAppState extends State<MyApp> {
           ),
           routes: {
             HomeScreen.routeName: (ctx) => HomeScreen(),
-            Profile.routeName: (ctx) => Profile(),
+            ProfileScreen.routeName: (ctx) => ProfileScreen(),
             EditProfile.routeName: (ctx) => EditProfile(),
             SignInScreen.routeName: (ctx) => SignInScreen(),
             SignUpScreen.routeName: (ctx) => SignUpScreen(),

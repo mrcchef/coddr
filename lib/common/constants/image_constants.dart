@@ -20,4 +20,6 @@ class Images {
   static const editUserIcon = 'assets/logos/editUser.png';
   static const verifiedBadgeIcon = 'assets/logos/verifiedBadge.png';
   static const phoneIcon = 'assets/logos/phone.png';
+  static const trophyIcon = 'assets/logos/trophy.png';
+  static const coinsIcon = 'assets/logos/coins.png';
 }

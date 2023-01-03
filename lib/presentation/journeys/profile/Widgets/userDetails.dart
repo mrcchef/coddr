@@ -11,14 +11,11 @@ class UserDetails extends StatefulWidget {
   final String displayName;
   final String contactNumber;
   final String email;
-  final bool isEmailVerified;
-  final String uid;
+
   UserDetails({
     @required this.displayName,
     @required this.contactNumber,
     @required this.email,
-    @required this.uid,
-    this.isEmailVerified = false,
   });
 
   @override

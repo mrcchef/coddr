@@ -6,7 +6,7 @@ import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
-import 'package:coddr/presentation/journeys/profile/profile.dart';
+import 'package:coddr/presentation/journeys/profile/profile_screen.dart';
 import 'package:coddr/presentation/widgets/CoddrAppBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -134,7 +134,7 @@ class _EditProfileState extends State<EditProfile> {
     UserModel userModel;
     Widget leftAppBarWidget = InkWell(
       onTap: () {
-        Navigator.of(context).popAndPushNamed(Profile.routeName);
+        Navigator.of(context).popAndPushNamed(ProfileScreen.routeName);
       },
       child: Icon(Icons.arrow_back_ios, color: Colors.black),
     );
@@ -172,7 +172,7 @@ class _EditProfileState extends State<EditProfile> {
                 backgroundColor: Colors.green,
               ),
             );
-            Navigator.pushReplacementNamed(context, Profile.routeName);
+            Navigator.pushReplacementNamed(context, ProfileScreen.routeName);
           }
         }),
         builder: (context, state) {
