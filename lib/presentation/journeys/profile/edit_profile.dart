@@ -7,6 +7,8 @@ import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/blocs/profile/profile_bloc.dart';
 import 'package:coddr/presentation/journeys/profile/profile_screen.dart';
+import 'package:coddr/presentation/themes/app_color.dart';
+import 'package:coddr/presentation/themes/themes.dart';
 import 'package:coddr/presentation/widgets/CoddrAppBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -17,10 +19,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfile extends StatefulWidget {
-  static const routeName = '\edit-profile';
-  const EditProfile({Key key}) : super(key: key);
-
-  //EditProfile(UserModel userModel);
+  static const routeName = '/edit-profile';
+  EditProfile({Key key}) : super(key: key);
 
   @override
   _EditProfileState createState() => _EditProfileState();
@@ -61,9 +61,9 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   //EDIT DETAILS
-  TextEditingController namecontroller = TextEditingController();
-  TextEditingController phonecontroller = TextEditingController();
-  TextEditingController institutecontroller = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController instituteController = TextEditingController();
   TextEditingController cfHandleController = TextEditingController();
   TextEditingController ccHandleController = TextEditingController();
   TextEditingController heHandleController = TextEditingController();
@@ -190,9 +190,9 @@ class _EditProfileState extends State<EditProfile> {
 
           final curState = (state as ProfileLoaded);
           userModel = curState.userModel;
-          namecontroller.text = userModel.displayName;
-          phonecontroller.text = userModel.contactNumber;
-          institutecontroller.text = userModel.institution;
+          nameController.text = userModel.displayName;
+          phoneController.text = userModel.contactNumber;
+          instituteController.text = userModel.institution;
           cfHandleController.text = userModel.handelCF;
           ccHandleController.text = userModel.handelCC;
           heHandleController.text = userModel.handelHE;
@@ -206,34 +206,27 @@ class _EditProfileState extends State<EditProfile> {
                   key: _formkey,
                   child: ListView(
                     children: [
-                      SizedBox(
-                        height: 25,
-                      ),
                       editImage(),
-                      SizedBox(
-                        height: 25,
-                      ),
                       editDetails(),
                       editHandles(userModel),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      editLocation(),
-                      SizedBox(
-                        height: 25,
-                      ),
+                      // editLocation(),
                       Center(
-                        child: ElevatedButton(
-                          style: TextButton.styleFrom(
-                              backgroundColor: Colors.red[900],
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: Sizes.dimen_10.w,
+                              horizontal: Sizes.dimen_10.w),
+                          child: ElevatedButton(
+                            style: TextButton.styleFrom(
+                              backgroundColor: AppColor.lightBlue,
                               shape: RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.circular(Sizes.dimen_20.w)),
-                              foregroundColor: Colors.white),
-                          onPressed: () => _saveForm(userModel),
-                          child: Text(
-                            'Save Changes',
-                            style: TextStyle(color: Colors.white),
+                            ),
+                            onPressed: () => _saveForm(userModel),
+                            child: Text(
+                              'Save Changes',
+                              style: ThemeText.button,
+                            ),
                           ),
                         ),
                       )
@@ -250,111 +243,132 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget editHandles(UserModel userModel) {
     return Padding(
-      padding: const EdgeInsets.all(18.0),
+      padding: EdgeInsets.symmetric(horizontal: Sizes.dimen_18.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Center(
-              child: Text(
-            'Edit handles',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          )),
-          SizedBox(
-            height: 25,
-          ),
-          Row(
-            children: [
-              Text('Codeforces'),
-              Spacer(),
-              Container(
-                height: 20,
-                width: 230,
-                child: (userModel.isHandelCFVerified)
-                    ? Text(
-                        userModel.handelCF,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                    : TextFormField(
-                        decoration: InputDecoration(
-                            hintText: 'Enter Username',
-                            hintStyle: TextStyle(fontSize: 14)),
-                        style: TextStyle(color: Colors.black),
-                        controller: cfHandleController,
-                        // validator: (value) {
-                        //   if (value.isEmpty) {
-                        //     return 'Please Enter Name';
-                        //   }
-                        //   return null;
-                        // },
-                        onSaved: (value) {
-                          handelCF = value;
-                        },
-                      ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Row(
-            children: [
-              Text('CodeChef'),
-              Spacer(),
-              Container(
-                height: 20,
-                width: 230,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      hintText: 'Enter Username',
-                      hintStyle: TextStyle(fontSize: 14)),
-                  style: TextStyle(color: Colors.black),
-                  // validator: (value) {
-                  //   if (value.isEmpty) {
-                  //     return 'Please Enter Name';
-                  //   }
-                  //   return null;
-                  // },
-                  controller: ccHandleController,
-                  onSaved: (value) {
-                    handelCC = value;
-                  },
+          Container(
+              padding: EdgeInsets.symmetric(
+                  vertical: Sizes.dimen_8.w, horizontal: Sizes.dimen_14.w),
+              child: Text('Edit handles', style: ThemeText.headline6)),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: Sizes.dimen_4.h),
+            child: TextFormField(
+              autocorrect: true,
+              textInputAction: TextInputAction.done,
+              decoration: InputDecoration(
+                prefixIcon: Container(
+                  padding: EdgeInsets.all(Sizes.dimen_8.w),
+                  child: Image.asset(Images.codeforcesLogo,
+                      height: Sizes.dimen_30.w),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Row(
-            children: [
-              Text('Hackerearth'),
-              Spacer(),
-              Container(
-                height: 20,
-                width: 230,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      hintText: 'Enter Username',
-                      hintStyle: TextStyle(fontSize: 14)),
-                  style: TextStyle(color: Colors.black),
-                  // validator: (value) {
-                  //   if (value.isEmpty) {
-                  //     return 'Please Enter Name';
-                  //   }
-                  //   return null;
-                  // },
-                  controller: heHandleController,
-                  onSaved: (value) {
-                    handelHE = value;
-                  },
+                labelText: "Codeforces",
+                labelStyle: TextStyle(color: Colors.brown[200]),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      width: Sizes.dimen_4.w, color: AppColor.lightYellow),
+                  borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
                 ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      width: Sizes.dimen_4.w, color: AppColor.lightYellow),
+                  borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
+                ),
+                contentPadding: EdgeInsets.all(Sizes.dimen_16.w),
+                filled: true,
+                hintStyle: TextStyle(color: Colors.grey[500]),
+                fillColor: Colors.white70,
               ),
-            ],
-          )
+              controller: cfHandleController,
+              style: ThemeText.bodyText1.copyWith(color: Colors.brown),
+              validator: (value) {
+                return null;
+              },
+              onSaved: (value) {
+                handelCF = value;
+              },
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: Sizes.dimen_4.h),
+            child: TextFormField(
+              autocorrect: true,
+              textInputAction: TextInputAction.done,
+              decoration: InputDecoration(
+                labelText: "CodeChef",
+                prefixIcon: Container(
+                  padding: EdgeInsets.all(Sizes.dimen_8.w),
+                  child: Image.asset(Images.codeChefLogo,
+                      height: Sizes.dimen_30.w),
+                ),
+                labelStyle: TextStyle(color: Colors.purple[200]),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      width: Sizes.dimen_4.w, color: AppColor.lightViolet),
+                  borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      width: Sizes.dimen_4.w, color: AppColor.lightViolet),
+                  borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
+                ),
+                filled: true,
+                contentPadding: EdgeInsets.all(Sizes.dimen_16.w),
+                hintStyle: TextStyle(color: Colors.grey[500]),
+                fillColor: Colors.white70,
+              ),
+              controller: ccHandleController,
+              style: ThemeText.bodyText1.copyWith(color: Colors.purple),
+              validator: (value) {
+                return null;
+              },
+              onSaved: (value) {
+                handelCC = value;
+              },
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: Sizes.dimen_4.h),
+            child: TextFormField(
+              autocorrect: true,
+              textInputAction: TextInputAction.done,
+              decoration: InputDecoration(
+                labelText: "Hacker Earth",
+                prefixIcon: Container(
+                  padding: EdgeInsets.symmetric(vertical: Sizes.dimen_8.w),
+                  child: Image.asset(
+                    Images.hackerEarthLogo,
+                    height: Sizes.dimen_30.w,
+                    width: Sizes.dimen_40.w,
+                  ),
+                ),
+                labelStyle: TextStyle(color: Colors.brown[200]),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      width: Sizes.dimen_4.w, color: AppColor.lightBrown),
+                  borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      width: Sizes.dimen_4.w, color: AppColor.lightBrown),
+                  borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
+                ),
+                filled: true,
+                contentPadding: EdgeInsets.all(Sizes.dimen_16.w),
+                hintStyle: TextStyle(color: Colors.grey[500]),
+                fillColor: Colors.white70,
+              ),
+              controller: heHandleController,
+              style: ThemeText.bodyText1.copyWith(color: Colors.brown),
+              validator: (value) {
+                return null;
+              },
+              onSaved: (value) {
+                handelHE = value;
+              },
+            ),
+          ),
         ],
       ),
     );
@@ -362,103 +376,98 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget editLocation() {
     return Padding(
-      padding: const EdgeInsets.all(18.0),
+      padding: EdgeInsets.symmetric(horizontal: Sizes.dimen_18.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Center(
-              child: Text(
-            'Edit Location',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          )),
-          SizedBox(
-            height: 25,
+          Container(
+            child: Text('Edit Location', style: ThemeText.headline6),
           ),
-          Row(
-            children: [
-              Text('City'),
-              Spacer(),
-              Container(
-                height: 20,
-                width: 230,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      hintText: 'Enter City',
-                      hintStyle: TextStyle(fontSize: 14)),
-                  style: TextStyle(color: Colors.black),
-                  controller: cityController,
-                  // validator: (value) {
-                  //   if (value.isEmpty) {
-                  //     return 'Please Enter City';
-                  //   }
-                  //   return null;
-                  // },
-                  onSaved: (value) {
-                    city = value;
-                  },
+          Container(
+            padding: EdgeInsets.symmetric(vertical: Sizes.dimen_4.h),
+            child: TextFormField(
+              autocorrect: true,
+              textInputAction: TextInputAction.done,
+              decoration: InputDecoration(
+                labelText: "City",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
                 ),
+                filled: true,
+                contentPadding: EdgeInsets.all(Sizes.dimen_16.w),
+                hintStyle: TextStyle(color: Colors.grey[500]),
+                fillColor: Colors.white70,
               ),
-            ],
+              controller: cityController,
+              style: TextStyle(color: Colors.black),
+              validator: (value) {
+                // if (value.isEmpty) {
+                //   return 'Occupation cannot be empty';
+                // }
+                return null;
+              },
+              onSaved: (value) {
+                city = value;
+              },
+            ),
           ),
-          SizedBox(
-            height: 30,
-          ),
-          Row(
-            children: [
-              Text('State'),
-              Spacer(),
-              Container(
-                height: 20,
-                width: 230,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      hintText: 'Enter State',
-                      hintStyle: TextStyle(fontSize: 14)),
-                  style: TextStyle(color: Colors.black),
-                  // validator: (value) {
-                  //   if (value.isEmpty) {
-                  //     return 'Please Enter State';
-                  //   }
-                  //   return null;
-                  // },
-                  controller: stateController,
-                  onSaved: (value) {
-                    state = value;
-                  },
+          Container(
+            padding: EdgeInsets.symmetric(vertical: Sizes.dimen_4.h),
+            child: TextFormField(
+              autocorrect: true,
+              textInputAction: TextInputAction.done,
+              decoration: InputDecoration(
+                labelText: "State",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
                 ),
+                filled: true,
+                contentPadding: EdgeInsets.all(Sizes.dimen_16.w),
+                hintStyle: TextStyle(color: Colors.grey[500]),
+                fillColor: Colors.white70,
               ),
-            ],
+              controller: stateController,
+              style: TextStyle(color: Colors.black),
+              validator: (value) {
+                // if (value.isEmpty) {
+                //   return 'Occupation cannot be empty';
+                // }
+                return null;
+              },
+              onSaved: (value) {
+                state = value;
+              },
+            ),
           ),
-          SizedBox(
-            height: 30,
-          ),
-          Row(
-            children: [
-              Text('Country'),
-              Spacer(),
-              Container(
-                height: 20,
-                width: 230,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      hintText: 'Enter Country',
-                      hintStyle: TextStyle(fontSize: 14)),
-                  style: TextStyle(color: Colors.black),
-                  // validator: (value) {
-                  //   if (value.isEmpty) {
-                  //     return 'Please Enter Country';
-                  //   }
-                  //   return null;
-                  // },
-                  controller: countryController,
-                  onSaved: (value) {
-                    country = value;
-                  },
+          Container(
+            padding: EdgeInsets.symmetric(vertical: Sizes.dimen_4.h),
+            child: TextFormField(
+              autocorrect: true,
+              textInputAction: TextInputAction.done,
+              decoration: InputDecoration(
+                labelText: "Country",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
                 ),
+                filled: true,
+                contentPadding: EdgeInsets.all(Sizes.dimen_16.w),
+                hintStyle: TextStyle(color: Colors.grey[500]),
+                fillColor: Colors.white70,
               ),
-            ],
-          )
+              controller: countryController,
+              style: TextStyle(color: Colors.black),
+              validator: (value) {
+                // if (value.isEmpty) {
+                //   return 'Occupation cannot be empty';
+                // }
+                return null;
+              },
+              onSaved: (value) {
+                country = value;
+              },
+            ),
+          ),
         ],
       ),
     );
@@ -466,24 +475,43 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget editDetails() {
     return Padding(
-      padding: const EdgeInsets.all(18.0),
+      padding: EdgeInsets.symmetric(horizontal: Sizes.dimen_18.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Please Enter Your Name',
-              style: TextStyle(fontSize: 14, color: Colors.grey)),
-          SizedBox(
-            height: 10,
-          ),
           Container(
-            height: 20,
+            padding: EdgeInsets.symmetric(vertical: Sizes.dimen_4.h),
             child: TextFormField(
-              style: TextStyle(color: Colors.black),
-              controller: namecontroller,
+              autocorrect: true,
+              textInputAction: TextInputAction.done,
+              decoration: InputDecoration(
+                prefixIcon: Container(
+                  padding: EdgeInsets.all(Sizes.dimen_4.w),
+                  child: Image.asset(Images.userIcon, height: Sizes.dimen_30.w),
+                ),
+                labelText: "Display Name",
+                labelStyle: TextStyle(color: Colors.brown[200]),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      width: Sizes.dimen_4.w, color: AppColor.lightYellow),
+                  borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      width: Sizes.dimen_4.w, color: AppColor.lightYellow),
+                  borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
+                ),
+                contentPadding: EdgeInsets.all(Sizes.dimen_16.w),
+                filled: true,
+                hintStyle: TextStyle(color: Colors.grey[500]),
+                fillColor: Colors.white70,
+              ),
+              controller: nameController,
+              style: ThemeText.bodyText1.copyWith(color: Colors.brown),
               validator: (value) {
                 if (value.isEmpty) {
-                  return 'Please Enter Name';
+                  return 'Name cannot be empty';
                 }
                 return null;
               },
@@ -492,21 +520,39 @@ class _EditProfileState extends State<EditProfile> {
               },
             ),
           ),
-          SizedBox(
-            height: 25,
-          ),
-          Text(
-            'Please enter your Phone Number',
-            style: TextStyle(fontSize: 14, color: Colors.grey),
-          ),
-          SizedBox(
-            height: 10,
-          ),
           Container(
-            height: 40,
+            padding: EdgeInsets.symmetric(vertical: Sizes.dimen_4.h),
             child: TextFormField(
-              controller: phonecontroller,
-              style: TextStyle(color: Colors.black),
+              autocorrect: true,
+              textInputAction: TextInputAction.done,
+              decoration: InputDecoration(
+                prefixIcon: Container(
+                  padding: EdgeInsets.all(Sizes.dimen_4.w),
+                  child:
+                      Image.asset(Images.phoneIcon, height: Sizes.dimen_30.w),
+                ),
+                labelStyle: TextStyle(color: Colors.purple[200]),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      width: Sizes.dimen_4.w, color: AppColor.lightViolet),
+                  borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      width: Sizes.dimen_4.w, color: AppColor.lightViolet),
+                  borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
+                ),
+                labelText: "Contact Number",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
+                ),
+                contentPadding: EdgeInsets.all(Sizes.dimen_16.w),
+                filled: true,
+                hintStyle: TextStyle(color: Colors.grey[500]),
+                fillColor: Colors.white70,
+              ),
+              controller: phoneController,
+              style: ThemeText.bodyText1.copyWith(color: Colors.purple),
               keyboardType: TextInputType.phone,
               maxLength: 10,
               validator: (value) {
@@ -519,103 +565,96 @@ class _EditProfileState extends State<EditProfile> {
               },
               onSaved: (value) {
                 contactNumber = value;
-                // print(contactNumber);
               },
             ),
           ),
-          SizedBox(
-            height: 15,
-          ),
-          Text('Please Enter Your Institution',
-              style: TextStyle(fontSize: 14, color: Colors.grey)),
-          SizedBox(
-            height: 10,
-          ),
           Container(
-            height: 20,
+            padding: EdgeInsets.symmetric(vertical: Sizes.dimen_4.h),
             child: TextFormField(
-              style: TextStyle(color: Colors.black),
-              controller: institutecontroller,
-              // validator: (value) {
-              //   if (value.isEmpty) {
-              //     return 'Please Enter Name';
-              //   }
-              //   return null;
-              // },
+              autocorrect: true,
+              textInputAction: TextInputAction.done,
+              decoration: InputDecoration(
+                prefixIcon: Container(
+                  padding: EdgeInsets.all(Sizes.dimen_4.w),
+                  child: Image.asset(Images.institutionIcon,
+                      height: Sizes.dimen_30.w),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      width: Sizes.dimen_4.w, color: AppColor.lightBrown),
+                  borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      width: Sizes.dimen_4.w, color: AppColor.lightBrown),
+                  borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
+                ),
+                labelStyle: TextStyle(color: Colors.brown[200]),
+                labelText: "Institution",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
+                ),
+                filled: true,
+                contentPadding: EdgeInsets.all(Sizes.dimen_16.w),
+                hintStyle: TextStyle(color: Colors.grey[500]),
+                fillColor: Colors.white70,
+              ),
+              controller: instituteController,
+              style: ThemeText.bodyText1.copyWith(color: Colors.brown),
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Institution cannot be empty';
+                }
+                return null;
+              },
               onSaved: (value) {
                 institution = value;
               },
             ),
           ),
-          SizedBox(
-            height: 33,
-          ),
-          // Row(
-          //   children: [
-          //     Text('Student/Profession',
-          //         style: TextStyle(fontSize: 14, color: Colors.black)),
-          //     SizedBox(
-          //       width: 35,
-          //     ),
-          //     Container(
-          //       color: Colors.grey[300],
-          //       height: 30,
-          //       child: Padding(
-          //         padding: const EdgeInsets.all(4.0),
-          //         child: DropdownButtonHideUnderline(
-          //             child: DropdownButton(
-          //           focusColor: Colors.pink,
-          //           value: occupation,
-          //           dropdownColor: Colors.grey,
-          //           style: TextStyle(color: Colors.black, fontSize: 14),
-          //           icon: Icon(Icons.arrow_drop_down),
-          //           iconEnabledColor: Colors.black,
-          //           onChanged: (newvalue) {
-          //             setState(() {
-          //               //stpr = newvalue;
-          //               occupation = newvalue;
-          //             });
-          //           },
-          //           items: <String>['Student', 'Profession']
-          //               .map<DropdownMenuItem<String>>((String value) {
-          //             return DropdownMenuItem<String>(
-          //               value: value,
-          //               child: Text(value),
-          //             );
-          //           }).toList(),
-          //         )),
-          //       ),
-          //     )
-          //   ],
-          // ),
-          Row(
-            children: [
-              Text('Profession'),
-              Spacer(),
-              Container(
-                height: 20,
-                width: 230,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      hintText: 'Enter Profession',
-                      hintStyle: TextStyle(fontSize: 14)),
-                  style: TextStyle(color: Colors.black),
-                  // validator: (value) {
-                  //   if (value.isEmpty) {
-                  //     return 'Please Enter Name';
-                  //   }
-                  //   return null;
-                  // },
-                  controller: occupationController,
-                  onSaved: (value) {
-                    handelHE = value;
-                  },
+          Container(
+            padding: EdgeInsets.symmetric(vertical: Sizes.dimen_4.h),
+            child: TextFormField(
+              autocorrect: true,
+              textInputAction: TextInputAction.done,
+              decoration: InputDecoration(
+                prefixIcon: Container(
+                  padding: EdgeInsets.all(Sizes.dimen_4.w),
+                  child: Image.asset(Images.occupationIcon,
+                      height: Sizes.dimen_30.w),
                 ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      width: Sizes.dimen_4.w, color: AppColor.lightBlue),
+                  borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      width: Sizes.dimen_4.w, color: AppColor.lightBlue),
+                  borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
+                ),
+                labelStyle: TextStyle(color: Colors.blue[200]),
+                labelText: "Occupation",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
+                ),
+                filled: true,
+                contentPadding: EdgeInsets.all(Sizes.dimen_16.w),
+                hintStyle: TextStyle(color: Colors.grey[500]),
+                fillColor: Colors.white70,
               ),
-            ],
-          ),
-          SizedBox(
-            height: 20,
+              controller: occupationController,
+              style: ThemeText.bodyText1.copyWith(color: Colors.blue),
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Occupation cannot be empty';
+                }
+                return null;
+              },
+              onSaved: (value) {
+                occupation = value;
+              },
+            ),
           ),
         ],
       ),
@@ -624,12 +663,15 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget editImage() {
     return Center(
-      child: InkWell(
+      child: Container(
+        margin: EdgeInsets.symmetric(
+          vertical: Sizes.dimen_6.h,
+        ),
         child: Stack(
           children: [
             Container(
               child: CircleAvatar(
-                radius: 60.0,
+                radius: Sizes.dimen_60.w,
                 backgroundImage: (_pickedImage != null)
                     ? (FileImage(_pickedImage))
                     : (prevImageUrl != "")
@@ -638,34 +680,19 @@ class _EditProfileState extends State<EditProfile> {
                 backgroundColor: Colors.transparent,
               ),
               decoration: new BoxDecoration(
-                // border color
                 shape: BoxShape.circle,
                 border: Border.all(
-                  width: 4.0,
+                  width: Sizes.dimen_4.w,
                   color: Color(0xFF6f6434),
                 ),
               ),
             ),
             Positioned(
-              height: 55,
-              width: 120,
-              left: 4,
-              bottom: 6,
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.black54,
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(70),
-                        bottomRight: Radius.circular(70))),
-                child: InkWell(
-                  child: Center(
-                    child: Text(
-                      'Edit',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  onTap: _pickImage,
-                ),
+              top: 80,
+              left: 80,
+              child: InkWell(
+                child: Image.asset(Images.editIcon, height: Sizes.dimen_60.w),
+                onTap: _pickImage,
               ),
             ),
           ],

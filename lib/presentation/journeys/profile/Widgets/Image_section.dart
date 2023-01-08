@@ -35,24 +35,26 @@ class ImageSection extends StatelessWidget {
             ),
             child: Stack(
               children: [
-                Container(
-                  padding: EdgeInsets.all(Sizes.dimen_1.w),
-                  decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(Sizes.dimen_10.w)),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
-                    child: SizedBox.fromSize(
-                      size: Size.fromRadius(Sizes.dimen_70.w),
-                      child: Image.network(
-                        imageUrl,
-                        fit: BoxFit.cover,
+                Center(
+                  child: Container(
+                    padding: EdgeInsets.all(Sizes.dimen_1.w),
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(Sizes.dimen_10.w)),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(Sizes.dimen_10.w),
+                      child: SizedBox.fromSize(
+                        size: Size.fromRadius(Sizes.dimen_70.w),
+                        child: Image.network(
+                          imageUrl,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
                 ),
                 Positioned(
-                  left: Sizes.dimen_100.w,
+                  right: Sizes.dimen_90.w,
                   child: Image.asset(
                     Images.verifiedBadgeIcon,
                     height: Sizes.dimen_40.w,

@@ -115,27 +115,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   displayName: userModel.displayName,
                   email: userModel.email,
                 ),
-                // SizedBox(
-                //   height: 18,
-                // ),
-                // Divider(
-                //   thickness: 2.5,
-                // ),
-                // UserDetails(
-                //     email: userModel.email,
-                //     displayName: userModel.displayName,
-                //     contactNumber: userModel.contactNumber),
-                // Divider(
-                //   thickness: 2.5,
-                // ),
-                // PHistory(
-                //   coins: userModel.coins == null ? 0 : userModel.coins,
-                //   contest: userModel.contest == null ? 0 : userModel.contest,
-                //   wins: userModel.wins == null ? 0 : userModel.wins,
-                // ),
-                // Divider(
-                //   thickness: 2.5,
-                // ),
                 Positioned(
                   top: Sizes.dimen_120.h,
                   child: PHandles(
@@ -151,17 +130,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         (userModel.isHandelCFVerified) ? true : false,
                   ),
                 ),
-                // Divider(
-                //   thickness: 2.5,
-                // ),
-                // Plocation(
-                //   city: userModel.city == null ? "" : userModel.city,
-                //   state: userModel.state == null ? "" : userModel.state,
-                //   country: userModel.country == null ? "" : userModel.country,
-                // ),
-                // Divider(
-                //   thickness: 2.5,
-                // ),
               ],
             ),
           );

@@ -4,6 +4,7 @@ import 'package:coddr/domain/entities/curated_contest_model.dart';
 import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/blocs/create_curated_contest/create_curated_contest_bloc.dart';
 import 'package:coddr/presentation/journeys/curated_contests/curated_contests.dart';
+import 'package:coddr/presentation/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -111,15 +112,15 @@ class PrizeBreakup extends StatelessWidget {
                   children: [
                     Padding(
                       padding: EdgeInsets.fromLTRB(
-                          Sizes.dimen_8.w, Sizes.dimen_4.w, Sizes.dimen_8.w, 0),
+                          Sizes.dimen_8.w, Sizes.dimen_8.w, Sizes.dimen_8.w, 0),
                       child: Text(
                         'Prize Pool',
-                        style: TextStyle(color: Colors.grey),
+                        style: ThemeText.headline6,
                       ),
                     ),
                     Text(
-                      prize.toString(),
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      '₹ ${prize.toString()}',
+                      style: ThemeText.headline6.copyWith(color: Colors.blue),
                     ),
                   ],
                 ),
@@ -128,15 +129,15 @@ class PrizeBreakup extends StatelessWidget {
                   children: [
                     Padding(
                       padding: EdgeInsets.fromLTRB(
-                          Sizes.dimen_8.w, Sizes.dimen_4.w, Sizes.dimen_8.w, 0),
+                          Sizes.dimen_8.w, Sizes.dimen_8.w, Sizes.dimen_8.w, 0),
                       child: Text(
                         'Spots',
-                        style: TextStyle(color: Colors.grey),
+                        style: ThemeText.headline6,
                       ),
                     ),
                     Text(
                       spots.toString(),
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: ThemeText.headline6.copyWith(color: Colors.blue),
                     ),
                   ],
                 ),
@@ -147,15 +148,15 @@ class PrizeBreakup extends StatelessWidget {
                     children: [
                       Padding(
                         padding: EdgeInsets.fromLTRB(Sizes.dimen_8.w,
-                            Sizes.dimen_4.w, Sizes.dimen_8.w, 0),
+                            Sizes.dimen_8.w, Sizes.dimen_8.w, 0),
                         child: Text(
                           'Entry',
-                          style: TextStyle(color: Colors.grey),
+                          style: ThemeText.headline6,
                         ),
                       ),
                       Text(
                         entryFees.toString(),
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: ThemeText.headline6.copyWith(color: Colors.blue),
                       ),
                     ],
                   ),

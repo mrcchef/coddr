@@ -22,4 +22,7 @@ class Images {
   static const phoneIcon = 'assets/logos/phone.png';
   static const trophyIcon = 'assets/logos/trophy.png';
   static const coinsIcon = 'assets/logos/coins.png';
+  static const editIcon = 'assets/logos/edit.png';
+  static const institutionIcon = 'assets/logos/institution.png';
+  static const occupationIcon = 'assets/logos/occupation.png';
 }

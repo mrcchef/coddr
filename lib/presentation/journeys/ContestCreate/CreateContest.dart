@@ -5,6 +5,9 @@ import 'package:coddr/presentation/journeys/ContestCreate/prize_breakup.dart';
 import 'package:coddr/presentation/journeys/curated_contests/platform_label.dart';
 import 'package:flutter/material.dart';
 
+import '../../themes/app_color.dart';
+import '../../themes/themes.dart';
+
 class CreateContest extends StatefulWidget {
   final bool isPrivate;
   final int parentContestId;
@@ -32,236 +35,371 @@ class CreateContest extends StatefulWidget {
 class _CreateContestState extends State<CreateContest> {
   GlobalKey<FormState> _formKey = GlobalKey();
   static const int maxPrizePool = 10000;
+  String contestTypeText;
+  TextEditingController passwordcontroller = TextEditingController();
+  TextEditingController contestsizecontroller = TextEditingController();
+  TextEditingController entryfeescontroller = TextEditingController();
+  TextEditingController contestNameController = TextEditingController();
+  int poolPrize = 0;
+  void initState() {
+    contestTypeText = widget.isPrivate ? 'Private' : "Public";
+    entryfeescontroller.addListener(() {
+      if (contestsizecontroller.text.isEmpty ||
+          entryfeescontroller.text.isEmpty) return 0;
+      poolPrize = (int.parse(contestsizecontroller.text) *
+          int.parse(entryfeescontroller.text));
+
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final String contestTypeText = widget.isPrivate ? 'Private' : "Public";
-    TextEditingController passwordcontroller = TextEditingController();
-    TextEditingController contestsizecontroller = TextEditingController();
-    TextEditingController entryfeescontroller = TextEditingController();
-    TextEditingController contestNameController = TextEditingController();
-
-    int getPoolPrize() {
-      if (contestsizecontroller.text.isEmpty ||
-          entryfeescontroller.text.isEmpty) return 0;
-      int value = (int.parse(contestsizecontroller.text) *
-          int.parse(entryfeescontroller.text));
-      return value;
-    }
-
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Form(
-      key: _formKey,
-      child: SafeArea(
-        child: Column(
-          children: [
-            PlatformLabel(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+          key: _formKey,
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  "Type : $contestTypeText",
-                  style: TextStyle(fontSize: Sizes.dimen_20.w),
-                ),
-              ],
-            ),
-            if (widget.isPrivate)
-              SizedBox(
-                height: Sizes.dimen_20.w,
-              ),
-            Row(
-              children: [
-                Flexible(
-                  child: Padding(
-                    padding: EdgeInsets.all(Sizes.dimen_8.w),
-                    child: TextFormField(
-                      controller: contestNameController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Contest Name',
-                        labelText: 'Contest Name',
-                        contentPadding: EdgeInsets.fromLTRB(
-                            Sizes.dimen_20.w,
-                            Sizes.dimen_10.w,
-                            Sizes.dimen_20.w,
-                            Sizes.dimen_10.w),
+                PlatformLabel(),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: Sizes.dimen_10.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Contest Type: ",
+                        style: ThemeText.headline6,
                       ),
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please Enter Valid Contest Name';
-                        }
-                        return null;
-                      },
-                    ),
+                      Text(
+                        contestTypeText,
+                        style: ThemeText.headline6.copyWith(color: Colors.red),
+                      ),
+                    ],
                   ),
                 ),
-                if (widget.isPrivate)
-                  Flexible(
-                    child: Padding(
-                      padding: EdgeInsets.all(Sizes.dimen_8.w),
-                      child: TextFormField(
-                        controller: passwordcontroller,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Enter Password',
-                          labelText: 'Password',
-                          contentPadding: EdgeInsets.fromLTRB(
-                              Sizes.dimen_20.w,
-                              Sizes.dimen_10.w,
-                              Sizes.dimen_20.w,
-                              Sizes.dimen_10.w),
+                Row(
+                  children: [
+                    Flexible(
+                      child: Container(
+                        padding: EdgeInsets.all(Sizes.dimen_4.h),
+                        child: TextFormField(
+                          autocorrect: true,
+                          textInputAction: TextInputAction.done,
+                          decoration: InputDecoration(
+                            hintText: 'Contest Name',
+                            labelText: 'Contest Name',
+                            labelStyle: TextStyle(color: Colors.brown[200]),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: Sizes.dimen_4.w,
+                                  color: AppColor.lightYellow),
+                              borderRadius:
+                                  BorderRadius.circular(Sizes.dimen_10.w),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: Sizes.dimen_4.w,
+                                  color: AppColor.lightYellow),
+                              borderRadius:
+                                  BorderRadius.circular(Sizes.dimen_10.w),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: Sizes.dimen_4.w,
+                                  color: AppColor.lightRed),
+                              borderRadius:
+                                  BorderRadius.circular(Sizes.dimen_10.w),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: Sizes.dimen_4.w,
+                                  color: AppColor.lightRed),
+                              borderRadius:
+                                  BorderRadius.circular(Sizes.dimen_10.w),
+                            ),
+                            contentPadding: EdgeInsets.all(Sizes.dimen_16.w),
+                            filled: true,
+                            hintStyle: TextStyle(color: Colors.grey[500]),
+                            fillColor: Colors.white70,
+                          ),
+                          controller: contestNameController,
+                          style:
+                              ThemeText.bodyText1.copyWith(color: Colors.brown),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Enter Contest Name';
+                            }
+                            return null;
+                          },
                         ),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please Enter Password';
+                      ),
+                    ),
+                    if (widget.isPrivate)
+                      Flexible(
+                        child: Container(
+                          padding: EdgeInsets.all(Sizes.dimen_4.h),
+                          child: TextFormField(
+                            autocorrect: true,
+                            textInputAction: TextInputAction.done,
+                            decoration: InputDecoration(
+                              hintText: 'xxxxx',
+                              labelText: 'Password',
+                              labelStyle: TextStyle(color: Colors.brown[200]),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: Sizes.dimen_4.w,
+                                    color: AppColor.lightYellow),
+                                borderRadius:
+                                    BorderRadius.circular(Sizes.dimen_10.w),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: Sizes.dimen_4.w,
+                                    color: AppColor.lightYellow),
+                                borderRadius:
+                                    BorderRadius.circular(Sizes.dimen_10.w),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: Sizes.dimen_4.w,
+                                    color: AppColor.lightRed),
+                                borderRadius:
+                                    BorderRadius.circular(Sizes.dimen_10.w),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: Sizes.dimen_4.w,
+                                    color: AppColor.lightRed),
+                                borderRadius:
+                                    BorderRadius.circular(Sizes.dimen_10.w),
+                              ),
+                              contentPadding: EdgeInsets.all(Sizes.dimen_16.w),
+                              filled: true,
+                              hintStyle: TextStyle(color: Colors.grey[500]),
+                              fillColor: Colors.white70,
+                            ),
+                            controller: passwordcontroller,
+                            style: ThemeText.bodyText1
+                                .copyWith(color: Colors.brown),
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Enter password';
+                              }
+                              if (value.length < 5)
+                                return 'Length is less than 5';
+                              return null;
+                            },
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Flexible(
+                      child: Container(
+                        padding: EdgeInsets.all(Sizes.dimen_4.h),
+                        child: TextFormField(
+                          autocorrect: true,
+                          textInputAction: TextInputAction.done,
+                          decoration: InputDecoration(
+                            hintText: '5',
+                            labelText: 'Contest Size',
+                            labelStyle: TextStyle(color: Colors.brown[200]),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: Sizes.dimen_4.w,
+                                  color: AppColor.lightYellow),
+                              borderRadius:
+                                  BorderRadius.circular(Sizes.dimen_10.w),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: Sizes.dimen_4.w,
+                                  color: AppColor.lightYellow),
+                              borderRadius:
+                                  BorderRadius.circular(Sizes.dimen_10.w),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: Sizes.dimen_4.w,
+                                  color: AppColor.lightRed),
+                              borderRadius:
+                                  BorderRadius.circular(Sizes.dimen_10.w),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: Sizes.dimen_4.w,
+                                  color: AppColor.lightRed),
+                              borderRadius:
+                                  BorderRadius.circular(Sizes.dimen_10.w),
+                            ),
+                            contentPadding: EdgeInsets.all(Sizes.dimen_16.w),
+                            filled: true,
+                            hintStyle: TextStyle(color: Colors.grey[500]),
+                            fillColor: Colors.white70,
+                          ),
+                          controller: contestsizecontroller,
+                          keyboardType: TextInputType.number,
+                          style:
+                              ThemeText.bodyText1.copyWith(color: Colors.brown),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Enter Size';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      child: Container(
+                        padding: EdgeInsets.all(Sizes.dimen_4.h),
+                        child: TextFormField(
+                          autocorrect: true,
+                          textInputAction: TextInputAction.done,
+                          decoration: InputDecoration(
+                            hintText: '20',
+                            labelText: 'Entry Fees',
+                            labelStyle: TextStyle(color: Colors.brown[200]),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: Sizes.dimen_4.w,
+                                  color: AppColor.lightYellow),
+                              borderRadius:
+                                  BorderRadius.circular(Sizes.dimen_10.w),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: Sizes.dimen_4.w,
+                                  color: AppColor.lightYellow),
+                              borderRadius:
+                                  BorderRadius.circular(Sizes.dimen_10.w),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: Sizes.dimen_4.w,
+                                  color: AppColor.lightRed),
+                              borderRadius:
+                                  BorderRadius.circular(Sizes.dimen_10.w),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: Sizes.dimen_4.w,
+                                  color: AppColor.lightRed),
+                              borderRadius:
+                                  BorderRadius.circular(Sizes.dimen_10.w),
+                            ),
+                            contentPadding: EdgeInsets.all(Sizes.dimen_16.w),
+                            filled: true,
+                            hintStyle: TextStyle(color: Colors.grey[500]),
+                            fillColor: Colors.white70,
+                          ),
+                          controller: entryfeescontroller,
+                          keyboardType: TextInputType.number,
+                          style:
+                              ThemeText.bodyText1.copyWith(color: Colors.brown),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Enter Entry Fees';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.all(Sizes.dimen_8.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Pool Prize: ',
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                      Text(
+                        '₹ $poolPrize',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6
+                            .copyWith(color: Colors.red),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(
+                  thickness: Sizes.dimen_2.w,
+                ),
+                Padding(
+                  padding: EdgeInsets.all(Sizes.dimen_8.w),
+                  child: Text(
+                    'Maximum Prize Pool',
+                    style: ThemeText.headline6,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(Sizes.dimen_8.w, 0, 0, 0),
+                  child: Text(
+                    '₹ $maxPrizePool',
+                    style: ThemeText.headline6.copyWith(color: Colors.red),
+                  ),
+                ),
+                Spacer(),
+                Divider(
+                  thickness: Sizes.dimen_4.w,
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Sizes.dimen_10.w,
+                        vertical: Sizes.dimen_2.h),
+                    child: Container(
+                      width: double.infinity,
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                            backgroundColor: Colors.green,
+                            foregroundColor: Colors.white),
+                        child: Text('Prize Breakup',
+                            style: TextStyle(fontSize: Sizes.dimen_24.w)),
+                        onPressed: () {
+                          if (_formKey.currentState.validate()) {
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PrizeBreakup(
+                                  contestName: contestNameController.text,
+                                  isPrivate: widget.isPrivate,
+                                  parentContestId: widget.parentContestId,
+                                  password: passwordcontroller.text,
+                                  platformId: widget.platformId,
+                                  prize: poolPrize,
+                                  spots: int.parse(contestsizecontroller.text),
+                                  entryFees:
+                                      int.parse(entryfeescontroller.text),
+                                  userModel: widget.userModel,
+                                  contestId: widget.contestId,
+                                  startTime: widget.startTime,
+                                  endtime: widget.endtime,
+                                  title: widget.title,
+                                ),
+                              ),
+                            );
                           }
-                          return null;
                         },
                       ),
                     ),
                   ),
-              ],
-            ),
-            SizedBox(
-              height: Sizes.dimen_20.w,
-            ),
-            Row(
-              children: [
-                Flexible(
-                  child: Padding(
-                    padding: EdgeInsets.all(Sizes.dimen_8.w),
-                    child: TextFormField(
-                      controller: contestsizecontroller,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Contest Size',
-                        labelText: 'Contest Size',
-                        contentPadding: EdgeInsets.fromLTRB(
-                            Sizes.dimen_20.w,
-                            Sizes.dimen_10.w,
-                            Sizes.dimen_20.w,
-                            Sizes.dimen_10.w),
-                        // fillColor: Colors.red
-                      ),
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please Enter Size';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                ),
-                Flexible(
-                  child: Padding(
-                    padding: EdgeInsets.all(Sizes.dimen_8.w),
-                    child: TextFormField(
-                      controller: entryfeescontroller,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Entry',
-                        labelText: 'Entry Fees',
-                        contentPadding: EdgeInsets.fromLTRB(
-                            Sizes.dimen_20.w,
-                            Sizes.dimen_10.w,
-                            Sizes.dimen_20.w,
-                            Sizes.dimen_10.w),
-                        // fillColor: Colors.red
-                      ),
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please Enter Fees';
-                        }
-
-                        if (int.parse(value) > widget.userModel.coins) {
-                          return 'Insufficent coins';
-                        }
-                        if (maxPrizePool < getPoolPrize())
-                          return 'Pool prize exceeds max pool prize';
-                        return null;
-                      },
-                    ),
-                  ),
                 ),
               ],
             ),
-            // Flexible(
-            //   child: Padding(
-            //     padding: EdgeInsets.all(Sizes.dimen_8.w),
-            //     child: Text(
-            //       'Pool Prize: ₹ ${getPoolPrize().toString()}',
-            //       style: Theme.of(context).textTheme.bodyText1,
-            //     ),
-            //   ),
-            // ),
-            Divider(
-              thickness: Sizes.dimen_2.w,
-            ),
-            Padding(
-              padding: EdgeInsets.all(Sizes.dimen_8.w),
-              child: Text(
-                'Maximum Prize Pool',
-                style: TextStyle(fontSize: Sizes.dimen_16.w),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(Sizes.dimen_8.w, 0, 0, 0),
-              child: Text(
-                '₹ $maxPrizePool',
-                style: TextStyle(fontSize: Sizes.dimen_20.w),
-              ),
-            ),
-            Spacer(),
-            Divider(
-              thickness: Sizes.dimen_4.w,
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding:
-                    EdgeInsets.fromLTRB(Sizes.dimen_8.w, 0, Sizes.dimen_8.w, 0),
-                child: Container(
-                  width: double.infinity,
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        foregroundColor: Colors.white),
-                    child: Text('Prize Breakup',
-                        style: TextStyle(fontSize: Sizes.dimen_24.w)),
-                    onPressed: () {
-                      if (_formKey.currentState.validate()) {
-                        Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PrizeBreakup(
-                              contestName: contestNameController.text,
-                              isPrivate: widget.isPrivate,
-                              parentContestId: widget.parentContestId,
-                              password: passwordcontroller.text,
-                              platformId: widget.platformId,
-                              prize: getPoolPrize(),
-                              spots: int.parse(contestsizecontroller.text),
-                              entryFees: int.parse(entryfeescontroller.text),
-                              userModel: widget.userModel,
-                              contestId: widget.contestId,
-                              startTime: widget.startTime,
-                              endtime: widget.endtime,
-                              title: widget.title,
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    ));
+          ),
+        ));
   }
 }
