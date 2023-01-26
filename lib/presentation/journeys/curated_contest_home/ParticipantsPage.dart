@@ -40,12 +40,14 @@ class ParticipantsPage extends StatelessWidget {
               children: [
                 Text(
                   'Total Spots: $totalSpots',
-                  style: ThemeText.bodyText1,
+                  style:
+                      ThemeText.bodyText1.copyWith(fontWeight: FontWeight.bold),
                 ),
                 Spacer(),
                 Text(
                   'Filled: $filledSpots',
-                  style: ThemeText.bodyText1,
+                  style:
+                      ThemeText.bodyText1.copyWith(fontWeight: FontWeight.bold),
                 )
               ],
             ),
@@ -61,7 +63,8 @@ class ParticipantsPage extends StatelessWidget {
                   title: Text(
                     participants[index]["displayName"],
                     maxLines: 1,
-                    style: ThemeText.bodyText1,
+                    style: ThemeText.bodyText1
+                        .copyWith(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
                     participants[index]["handelCF"],
@@ -82,7 +85,8 @@ class ParticipantsPage extends StatelessWidget {
                 );
               },
             ),
-          )
+          ),
+          
         ],
       ),
     );

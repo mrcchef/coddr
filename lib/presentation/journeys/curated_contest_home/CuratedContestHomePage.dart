@@ -9,6 +9,7 @@ import 'package:coddr/presentation/journeys/curated_contest_home/CuratedContestC
 import 'package:coddr/presentation/journeys/curated_contest_home/LeaderBoardPage.dart';
 import 'package:coddr/presentation/journeys/curated_contest_home/ParticipantsPage.dart';
 import 'package:coddr/presentation/journeys/curated_contest_home/PrizePoolPage.dart';
+import 'package:coddr/presentation/journeys/curated_contest_home/ResultPage.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:coddr/presentation/themes/themes.dart';
 import 'package:flutter/material.dart';
@@ -102,6 +103,7 @@ class _CuratedContestHomePageState extends State<CuratedContestHomePage> {
       LeaderBoardPage(
           curatedContestModel: widget.curatedContestModel,
           contestState: contestState),
+      ResultPage(),
     ];
 
     return Scaffold(
@@ -113,15 +115,12 @@ class _CuratedContestHomePageState extends State<CuratedContestHomePage> {
       ),
       body: Column(
         children: [
-          SizedBox(
-            height: Sizes.dimen_70.h,
-            child: CuratedContestCardInfo(
-              parentContestName: widget.curatedContestModel.parentContestName,
-              contestName: widget.curatedContestModel.contestName,
-              endTime: widget.curatedContestModel.endTime,
-              startTime: widget.curatedContestModel.startTime,
-              contestState: contestState,
-            ),
+          CuratedContestCardInfo(
+            parentContestName: widget.curatedContestModel.parentContestName,
+            contestName: widget.curatedContestModel.contestName,
+            endTime: widget.curatedContestModel.endTime,
+            startTime: widget.curatedContestModel.startTime,
+            contestState: contestState,
           ),
           Expanded(child: bottomNavigationWidgets[_currentTabIndex]),
         ],

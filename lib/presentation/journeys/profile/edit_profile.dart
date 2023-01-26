@@ -136,7 +136,12 @@ class _EditProfileState extends State<EditProfile> {
       onTap: () {
         Navigator.of(context).popAndPushNamed(ProfileScreen.routeName);
       },
-      child: Icon(Icons.arrow_back_ios, color: Colors.black),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: Sizes.dimen_16.w,
+        ),
+        child: Icon(Icons.arrow_back_ios, color: Colors.black),
+      ),
     );
 
     Widget middleAppBarWidget = Padding(

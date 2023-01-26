@@ -2,9 +2,6 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/domain/entities/curated_contest_model.dart';
-import 'package:coddr/presentation/journeys/curated_contest_home/ContestCardInfo.dart';
-import 'package:coddr/presentation/journeys/curated_contest_home/LeaderboardPage.dart';
-import 'package:coddr/presentation/journeys/curated_contest_home/WinningsPage.dart';
 import 'package:coddr/presentation/journeys/curated_contests/curated_contest_card.dart';
 import 'package:coddr/presentation/journeys/curated_contests/platform_label.dart';
 import 'package:flutter/material.dart';
@@ -29,11 +26,11 @@ class _RankListPageState extends State<RankListPage> {
         body: SafeArea(
           child: Column(children: [
             PlatformLabel(),
-            ContestCardinfo(
-              startTime: widget.curatedContestModel.startTime,
-              endTime: widget.curatedContestModel.endTime,
-              title: widget.curatedContestModel.parentContestName,
-            ),
+            // ContestCardinfo(
+            //   startTime: widget.curatedContestModel.startTime,
+            //   endTime: widget.curatedContestModel.endTime,
+            //   title: widget.curatedContestModel.parentContestName,
+            // ),
             CuratedContestCard(
               curatedContestModel: widget.curatedContestModel,
               isPrivate: false,
@@ -63,7 +60,7 @@ class _RankListPageState extends State<RankListPage> {
             Expanded(
               child: TabBarView(
                 children: [
-                  WinningsPage(curatedContestModel: widget.curatedContestModel),
+                  // WinningsPage(curatedContestModel: widget.curatedContestModel),
                   // LeaderBoard(curatedContestModel: widget.curatedContestModel),
                 ],
               ),

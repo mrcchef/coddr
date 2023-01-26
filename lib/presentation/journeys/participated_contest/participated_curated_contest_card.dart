@@ -1,7 +1,7 @@
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/domain/entities/curated_contest_model.dart';
-import 'package:coddr/presentation/journeys/curated_contest_home/RankListPage.dart';
+import 'package:coddr/presentation/journeys/curated_contest_home/CuratedContestHomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -32,7 +32,7 @@ class _ParticipatedCuratedContestCardState
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => RankListPage(
+            builder: (context) => CuratedContestHomePage(
               curatedContestModel: widget.curatedContestModel,
             ),
           ),

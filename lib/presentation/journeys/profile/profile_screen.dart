@@ -44,7 +44,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
       onTap: () {
         Navigator.of(context).pop();
       },
-      child: Icon(Icons.arrow_back_ios, color: Colors.black),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: Sizes.dimen_16.w,
+        ),
+        child: Icon(Icons.arrow_back_ios, color: Colors.black),
+      ),
     );
 
     Widget middleAppBarWidget = Padding(

@@ -1,6 +1,7 @@
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/enums/enum_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
+import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:coddr/presentation/themes/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class LeaderBoardPage extends StatefulWidget {
 class _LeaderBoardPageState extends State<LeaderBoardPage> {
   List<String> users = [];
   ContestStandingsBloc _contestStandingsBloc;
+  Map<String, String> userToImage = new Map();
 
   @override
   void initState() {
@@ -35,6 +37,7 @@ class _LeaderBoardPageState extends State<LeaderBoardPage> {
     if (widget.contestState != ContestState.notStarted) {
       widget.curatedContestModel.participants.forEach((element) {
         users.add(element['handelCF']);
+        userToImage[element['handelCF']] = element['imageUrl'];
       });
 
       _contestStandingsBloc = getItInstance<ContestStandingsBloc>();
@@ -57,9 +60,16 @@ class _LeaderBoardPageState extends State<LeaderBoardPage> {
     super.dispose();
   }
 
+  final List<Color> cardColors = [
+    AppColor.lightGreen,
+    AppColor.lightRed,
+    AppColor.lightViolet,
+    AppColor.lightBrown,
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Column(
       children: [
         if (widget.contestState == ContestState.notStarted)
           Container(
@@ -82,10 +92,12 @@ class _LeaderBoardPageState extends State<LeaderBoardPage> {
             bloc: _contestStandingsBloc,
             builder: (context, state) {
               if (state is ContestStandingsFetching)
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.red,
-                    backgroundColor: Colors.green,
+                return Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.red,
+                      backgroundColor: Colors.green,
+                    ),
                   ),
                 );
               else if (state is ContestStandingsFetched) {
@@ -101,30 +113,152 @@ class _LeaderBoardPageState extends State<LeaderBoardPage> {
 
                 List<CFHandelStandingsEntity> sortedParticipatedUsers =
                     sortUsers(participatedUsers);
-                return ListView(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: Sizes.dimen_16.w,
-                      ),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Participants: ${participatedUsers.length}',
-                            style: ThemeText.bodyText1,
+                return Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: Sizes.dimen_16.w),
+                    child: ListView(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: Sizes.dimen_16.w,
                           ),
-                          Spacer(),
-                          Text(
-                            'Eligible: ${nonParticipatedUsers.length}',
-                            style: ThemeText.bodyText1,
-                          )
-                        ],
-                      ),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Participants: ${participatedUsers.length + nonParticipatedUsers.length}',
+                                style: ThemeText.bodyText1
+                                    .copyWith(fontWeight: FontWeight.bold),
+                              ),
+                              Spacer(),
+                              Text(
+                                'Eligible: ${nonParticipatedUsers.length}',
+                                style: ThemeText.bodyText1
+                                    .copyWith(fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
+                        ),
+                        ListView.separated(
+                          separatorBuilder: ((context, index) {
+                            return SizedBox(
+                              height: Sizes.dimen_16.w,
+                            );
+                          }),
+                          shrinkWrap: true,
+                          itemCount: sortedParticipatedUsers.length,
+                          itemBuilder: ((context, index) {
+                            return ListTile(
+                                minVerticalPadding: Sizes.dimen_10.w,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        Sizes.dimen_20.w)),
+                                tileColor:
+                                    cardColors[index % cardColors.length],
+                                title: Text(
+                                  sortedParticipatedUsers[index].handle,
+                                  maxLines: 1,
+                                  style: ThemeText.bodyText1
+                                      .copyWith(fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Solved: ${sortedParticipatedUsers[index].solvedProblems}',
+                                      maxLines: 1,
+                                      style: ThemeText.subtitle2,
+                                    ),
+                                    Text(
+                                      'Score: ${sortedParticipatedUsers[index].points}',
+                                      maxLines: 1,
+                                      style: ThemeText.subtitle2,
+                                    ),
+                                  ],
+                                ),
+                                leading: CircleAvatar(
+                                    radius: Sizes.dimen_30.w,
+                                    backgroundColor: Colors.transparent,
+                                    backgroundImage: NetworkImage(userToImage[
+                                        sortedParticipatedUsers[index]
+                                            .handle])),
+                                trailing: Container(
+                                  padding: EdgeInsets.all(Sizes.dimen_10.w),
+                                  decoration: new BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                          Sizes.dimen_10.w),
+                                      color: Colors.white),
+                                  child: Text(
+                                    "${index + 1}",
+                                    style: ThemeText.headline6,
+                                  ),
+                                ));
+                          }),
+                        ),
+                        Padding(
+                          padding:
+                              EdgeInsets.symmetric(vertical: Sizes.dimen_16.w),
+                          child: Text(
+                            "Not Eligible",
+                            style: ThemeText.headline6,
+                          ),
+                        ),
+                        ListView.separated(
+                          separatorBuilder: ((context, index) {
+                            return SizedBox(
+                              height: Sizes.dimen_16.w,
+                            );
+                          }),
+                          shrinkWrap: true,
+                          itemCount: nonParticipatedUsers.length,
+                          itemBuilder: ((context, index) {
+                            return ListTile(
+                                minVerticalPadding: Sizes.dimen_10.w,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        Sizes.dimen_20.w)),
+                                tileColor: Colors.grey.shade200,
+                                title: Text(
+                                  nonParticipatedUsers[index].handle,
+                                  maxLines: 1,
+                                  style: ThemeText.bodyText1
+                                      .copyWith(fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Solved: ${nonParticipatedUsers[index].solvedProblems}',
+                                      maxLines: 1,
+                                      style: ThemeText.subtitle2,
+                                    ),
+                                    Text(
+                                      'Score: ${nonParticipatedUsers[index].points}',
+                                      maxLines: 1,
+                                      style: ThemeText.subtitle2,
+                                    ),
+                                  ],
+                                ),
+                                leading: CircleAvatar(
+                                    radius: Sizes.dimen_30.w,
+                                    backgroundColor: Colors.transparent,
+                                    backgroundImage: NetworkImage(userToImage[
+                                        nonParticipatedUsers[index].handle])),
+                                trailing: Container(
+                                  padding: EdgeInsets.all(Sizes.dimen_10.w),
+                                  decoration: new BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                          Sizes.dimen_10.w),
+                                      color: Colors.white),
+                                  child: Text(
+                                    "NA",
+                                    style: ThemeText.headline6,
+                                  ),
+                                ));
+                          }),
+                        ),
+                      ],
                     ),
-                    ListView.builder(itemBuilder: ((context, index) {
-                      return ListTile();
-                    })),
-                  ],
+                  ),
                 );
               } else if (state is ContestStandingsFailed) {
                 return Center(

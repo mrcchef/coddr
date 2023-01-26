@@ -16,21 +16,32 @@ class CFStandingsModel extends CFStandingsEntity {
             relativeTimeSeconds: contest.relativeTimeSeconds,
             cfHandelStandingsEntity:
                 rows.map<CFHandelStandingsEntity>((element) {
+              int solvedProblems = 0;
+              element.problemResults.forEach((element) {
+                if (element.points != 0) solvedProblems++;
+              });
               return CFHandelStandingsEntity(
                   handle: element.party.members[0].handle,
                   rank: element.rank,
                   points: element.points,
-                  penalty: element.penalty);
+                  penalty: element.penalty,
+                  solvedProblems: solvedProblems);
             }).toList());
 
   List<CFHandelStandingsEntity> getRankListRows(List<Rows> rows) {
     List<CFHandelStandingsEntity> result = [];
+
     rows.forEach((element) {
+      int solvedProblems = 0;
+      element.problemResults.forEach((element) {
+        if (element.points != 0) solvedProblems++;
+      });
       result.add(CFHandelStandingsEntity(
           handle: element.party.members[0].handle,
           rank: element.rank,
           points: element.points,
-          penalty: element.penalty));
+          penalty: element.penalty,
+          solvedProblems: solvedProblems));
     });
     return result;
   }
@@ -182,6 +193,7 @@ class Rows {
       penalty: json['penalty'],
       successfulHackCount: json['successfulHackCount'],
       unsuccessfulHackCount: json['unsuccessfulHackCount'],
+      problemResults: problemResults,
     );
   }
 

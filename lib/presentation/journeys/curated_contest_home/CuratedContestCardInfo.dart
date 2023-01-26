@@ -1,8 +1,6 @@
-import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/enums/enum_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
-import 'package:coddr/presentation/journeys/curated_contest_home/CuratedContestHomePage.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:coddr/presentation/themes/themes.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +34,7 @@ class _CuratedContestCardInfoState extends State<CuratedContestCardInfo> {
     int days, hours, minutes, seconds;
     const int daysDivisionFactor = 24 * 60 * 60;
     const int hoursDivisionFactor = 60 * 60;
-    const int minutesDivisionFacotr = 60;
+    const int minutesDivisionFactor = 60;
 
     if (widget.contestState == ContestState.notStarted) {
       remaningTime = widget.startTime.difference(currentTime);
@@ -45,8 +43,8 @@ class _CuratedContestCardInfoState extends State<CuratedContestCardInfo> {
       seconds = seconds % daysDivisionFactor;
       hours = (seconds / hoursDivisionFactor).toInt();
       seconds = seconds % hoursDivisionFactor;
-      minutes = (seconds / hoursDivisionFactor).toInt();
-      seconds = seconds % minutesDivisionFacotr;
+      minutes = (seconds / minutesDivisionFactor).toInt();
+      seconds = seconds % minutesDivisionFactor;
 
       str = "Starts in ${days}D : ${hours}H : ${minutes}M : ${seconds}S";
     } else if (widget.contestState == ContestState.started) {
@@ -122,11 +120,14 @@ class _CuratedContestCardInfoState extends State<CuratedContestCardInfo> {
               height: Sizes.dimen_30.w,
               thickness: Sizes.dimen_2.w,
             ),
-            Center(
-                child: Text(
-              getTimeContent(),
-              style: ThemeText.headline6,
-            )),
+            Padding(
+              padding: EdgeInsets.only(bottom: Sizes.dimen_16.w),
+              child: Center(
+                  child: Text(
+                getTimeContent(),
+                style: ThemeText.headline6,
+              )),
+            ),
           ],
         ));
   }

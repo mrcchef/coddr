@@ -33,12 +33,14 @@ class PrizePoolPage extends StatelessWidget {
               children: [
                 Text(
                   'Prize Pool: ₹ $prize',
-                  style: ThemeText.bodyText1,
+                  style:
+                      ThemeText.bodyText1.copyWith(fontWeight: FontWeight.bold),
                 ),
                 Spacer(),
                 Text(
                   'Entry Fees: ₹ $entryFees',
-                  style: ThemeText.bodyText1,
+                  style:
+                      ThemeText.bodyText1.copyWith(fontWeight: FontWeight.bold),
                 )
               ],
             ),
@@ -93,7 +95,7 @@ class PrizePoolPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(Sizes.dimen_20.w)),
-                      tileColor: Colors.yellow.shade100,
+                      tileColor: Colors.grey.shade200,
                       title: Center(
                         child: Text(
                           "Runner Up",
@@ -133,7 +135,7 @@ class PrizePoolPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(Sizes.dimen_20.w)),
-                      tileColor: Colors.yellow.shade100,
+                      tileColor: Colors.brown.shade100,
                       title: Center(
                         child: Text(
                           "2nd Runner Up",
@@ -158,7 +160,7 @@ class PrizePoolPage extends StatelessWidget {
                                 BorderRadius.circular(Sizes.dimen_60.w),
                             color: Colors.orange.shade300),
                         child: Text(
-                          '₹ ${positionToReward['1'].toString()}',
+                          '₹ ${positionToReward['3'].toString()}',
                           style: ThemeText.headline6,
                         ),
                       ),

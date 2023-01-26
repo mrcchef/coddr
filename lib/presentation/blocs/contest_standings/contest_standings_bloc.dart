@@ -20,7 +20,6 @@ class ContestStandingsBloc
 
       emit(eitherList.fold((appError) => ContestStandingsFailed(),
           (contestStandings) {
-        
         var hashMap = new Map();
         contestStandings.cfHandelStandingsEntity.forEach(
           (element) {
@@ -33,7 +32,11 @@ class ContestStandingsBloc
             if (!hashMap.containsKey(element)) {
               contestStandings.cfHandelStandingsEntity.add(
                   CFHandelStandingsEntity(
-                      handle: element, rank: -1, points: -1, penalty: -1));
+                      handle: element,
+                      rank: -1,
+                      points: 0,
+                      penalty: -1,
+                      solvedProblems: 0));
             }
           },
         );
