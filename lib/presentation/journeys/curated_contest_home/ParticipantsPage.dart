@@ -1,6 +1,7 @@
 import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:coddr/presentation/themes/themes.dart';
+import 'package:coddr/presentation/widgets/Loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -71,11 +72,18 @@ class ParticipantsPage extends StatelessWidget {
                     maxLines: 1,
                     style: ThemeText.subtitle2,
                   ),
-                  leading: CircleAvatar(
-                      radius: Sizes.dimen_30.w,
-                      backgroundColor: Colors.transparent,
-                      backgroundImage:
-                          NetworkImage(participants[index]['imageUrl'])),
+                  leading: Stack(children: [
+                    Positioned.fill(
+                        child: Align(
+                      alignment: Alignment.center,
+                      child: Loading(),
+                    )),
+                    CircleAvatar(
+                        radius: Sizes.dimen_30.w,
+                        backgroundColor: Colors.transparent,
+                        backgroundImage:
+                            NetworkImage(participants[index]['imageUrl']))
+                  ]),
                   trailing: InkWell(child: Icon(Icons.link)),
                 );
               }),
@@ -86,7 +94,6 @@ class ParticipantsPage extends StatelessWidget {
               },
             ),
           ),
-          
         ],
       ),
     );

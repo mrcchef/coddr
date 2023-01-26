@@ -3,6 +3,7 @@ import 'package:coddr/common/enums/enum_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
 import 'package:coddr/presentation/themes/themes.dart';
+import 'package:coddr/presentation/widgets/Loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -175,12 +176,22 @@ class _LeaderBoardPageState extends State<LeaderBoardPage> {
                                     ),
                                   ],
                                 ),
-                                leading: CircleAvatar(
-                                    radius: Sizes.dimen_30.w,
-                                    backgroundColor: Colors.transparent,
-                                    backgroundImage: NetworkImage(userToImage[
-                                        sortedParticipatedUsers[index]
-                                            .handle])),
+                                leading: Stack(
+                                  children: [
+                                    Positioned.fill(
+                                        child: Align(
+                                      alignment: Alignment.center,
+                                      child: Loading(),
+                                    )),
+                                    CircleAvatar(
+                                      radius: Sizes.dimen_30.w,
+                                      backgroundColor: Colors.transparent,
+                                      backgroundImage: NetworkImage(userToImage[
+                                          sortedParticipatedUsers[index]
+                                              .handle]),
+                                    ),
+                                  ],
+                                ),
                                 trailing: Container(
                                   padding: EdgeInsets.all(Sizes.dimen_10.w),
                                   decoration: new BoxDecoration(
@@ -238,11 +249,22 @@ class _LeaderBoardPageState extends State<LeaderBoardPage> {
                                     ),
                                   ],
                                 ),
-                                leading: CircleAvatar(
-                                    radius: Sizes.dimen_30.w,
-                                    backgroundColor: Colors.transparent,
-                                    backgroundImage: NetworkImage(userToImage[
-                                        nonParticipatedUsers[index].handle])),
+                                leading: Stack(
+                                  children: [
+                                    Positioned.fill(
+                                        child: Align(
+                                      alignment: Alignment.center,
+                                      child: Loading(),
+                                    )),
+                                    CircleAvatar(
+                                      radius: Sizes.dimen_30.w,
+                                      backgroundColor: Colors.transparent,
+                                      backgroundImage: NetworkImage(userToImage[
+                                          sortedParticipatedUsers[index]
+                                              .handle]),
+                                    ),
+                                  ],
+                                ),
                                 trailing: Container(
                                   padding: EdgeInsets.all(Sizes.dimen_10.w),
                                   decoration: new BoxDecoration(

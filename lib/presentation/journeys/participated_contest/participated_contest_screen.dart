@@ -3,8 +3,8 @@ import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/domain/entities/curated_contest_model.dart';
 import 'package:coddr/presentation/blocs/participated_contest/participated_contest_bloc.dart';
-import 'package:coddr/presentation/journeys/participated_contest/participated_curated_contest_card.dart';
 import 'package:coddr/presentation/journeys/participated_contest/PHistory.dart';
+import 'package:coddr/presentation/journeys/participated_contest/participated_curated_contest_card.dart';
 import 'package:coddr/presentation/widgets/CoddrAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,7 +60,10 @@ class _ParticipatedContestScreenState extends State<ParticipatedContestScreen> {
       onTap: () {
         Navigator.of(context).pop();
       },
-      child: Icon(Icons.arrow_back_ios, color: Colors.black),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: Sizes.dimen_16.w),
+        child: Icon(Icons.arrow_back_ios, color: Colors.black),
+      ),
     );
 
     Widget middleAppBarWidget = Padding(
