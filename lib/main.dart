@@ -11,7 +11,7 @@ import 'package:coddr/presentation/blocs/send_verification_email/send_verificati
 import 'package:coddr/presentation/blocs/signIn/signin_bloc.dart';
 import 'package:coddr/presentation/blocs/signup/signup_bloc.dart';
 import 'package:coddr/presentation/blocs/update_curated_contest/update_curated_contest_bloc.dart';
-import 'package:coddr/presentation/journeys/RankList/WebViewPage.dart';
+import 'package:coddr/presentation/journeys/curated_contest_home/WebViewPage.dart';
 import 'package:coddr/presentation/journeys/auth/complete_profile.dart';
 import 'package:coddr/presentation/journeys/auth/sign_in_screen.dart';
 import 'package:coddr/presentation/journeys/auth/sign_up_screen.dart';

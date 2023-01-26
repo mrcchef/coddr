@@ -60,6 +60,8 @@ class PrizeBreakup extends StatelessWidget {
       'uid': userModel.uid,
       'email': userModel.email,
       'handelCF': userModel.handelCF,
+      'imageUrl': userModel.imageUrl,
+      'isAdmin': true.toString(),
     };
     participants.add(host);
 

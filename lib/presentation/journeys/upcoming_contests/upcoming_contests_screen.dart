@@ -3,7 +3,6 @@ import 'package:coddr/common/constants/size_constants.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/dependencies/get_it.dart';
 import 'package:coddr/domain/entities/contest_entity.dart';
-import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/blocs/contest_listing/contest_listing_bloc.dart';
 import 'package:coddr/presentation/journeys/upcoming_contests/contest_card.dart';
 import 'package:coddr/presentation/themes/app_color.dart';
@@ -59,7 +58,12 @@ class _UpcomingContestsScreenState extends State<UpcomingContestsScreen> {
       onTap: () {
         Navigator.of(context).pop();
       },
-      child: Icon(Icons.arrow_back_ios, color: Colors.black),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: Sizes.dimen_16.w,
+        ),
+        child: Icon(Icons.arrow_back_ios, color: Colors.black),
+      ),
     );
 
     Widget middleAppBarWidget = Padding(

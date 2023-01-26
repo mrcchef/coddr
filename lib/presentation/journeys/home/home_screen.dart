@@ -57,7 +57,12 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: () {
           Scaffold.of(context).openDrawer();
         },
-        child: Icon(Icons.menu, color: Colors.black),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: Sizes.dimen_16.w,
+          ),
+          child: Icon(Icons.menu, color: Colors.black),
+        ),
       );
     }
 

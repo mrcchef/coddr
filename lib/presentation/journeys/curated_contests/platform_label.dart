@@ -1,7 +1,7 @@
 import 'package:coddr/common/constants/image_constants.dart';
 import 'package:coddr/common/constants/size_constants.dart';
-import 'package:flutter/material.dart';
 import 'package:coddr/common/extensions/size_extensions.dart';
+import 'package:flutter/material.dart';
 
 class PlatformLabel extends StatefulWidget {
   @override
@@ -37,15 +37,17 @@ class _PlatformLabelState extends State<PlatformLabel> {
                     ),
                   ),
                   Spacer(),
-                  Image.asset(
-                    Images.codeforcesLogo,
-                    fit: BoxFit.fill,
-                    height: Sizes.dimen_40.w,
-                    width: Sizes.dimen_60.w,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: Sizes.dimen_8.w),
+                    child: Image.asset(
+                      Images.codeforcesLogo,
+                      fit: BoxFit.fill,
+                      height: Sizes.dimen_40.w,
+                      width: Sizes.dimen_40.w,
+                    ),
                   ),
-
                   Text(
-                    '   CodeForces',
+                    'CodeForces',
                     style: TextStyle(
                         color: Colors.white, fontSize: Sizes.dimen_20.w),
                   ),
@@ -53,11 +55,6 @@ class _PlatformLabelState extends State<PlatformLabel> {
                 ],
               ),
             ),
-            //This time we have to make dynamic
-            // Text(
-            //   '19h42m left',
-            //   style: TextStyle(color: Colors.white, fontSize: Sizes.dimen_16.w),
-            // )
           ],
         )
       ],

@@ -25,4 +25,9 @@ class Images {
   static const editIcon = 'assets/logos/edit.png';
   static const institutionIcon = 'assets/logos/institution.png';
   static const occupationIcon = 'assets/logos/occupation.png';
+  static const leaderboardIcon = 'assets/logos/leaderboard.png';
+  static const participantsIcon = 'assets/logos/participants.png';
+  static const firstPlaceRibbon = 'assets/logos/firstPlaceRibbon.png';
+  static const secondPlaceRibbon = 'assets/logos/secondPlaceRibbon.png';
+  static const thirdPlaceRibbon = 'assets/logos/thirdPlaceRibbon.png';
 }

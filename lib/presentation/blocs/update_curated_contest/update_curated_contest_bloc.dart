@@ -64,47 +64,5 @@ class UpdateCuratedContestBloc
     });
   }
 
-  // @override
-  // Stream<UpdateCuratedContestState> mapEventToState(
-  //     UpdateCuratedContestEvent event) async* {
-  //   if (event is UpdateCuratedContestEventt) {
-  //     yield CuratedContestUpdatingState();
 
-  //     final eitherResponse =
-  //         await updateCuratedContest(event.curatedContestModel);
-  //     final eitherResponse2 = await updateUserModel(event.userModel);
-
-  //     bool isUpdateCuratedContestSuccess =
-  //         eitherResponse.fold((appError) => false, (r) => true);
-
-  //     if (!isUpdateCuratedContestSuccess)
-  //       yield CuratedContestErrorState("Updation falied");
-
-  //     isUpdateCuratedContestSuccess &=
-  //         eitherResponse2.fold((appError) => false, (r) => true);
-
-  //     if (!isUpdateCuratedContestSuccess)
-  //       yield CuratedContestErrorState("Updation failed");
-  //     else {
-  //       final eitherResponse3 = await updateParticipatedContests(
-  //         ParticipatedContestArgument(
-  //           uid: event.userModel.uid,
-  //           participatedContestModel: ParticipatedContestModel(
-  //             parentContestId: event.curatedContestModel.parentContestId,
-  //             contestId: event.curatedContestModel.contestId,
-  //             platformId: event.curatedContestModel.platformId,
-  //           ),
-  //         ),
-  //       );
-
-  //       isUpdateCuratedContestSuccess &=
-  //           eitherResponse3.fold((l) => false, (r) => true);
-
-  //       if (!isUpdateCuratedContestSuccess) {
-  //         yield CuratedContestErrorState("Updation failed");
-  //       } else
-  //         yield CuratedContestUpdatedState();
-  //     }
-  //   }
-  // }
 }

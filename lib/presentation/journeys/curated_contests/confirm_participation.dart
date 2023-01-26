@@ -3,7 +3,8 @@ import 'package:coddr/common/extensions/size_extensions.dart';
 import 'package:coddr/domain/entities/curated_contest_model.dart';
 import 'package:coddr/domain/entities/user_model.dart';
 import 'package:coddr/presentation/blocs/update_curated_contest/update_curated_contest_bloc.dart';
-import 'package:coddr/presentation/journeys/RankList/RankListPage.dart';
+import 'package:coddr/presentation/journeys/curated_contest_home/RankListPage.dart';
+import 'package:coddr/presentation/journeys/curated_contest_home/curatedContestHomePage.dart';
 import 'package:coddr/presentation/journeys/curated_contests/platform_label.dart';
 import 'package:coddr/presentation/journeys/upcoming_contests/upcoming_contests_screen.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,7 @@ class ConfirmParticipation extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => RankListPage(
+                builder: (context) => CuratedContestHomePage(
                   curatedContestModel: newCuratedContestModel,
                 ),
               ),
@@ -119,18 +120,20 @@ class ConfirmParticipation extends StatelessWidget {
                               'uid': userModel.uid,
                               'email': userModel.email,
                               'handelCF': userModel.handelCF,
+                              'imageUrl':userModel.imageUrl,
+                              'isAdmin':false.toString(),
                             };
                             List<Map<String, String>> participants =
                                 curatedContestModel.participants;
                             participants.add(hm);
-                            //print("helloooo mister $participants");
+                            
                             newUserModel = userModel.copyWith(
                               coins: userModel.coins -
                                   curatedContestModel.entryFees,
                               contest: userModel.contest + 1,
                             );
 
-                            // print("newUserModel $newUserModel");
+                           
 
                             newCuratedContestModel =
                                 curatedContestModel.copyWith(
